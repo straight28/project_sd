@@ -15,25 +15,27 @@ import com.showdwon.controller.actionInter.ActionInterface;
 public class member_Login implements ActionInterface {
 	@Override
 	public void perForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-//		String url = "member/Login_fail.jsp";
-		String url = "/ended.jsp";
+		int result = 0;
+		String url = "DO?command=login_Fail";
+		String message = ""; //// 알림을 위한 메세지
+		String userid = request.getParameter("userid").trim();
+		String userpass = request.getParameter("userpass").trim();
 		
-		HttpSession session = request.getSession();
+		MemberDAO mDAO = MemberDAO.getInstance();
 		
-		String id = request.getParameter("userid");
-		String pwd = request.getParameter("userpass");		
+		result = mDAO.checkID(userid,userpass);
 		
-		MemberDAO memberDAO = MemberDAO.getInstance();
-		MemberDTO mDTO = memberDAO.selectMemberByUserid(id);
-		
-		if(mDTO != null){
-			if(mDTO.getUserpass().equals(pwd)){
-				session.removeAttribute("id");
-				session.setAttribute("loginUser", mDTO);
-				url ="DO?command=main_Page";
-			}
+		if(result == 2){ /// 로그인 성공
+			HttpSession session = request.getSession();
+			session.setAttribute("userid", userid);
+			url = "DO?command=main_Page";
+			message= "로그인 성공";
+		}else if(result == 1){ ////비밀번호 틀림
+			message= "비밀번호를 확인하세요.";
+		}else if(result == -1){ ///아이디 없음
+			message= "가입되지 않은 아이디 입니다.";
 		}
+		request.setAttribute("message", message);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);

@@ -89,7 +89,7 @@ public class MemberDAO implements MemberDAO_Inter{
 	public MemberDTO selectMemberByUserid(String userid){
 		MemberDTO mDTO = null;
 		
-		String sql = "select * from member where id=?";
+		String sql = "select * from member where userid=?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -116,7 +116,39 @@ public class MemberDAO implements MemberDAO_Inter{
 		return mDTO;
 	}
 	
-	
+	/* 로그인시 회원 검사 */
+	public int checkID(String userid, String userpass){
+		int result = -1; //-1이면 아이디가 db에 없는 상태
+		
+		String sql = "select userpass from member where userid=?";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBConnectManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userid);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				result = 0; //  0 이면 아이디가 존재
+				String DBpassword = rs.getString(1);
+				if (DBpassword.equals(userpass)) {
+					result = 2;  //2이면 아이디와 비번 둘다 일치
+				}else{
+					result = 1;   //1이면 아이디는 맞으나 비번 불일치
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{
+			DBConnectManager.disConnect(conn, pstmt, rs);
+		}
+		return result;
+	}
 	
 	 
 	/* 회원 정보 업데이트 */

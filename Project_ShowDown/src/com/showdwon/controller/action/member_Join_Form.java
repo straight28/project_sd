@@ -13,7 +13,7 @@ public class member_Join_Form implements ActionInterface {
 	@Override
 	public void perForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String url = "TestJSP.jsp";
+		String url = "JoinPage.jsp";
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);

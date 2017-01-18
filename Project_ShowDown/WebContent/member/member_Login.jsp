@@ -9,7 +9,7 @@
     <fieldset>
         
             <label>아이디</label>
-            <input type="text" name="userid" value="${userid}"><br>
+            <input type="text" name="userid"><br>
 
             <label>비밀번호</label>
             <input type="password" name="userpass"><br>

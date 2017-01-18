@@ -1,13 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<% request.setCharacterEncoding("UTF-8");%>    
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+	pageEncoding="UTF-8"%>
+<%@ include file="../header.jsp" %>	
+	
+	
+
+<p>${message}</p>
 <h1> 실패시엔 이 페이지로 오게됩니다.  </h1>
-</body>
-</html>
+
+
+<%@ include file="../footer.jsp" %>

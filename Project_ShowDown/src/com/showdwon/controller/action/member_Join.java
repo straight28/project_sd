@@ -15,7 +15,7 @@ public class member_Join implements ActionInterface {
 	@Override
 	public void perForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int result=0;
-		String url = "/ended.jsp";
+		String url = "/JoinPage.jsp";
 		/// DTO 객체 생성
 		MemberDTO mDTO = new MemberDTO();
 
@@ -34,7 +34,7 @@ public class member_Join implements ActionInterface {
 		
 		
 		if (result == 0) {
-			url = "/ended.jsp";
+			url = "/JoinPage.jsp";
 		}else{
 			url = "member/member_Login.jsp";
 		}

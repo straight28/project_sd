@@ -1,5 +1,6 @@
 package com.showdwon.controller;
 
+import com.showdwon.controller.action.Login_Fail;
 import com.showdwon.controller.action.main_Page;
 import com.showdwon.controller.action.member_Join;
 import com.showdwon.controller.action.member_Join_Form;
@@ -31,6 +32,8 @@ public class ActionFactory {
 			action = new member_Login();
 		}else if(command.equals("main_Page")){
 			action = new main_Page();
+		}else if(command.equals("login_Fail")){
+			action = new Login_Fail();
 		}
 		return action;
 
