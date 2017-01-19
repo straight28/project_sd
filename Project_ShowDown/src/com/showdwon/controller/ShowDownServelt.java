@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.showdwon.controller.actionInter.ActionInterface;
+import com.showdwon.controller.actionInterface.ActionInterface;
 
 @WebServlet("/DO")
 public class ShowDownServelt extends HttpServlet {
@@ -24,7 +24,7 @@ public class ShowDownServelt extends HttpServlet {
 		ActionInterface action = af.getAction(command);
 		
 		if(action != null){
-			action.perForm(request, response);
+			action.execute(request, response);
 		}
 	}
 

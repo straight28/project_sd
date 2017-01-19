@@ -1,12 +1,12 @@
 package com.showdwon.controller;
 
-import com.showdwon.controller.action.Login_Fail;
-import com.showdwon.controller.action.main_Page;
-import com.showdwon.controller.action.member_Join;
-import com.showdwon.controller.action.member_Join_Form;
-import com.showdwon.controller.action.member_Login;
-import com.showdwon.controller.action.member_Login_Form;
-import com.showdwon.controller.actionInter.ActionInterface;
+import com.showdwon.controller.action.IndexPageAction;
+import com.showdwon.controller.action.JoinAction;
+import com.showdwon.controller.action.JoinFormAction;
+import com.showdwon.controller.action.LoginAction;
+import com.showdwon.controller.action.LoginFailAction;
+import com.showdwon.controller.action.LoginFormAction;
+import com.showdwon.controller.actionInterface.ActionInterface;
 
 public class ActionFactory {
 
@@ -23,17 +23,17 @@ public class ActionFactory {
 		System.out.println("actionFactory에서 command " + command);
 
 		if (command.equals("member_Join")) {
-			action = new member_Join();
+			action = new JoinAction();
 		}else if(command.equals("member_Join_Form")){
-			action = new member_Join_Form();
+			action = new JoinFormAction();
 		}else if(command.equals("member_Login_Form")){
-			action = new member_Login_Form();
+			action = new LoginFormAction();
 		}else if(command.equals("member_Login")){
-			action = new member_Login();
+			action = new LoginAction();
 		}else if(command.equals("main_Page")){
-			action = new main_Page();
+			action = new IndexPageAction();
 		}else if(command.equals("login_Fail")){
-			action = new Login_Fail();
+			action = new LoginFailAction();
 		}
 		return action;
 
