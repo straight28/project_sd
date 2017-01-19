@@ -1,4 +1,4 @@
-package com.showdwon.DBConnect;
+package com.showdown.DBConnect;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

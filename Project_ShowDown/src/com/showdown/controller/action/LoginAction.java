@@ -1,4 +1,4 @@
-package com.showdwon.controller.action;
+package com.showdown.controller.action;
 
 import java.io.IOException;
 
@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.showdown.controller.actionInterface.ActionInterface;
 import com.showdown.dao.MemberDao;
-import com.showdwon.controller.actionInterface.ActionInterface;
 
 public class LoginAction implements ActionInterface {
 	@Override

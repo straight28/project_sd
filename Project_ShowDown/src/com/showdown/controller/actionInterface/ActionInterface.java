@@ -1,4 +1,4 @@
-package com.showdwon.controller.actionInterface;
+package com.showdown.controller.actionInterface;
 import java.io.IOException;
 
 import javax.servlet.ServletException;

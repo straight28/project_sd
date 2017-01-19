@@ -1,12 +1,12 @@
-package com.showdwon.controller;
+package com.showdown.controller;
 
-import com.showdwon.controller.action.IndexPageAction;
-import com.showdwon.controller.action.JoinAction;
-import com.showdwon.controller.action.JoinFormAction;
-import com.showdwon.controller.action.LoginAction;
-import com.showdwon.controller.action.LoginFailAction;
-import com.showdwon.controller.action.LoginFormAction;
-import com.showdwon.controller.actionInterface.ActionInterface;
+import com.showdown.controller.action.IndexPageAction;
+import com.showdown.controller.action.JoinAction;
+import com.showdown.controller.action.JoinFormAction;
+import com.showdown.controller.action.LoginAction;
+import com.showdown.controller.action.LoginFailAction;
+import com.showdown.controller.action.LoginFormAction;
+import com.showdown.controller.actionInterface.ActionInterface;
 
 public class ActionFactory {
 

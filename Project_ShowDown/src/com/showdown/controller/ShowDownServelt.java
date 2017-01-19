@@ -1,4 +1,4 @@
-package com.showdwon.controller;
+package com.showdown.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.showdwon.controller.actionInterface.ActionInterface;
+import com.showdown.controller.actionInterface.ActionInterface;
 
 @WebServlet("/DO")
 public class ShowDownServelt extends HttpServlet {

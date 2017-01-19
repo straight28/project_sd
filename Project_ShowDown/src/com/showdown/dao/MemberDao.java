@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import com.showdown.DBConnect.DBConnectManager;
 import com.showdown.dto.MemberDto;
-import com.showdwon.DBConnect.DBConnectManager;
 
 /* 회원 정보 dao */
 public class MemberDao implements MemberDaoInterface{
