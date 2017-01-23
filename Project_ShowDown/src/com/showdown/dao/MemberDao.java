@@ -3,6 +3,7 @@ package com.showdown.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import com.showdown.DBConnect.DBConnectManager;
 import com.showdown.dto.MemberDto;
@@ -35,13 +36,14 @@ public class MemberDao implements MemberDaoInterface{
 	}
 */
 	
+	
 	/*  회원가입을 위한 메소드 "C"  */
 	@Override
 	public int InsertMember(MemberDto mDTO) {
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "insert into member(userid, userpass, nickname, email, admin) values(?,?,?,?,?)";
+		String sql = "insert into member(userid, userpass, nickname, email) values(?,?,?,?)";
 		
 		try {
 			conn = DBConnectManager.getConnection();
@@ -50,7 +52,6 @@ public class MemberDao implements MemberDaoInterface{
 			pstmt.setString(2, mDTO.getUserpass());
 			pstmt.setString(3, mDTO.getNickname());
 			pstmt.setString(4, mDTO.getEmail());
-			pstmt.setInt(5, mDTO.getAdmin());
 			result = pstmt.executeUpdate();
 			
 		} catch (Exception e) {
@@ -96,16 +97,20 @@ public class MemberDao implements MemberDaoInterface{
 		
 		try {
 			conn = DBConnectManager.getConnection();
+//			conn = DBConnectManager.getTestConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userid);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()){
 				mDTO = new MemberDto();
+				mDTO.setUsernum(rs.getInt("usernum"));
 				mDTO.setUserid(rs.getString("userid"));
 				mDTO.setUserpass(rs.getString("userpass"));
 				mDTO.setNickname(rs.getString("nickname"));
 				mDTO.setEmail(rs.getString("email"));
+				mDTO.setManagecode(rs.getInt("managecode"));
+				mDTO.setIndate(rs.getTimestamp("indate"));
 			}
 			
 		} catch (Exception e) {
@@ -116,32 +121,35 @@ public class MemberDao implements MemberDaoInterface{
 		return mDTO;
 	}
 	
+
+
+	
 	/* 로그인시 회원 검사 */
 	public int checkID(String userid, String userpass){
 		int result = -1; //-1이면 아이디가 db에 없는 상태
-		
-		String sql = "select userpass from member where userid=?";
+		String sql = "SELECT USERPASS FROM MEMBER WHERE USERID=?";
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		System.out.println(userid);
 		
 		try {
 			conn = DBConnectManager.getConnection();
+//			conn = DBConnectManager.getTestConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userid);
 			rs = pstmt.executeQuery();
+			if(rs.next()){
 			
-			if (rs.next()) {
-				result = 0; //  0 이면 아이디가 존재
-				String DBpassword = rs.getString(1);
-				if (DBpassword.equals(userpass)) {
-					result = 2;  //2이면 아이디와 비번 둘다 일치
-				}else{
-					result = 1;   //1이면 아이디는 맞으나 비번 불일치
-				}
+			String DBpassword = rs.getString(1);
+			result = 0; //  0 이면 아이디가 존재
+			if (DBpassword.equals(userpass)) {
+				result = 2;  //2이면 아이디와 비번 둘다 일치
+			}else{
+				result = 1;   //1이면 아이디는 맞으나 비번 불일치
 			}
-			
+		}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally{
@@ -153,7 +161,26 @@ public class MemberDao implements MemberDaoInterface{
 	 
 	/* 회원 정보 업데이트 */
 	@Override
-	public int UpdateMember() {
-		return 0;
+	public int UpdateMember(MemberDto mDTO) {
+		int result = -1;
+		String sql = "update member set userpass=?, nickname=?, email=? where usernum=?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = DBConnectManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mDTO.getUserpass());
+			pstmt.setString(2, mDTO.getNickname());
+			pstmt.setString(3, mDTO.getEmail());
+			pstmt.setString(4,mDTO.getUserid());
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{
+			DBConnectManager.disConnect(conn, pstmt);
+		}
+		return result;
 	}
 }

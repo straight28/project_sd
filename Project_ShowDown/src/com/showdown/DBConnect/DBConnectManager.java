@@ -1,6 +1,7 @@
 package com.showdown.DBConnect;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -35,7 +36,8 @@ public class DBConnectManager {
 		}
 		return conn;
 	}
-
+	
+	
 	// public 메소드는 어디서나 이 메소드가 호출 될 수 있다는 의미
 	// static 메소드는 지정된 메모리에 상주한다는 의미
 	public static void disConnect(Connection conn, Statement stmt, ResultSet rs) {
@@ -58,15 +60,35 @@ public class DBConnectManager {
 
 	public static void disConnect(Connection conn, Statement stmt) {
 
-			if (stmt != null) {
-				try {stmt.close();
-				} catch (SQLException e){}
-			}
-			if (conn != null) {
-			
-				try { 
-					conn.close();
-				}catch (SQLException e){}
-			}
+		if (stmt != null) {
+			try {stmt.close();
+			} catch (SQLException e){}
 		}
+		if (conn != null) {
+		
+			try { 
+				conn.close();
+			}catch (SQLException e){}
+		}
+	}
+	
+	
+	
+/*	// test를 위한 Connection 가져오기..
+	public static Connection getTestConnection(){
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:XE", "show", "1234");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return conn;
+	}*/
 }

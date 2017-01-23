@@ -21,12 +21,10 @@ public class JoinAction implements ActionInterface {
 
 		//// 회원 정보 확인
 		mDTO.setUserid(request.getParameter("userid"));
-		System.out.println(request.getParameter("userid"));
 		mDTO.setUserpass(request.getParameter("userpass"));
 		mDTO.setNickname(request.getParameter("nickname"));
 		mDTO.setEmail(request.getParameter("email"));
-		mDTO.setAdmin(0); //// 일반 회원은 0값 입력
-
+		mDTO.setManagecode(0); /// 0이면 일반회원
 		MemberDao mDAO = MemberDao.getInstance();
 		result = mDAO.InsertMember(mDTO); //// dao에 있는 메소드에 회원정보값 입력
 		
