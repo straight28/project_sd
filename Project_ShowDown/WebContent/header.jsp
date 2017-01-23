@@ -8,7 +8,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Show WebPage</title>
-<!-- css --><link href="css/test.css" rel="stylesheet">
+<!-- css -->
+<link href="css/test.css" rel="stylesheet">  
 
 <%-- 부트스트랩을 위한 주소와 링크 시작 --%>
 		<link rel="stylesheet" href="css/bootstrap.css">
@@ -21,11 +22,13 @@
 <body>
 
 <div id="wrap">
-<!-- 헤더파일 들어가는 곳 시작  -->
+<!-- 헤더 시작  -->
 <header>
 <!-- 로고 들어가는 곳 시작 -->
 <div id="logo">
-<%-- 로고 내용찾아서 추가할 것 --%>
+<a href="DO?command=index">
+<img src="image/logo.png" alt="showdown">
+</a>
 </div>
 <!-- 로고 들어가는 곳 끝 -->
 
@@ -40,5 +43,4 @@
 
 </header>
 </div>
-
-
+<!-- 헤더 끝  -->
