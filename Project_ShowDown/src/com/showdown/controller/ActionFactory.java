@@ -34,7 +34,11 @@ public class ActionFactory {
 			action = new IndexPageAction();
 		}else if(command.equals("login_Fail")){
 			action = new LoginFailAction();
+		}else if(command.equals("index")){
+			action = new IndexPageAction();
 		}
+		
+		
 		return action;
 
 	}

@@ -27,7 +27,7 @@
 <!-- 로고 들어가는 곳 시작 -->
 <div id="logo">
 <a href="DO?command=index">
-<img src="image/logo.png" alt="showdown">
+<img src="image/logo.png" alt="showdown 로고 이미지" title="showdown 로고 이미지">
 </a>
 </div>
 <!-- 로고 들어가는 곳 끝 -->

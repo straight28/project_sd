@@ -13,7 +13,7 @@ public class IndexPageAction implements ActionInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String url = "mainPage.jsp";
+		String url = "index.jsp";
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
