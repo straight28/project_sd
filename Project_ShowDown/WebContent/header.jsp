@@ -17,6 +17,8 @@
 <%-- 부트스트랩을 위한 주소와 링크 끝 --%>
 
 <!-- javascript -->
+<script src="js/jquery-3.1.1.js"></script>
+<script src="js/bootstrap.js"></script>
 
 </head>
 <body>
