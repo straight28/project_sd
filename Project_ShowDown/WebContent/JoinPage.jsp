@@ -14,7 +14,7 @@
 			<th><label for="userid" class=sr-only></label></th>
 			<td><input type="text" name="userid" class="form-control"
 				placeholder="아이디" required> <!-- required는 필수입력을 뜻함, 입력되지 않으면 전송되지 않음 -->
-				<span class="btn btn-default glyphicon glyphicon-ok-sign"
+				<span class="btn btn-default btn-sm glyphicon glyphicon-ok-sign"
 				style="color: #271b65; font-size: 14px" onclick="#"> 중복검사 </span> 
 				<span class="help-block">&nbsp;* 영문자와 숫자만 가능</span></td>
 		</tr>
@@ -35,7 +35,7 @@
 			<th><label for="nickname" class=sr-only></label></th>
 			<td><input type="text" name="nickname" class="form-control"
 				placeholder="유저 닉네임 (10자이내)" required> 
-				<span class="btn btn-default glyphicon glyphicon-ok-sign"
+				<span class="btn btn-default btn-sm glyphicon glyphicon-ok-sign"
 				style="color: #271b65; font-size: 14px" onclick="#"> 중복검사 </span> <%-- db에서 닉네임 찾아서 일치여부 검사, 유저id와 동일가능 --%>
 			</td>
 		</tr>

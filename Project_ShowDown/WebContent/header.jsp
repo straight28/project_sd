@@ -10,20 +10,17 @@
 <title>Show WebPage</title>
 <!-- css -->
 <link href="css/test.css" rel="stylesheet">  
-
 <%-- 부트스트랩을 위한 주소와 링크 시작 --%>
 		<link rel="stylesheet" href="css/bootstrap.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<%-- 부트스트랩을 위한 주소와 링크 끝 --%>
-
 <!-- javascript -->
 <script src="js/jquery-3.1.1.js"></script>
 <script src="js/bootstrap.js"></script>
 
+
 </head>
 <body>
 
-<div id="wrap">
 <!-- 헤더 시작  -->
 <header>
 <!-- 로고 들어가는 곳 시작 -->
@@ -36,13 +33,9 @@
 
 <h1 style="color:red"> 여기는 헤더 입니다. </h1>
 
-<div id="test">
 
-</div>
 
 <hr>
 
-
 </header>
-</div>
 <!-- 헤더 끝  -->
