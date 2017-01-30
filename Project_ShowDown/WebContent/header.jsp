@@ -7,35 +7,71 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Show WebPage</title>
-<!-- css -->
-<link href="css/test.css" rel="stylesheet">  
+<title>Doodle Dak</title>
+
 <%-- 부트스트랩을 위한 주소와 링크 시작 --%>
 		<link rel="stylesheet" href="css/bootstrap.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <!-- javascript -->
-<script src="js/jquery-3.1.1.js"></script>
-<script src="js/bootstrap.js"></script>
-
-
+		<script src="js/jquery-3.1.1.js"></script>
+		<script src="js/bootstrap.js"></script>
+<!-- css -->
+		<link href="css/test.css" rel="stylesheet">  
+		
 </head>
 <body>
 
-<!-- 헤더 시작  -->
-<header>
-<!-- 로고 들어가는 곳 시작 -->
-<div id="logo">
-<a href="DO?command=index">
-<img src="image/logo.png" alt="showdown 로고 이미지" title="showdown 로고 이미지">
-</a>
-</div>
-<!-- 로고 들어가는 곳 끝 -->
-
-<h1 style="color:red"> 여기는 헤더 입니다. </h1>
 
 
+<div class="container-fluid" style="text-align: center">
+    <div class="row">
+        <div class="headerDiv">
+            <div class="col-sm-3">
 
-<hr>
+                <!-- 로고 들어가는 곳 시작 -->
+                <div id="logowrap">
+                    <a href="DO?command=index">
+                        <img src="image/logo.png" class="logo" alt="showdown 로고 이미지" title="showdown 로고 이미지">
+                    </a>
+                </div>
+                <!-- 로고 들어가는 곳 끝 -->
+            </div>
+            <div class="col-sm-9">
+                <div id="header_menu">
+                    <ul>
+                        <li>
+                            <a href="#">로그인</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </li>
+                        <li>
+                            <a href="#">회원가입</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </li>
+                    </ul>
 
-</header>
-<!-- 헤더 끝  -->
+                </div>
+                <div class="clear"></div> <!-- headerDiv 에서  header_menu부분이 float으로 인해 무시되는 부분이 있어서 추가함 -->
+            </div>
+
+
+            <p id="firstdoor">두들두들탁<span style="color: black"> 에 오신것을 환영합니다!</span></p>
+            <div class="col-sm-12">
+                <div id="header_Nav">
+                    <ul>
+                        <li>
+                            <a href="#">Doodle tak 이란</a>
+                        </li>
+                        <li>
+                            <a href="#">유저 게시판</a>
+                        </li>
+                        <li>
+                            <a href="#">제안 게시판</a>
+                        </li>
+                        <li>
+                            <a href="#">다른 서비스</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+

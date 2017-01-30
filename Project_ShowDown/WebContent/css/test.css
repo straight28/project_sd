@@ -1,16 +1,158 @@
-.inputwindow {
+.member_login_menu {
 	margin: 20px 100px;
 }
 
-#wrap{
+html, body {
+        height: 100%; /* 전체 넓이 100%로 정함 */
+    }
+
+    body {
+        background-color: #ffffff; /* 아직 완전 흰색 아님. 완전 흰색 되면 지울것 */
+    }
+
+    .container-fluid {
+        min-height: 100%; /* 아무런 내용이 없어도 최소 100% 자리를 차지하게 함. */
+        
+    }
+
+    .col-md-12 {
+        background-color: #ffffff;
+    }
+
+    .col-md-9 {
+        background-color: #ffffff; 
+        /*body2  */
+    }
     
-    text-align:left;
-}
+    .col-md-3{
+        background-color: #ffffff; 
+        /*body3  */
+    }
 
-#logo{
+    .col-sm-9 {
+        background-color: #ffffff;
+        z-index: 0;
+    }
 
-}
+    .col-sm-3 {
+        background-color: #ffffff;
+        z-index: 1; /* 태그의 z 인덱스 (높을수록 다른 태그 위에 배치됨) */
+    }
 
-.clear{
-	clear:both;
-}
+    .headerDiv {
+        height: 100px;
+        background-color: #ffffff; /* header의 높이는 100px로 잡음 */
+    }
+
+
+    /************ logo 부분 ************/
+    #logowrap {
+        width: 230px;
+        height: 50px;
+        margin: 60px 0 30px 10px /*상 우 하 좌 순서*/
+    }
+
+    .logo {
+        width: 230px;
+        height: 50px;
+    }
+
+    .headerDiv .col-sm-9 #header_menu{
+        float: right;
+    }
+
+    #header_menu ul {
+
+        list-style: none;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    #header_menu ul li {
+
+        display: inline;
+    }
+
+    #header_menu ul li a {
+
+        text-decoration: none;
+        display: inline-block;
+        height: 40px;
+        width: 80px;
+        text-align: center;
+        color: #262626;
+        font-size: 12px;
+        line-height: 40px; /* 한 줄 짜리 텍스트를 수직정렬할 때 사용*/
+        font-family: "맑은 고딕";
+    }
+
+    #header_menu ul li a:hover {
+        color: #ffffff;
+        font-weight: bold;
+        background-color: #262626;
+        border-radius: 15px; /* 테두리부분을 둥글게 만듬 */
+    }
+
+
+    #firstdoor{
+        color: #00A4A2;
+        font-size: 18px;
+    }
+
+    /************ header nav 부분 ************/
+    #header_Nav {
+        background-color: #ffffff;
+        float: right;
+    }
+
+    #header_Nav ul{
+    list-style: none;
+    }
+
+    #header_Nav ul li{
+    display:inline-block;
+    font-family: "맑은 고딕";
+    margin:10px 10px 0 10px;
+    }
+
+    #header_Nav ul li a{
+    text-decoration: none;
+    display: block;  /* 블록 박스로 만듬*/
+    width:140px;
+    text-align: center;
+    color: #232323;
+    font-weight: bold;
+    font-size: 1.3em;
+    }
+
+    #header_Nav ul li a:hover{
+    color: #ff3d4a;
+    }
+
+    /************ body ************/
+    .bodyDiv {
+        height:	690px;
+        background-color: #ffffff;
+    }
+
+    .footerDiv {
+    	
+        text-align: center;
+        height: 90px;
+        background-color: #303132;
+    }
+
+    .footerDiv .col-sm-12 {
+        font-family: "맑은 고딕";
+        color: lightgrey;
+    }
+
+    .footerDiv .col-sm-12 a {
+        text-decoration: none;
+        color: white;
+    }
+
+    .clear { clear: both }
+
+
+

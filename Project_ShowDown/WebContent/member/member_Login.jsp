@@ -42,7 +42,7 @@
 
 	
 	</div>
-	<div class="inputwindow">
+	<div class="member_login_menu">
 		<input type="submit" class="btn btn-default" style="color: #271b65;"value="로그인"> 
 			<input type="submit" class="btn btn-default" style="color: #271b65;" value="회원가입"
 			onclick="location='DO?command=member_Join_Form'"> 
