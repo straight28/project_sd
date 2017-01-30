@@ -5,7 +5,7 @@
 
 <div class="row">
 	<div class="bodyDiv">
-		<hr>
+		<hr style="border-color: #be6dff">
 		<br>
 		<div class="col-md-12">
 
