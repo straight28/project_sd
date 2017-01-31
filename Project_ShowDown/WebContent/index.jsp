@@ -9,13 +9,13 @@
 <tr>
 <th style="padding-left:20px">
 <button>																							<%-- member_Join은 회원가입.  --%>																
-<span class="glyphicon glyphicon-ok-sign" style="color:#000000; font-size:15px" onclick="location='DO?command=member_Join_Form'"> 회원가입 </span>
+<span class="glyphicon glyphicon-ok-sign" style="color:white; font-size:15px" onclick="location='DO?command=member_Join_Form'"> 회원가입 </span>
 </button>
 </th>
 
 <th style="padding-left:20px">
 <button>
-<span class="glyphicon glyphicon-ok-sign" style="color:#000000; font-size:15px" onclick="location='DO?command=member_Login_Form'"> 로그인 </span>
+<span class="glyphicon glyphicon-ok-sign" style="color:white; font-size:15px" onclick="location='DO?command=member_Login_Form'"> 로그인 </span>
 </button> 
 </th>
 </tr>

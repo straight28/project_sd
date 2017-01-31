@@ -40,10 +40,10 @@
                 <div id="header_menu">
                     <ul>
                         <li>
-                            <a href="#">로그인</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="#">로그아웃</a>&nbsp;&nbsp;&nbsp;&nbsp;
                         </li>
                         <li>
-                            <a href="#">회원가입</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="#">도움말</a>&nbsp;&nbsp;&nbsp;&nbsp;
                         </li>
                     </ul>
 

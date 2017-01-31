@@ -1,5 +1,5 @@
 .member_login_menu {
-	margin: 10px 0px;
+	margin-left: 60px;
 }
 
 html, body {
@@ -131,7 +131,7 @@ html, body {
 
     /************ body ************/
     .bodyDiv {
-        height:	690px;
+        height:	620px;
         background-color: #ffffff;
         text-align: start;
     }
@@ -139,7 +139,7 @@ html, body {
     .footerDiv {
     	
         text-align: center;
-        height: 90px;
+        height: 60px;
         background-color: #303132;
     }
 
