@@ -13,7 +13,7 @@ public class LoginFailAction implements ActionInterface{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String url ="/ended.jsp";
+		String url ="/error.jsp";
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);

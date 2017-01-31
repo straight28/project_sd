@@ -38,21 +38,35 @@
             </div>
             <div class="col-sm-9">
                 <div id="header_menu">
+                <c:choose>
+                <c:when test="${!empty sessionScope.userid}">
                     <ul>
                         <li>
-                            <a href="#">로그아웃</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            ${sessionScope.userid }님 접속중 
                         </li>
+                        <li>
+                             <a href="DO?command=mymenu_form">내 메뉴</a>
+                        </li>
+                        <li>
+                            <a href="DO?command=logout">로그아웃</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </li>
+                    </ul>
+				</c:when>
+				<c:otherwise>
+					<ul>
                         <li>
                             <a href="#">도움말</a>&nbsp;&nbsp;&nbsp;&nbsp;
                         </li>
                     </ul>
-
+				</c:otherwise>					
+				</c:choose>
                 </div>
                 <div class="clear"></div> <!-- headerDiv 에서  header_menu부분이 float으로 인해 무시되는 부분이 있어서 추가함 -->
             </div>
 
+				<p id="firstdoor">두들두들탁<span style="color: black"> 에 오신것을 환영합니다!</span></p>
 
-            <p id="firstdoor">두들두들탁<span style="color: black"> 에 오신것을 환영합니다!</span></p>
+            
             <div class="col-sm-12">
                 <div id="header_Nav">
                     <ul>
@@ -63,7 +77,7 @@
                             <a href="#">유저 게시판</a>
                         </li>
                         <li>
-                            <a href="#">제안 게시판</a>
+                            <a href="#">질문 게시판</a>
                         </li>
                         <li>
                             <a href="#">다른 서비스</a>

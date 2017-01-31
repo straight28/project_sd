@@ -25,6 +25,7 @@ public class JoinAction implements ActionInterface {
 		mDTO.setNickname(request.getParameter("nickname"));
 		mDTO.setEmail(request.getParameter("email"));
 		mDTO.setManagecode(0); /// 0이면 일반회원
+		
 		MemberDao mDAO = MemberDao.getInstance();
 		result = mDAO.InsertMember(mDTO); //// dao에 있는 메소드에 회원정보값 입력
 		
@@ -34,7 +35,7 @@ public class JoinAction implements ActionInterface {
 		if (result == 0) {
 			url = "/JoinPage.jsp";
 		}else{
-			url = "member/member_Login.jsp";
+			url = "member/memberLogin.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);

@@ -131,7 +131,7 @@ html, body {
 
     /************ body ************/
     .bodyDiv {
-        height:	620px;
+        height:	700px;
         background-color: #ffffff;
         text-align: start;
     }
@@ -139,7 +139,7 @@ html, body {
     .footerDiv {
     	
         text-align: center;
-        height: 60px;
+        height: 80px;
         background-color: #303132;
     }
 

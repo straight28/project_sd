@@ -6,6 +6,8 @@ import com.showdown.controller.action.JoinFormAction;
 import com.showdown.controller.action.LoginAction;
 import com.showdown.controller.action.LoginFailAction;
 import com.showdown.controller.action.LoginFormAction;
+import com.showdown.controller.action.LogoutAction;
+import com.showdown.controller.action.MyMenuFormAction;
 import com.showdown.controller.actionInterface.ActionInterface;
 
 public class ActionFactory {
@@ -30,12 +32,14 @@ public class ActionFactory {
 			action = new LoginFormAction();
 		}else if(command.equals("member_Login")){
 			action = new LoginAction();
-		}else if(command.equals("main_Page")){
-			action = new IndexPageAction();
 		}else if(command.equals("login_Fail")){
 			action = new LoginFailAction();
 		}else if(command.equals("index")){
 			action = new IndexPageAction();
+		}else if(command.equals("logout")){
+			action = new LogoutAction();
+		}else if(command.equals("mymenu_form")){
+			action = new MyMenuFormAction();
 		}
 		
 		

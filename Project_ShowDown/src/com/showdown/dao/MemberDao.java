@@ -43,7 +43,7 @@ public class MemberDao implements MemberDaoInterface{
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "insert into member(userid, userpass, nickname, email) values(?,?,?,?)";
+		String sql = "insert into member(userid, userpass, nickname, email,managecode) values(?,?,?,?,?)";
 		
 		try {
 			conn = DBConnectManager.getConnection();
@@ -52,6 +52,7 @@ public class MemberDao implements MemberDaoInterface{
 			pstmt.setString(2, mDTO.getUserpass());
 			pstmt.setString(3, mDTO.getNickname());
 			pstmt.setString(4, mDTO.getEmail());
+			pstmt.setInt(5, mDTO.getManagecode());
 			result = pstmt.executeUpdate();
 			
 		} catch (Exception e) {
@@ -132,7 +133,7 @@ public class MemberDao implements MemberDaoInterface{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		System.out.println(userid);
+		System.out.println("유저의 아이디는"+userid);
 		
 		try {
 			conn = DBConnectManager.getConnection();

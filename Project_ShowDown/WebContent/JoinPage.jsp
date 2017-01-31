@@ -11,14 +11,14 @@
 
 
 			<form name="joinForm" role="form" method="post" class="form-horizontal"
-                      action="DO">
-                    <INPUT TYPE="hidden" name="command" value="member_Join">
+                      action="DO?command=member_Join">
+                    
 
 
                     <div class="form-group">
-                        <label for="userid" class="col-xs-2 col-lg-2 control-label">이름</label>
+                        <label for="userid" class="col-xs-2 col-lg-2 control-label">아이디</label>
                         <div class="col-xs-10 col-lg-10">
-                        <input type="text" name="userid" class="form-control" placeholder="이름">
+                        <input type="text" name="userid" class="form-control" placeholder="이름" required>
                             <span class="help-block">&nbsp;* 영문자와 숫자만 가능</span>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                         <label for="email" class="col-xs-2 col-lg-2 control-label">이메일</label>
                         <div class="col-xs-10 col-lg-10">
                         <input type="email" name="email" class="form-control"
-                               placeholder="email  * 필수 입력" required>
+                               placeholder="email " required>
                         </div>
                     </div>
 

@@ -27,7 +27,7 @@ public class LoginAction implements ActionInterface {
 		if(result == 2){ /// 로그인 성공
 			HttpSession session = request.getSession();
 			session.setAttribute("userid", userid);
-			url = "DO?command=main_Page";
+			url = "DO?command=index";
 			message= "로그인 성공";
 		}else if(result == 1){ ////비밀번호 틀림
 			message= "비밀번호를 확인하세요.";
