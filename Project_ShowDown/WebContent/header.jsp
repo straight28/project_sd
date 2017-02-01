@@ -39,10 +39,10 @@
             <div class="col-sm-9">
                 <div id="header_menu">
                 <c:choose>
-                <c:when test="${!empty sessionScope.userid}">
+                <c:when test="${!empty sessionScope.loginUser.userid}">
                     <ul>
                         <li>
-                            ${sessionScope.userid }님 접속중 
+                            ${sessionScope.loginUser.nickname}(${sessionScope.loginUser.userid})님 접속중 
                         </li>
                         <li>
                              <a href="DO?command=mymenu_form">내 메뉴</a>
@@ -88,4 +88,5 @@
             </div>
         </div>
     </div>
-
+<hr style="border-color: #be6dff">
+		<br>

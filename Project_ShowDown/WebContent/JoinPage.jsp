@@ -5,10 +5,11 @@
 
 <div class="row">
 	<div class="bodyDiv">
-		<hr style="border-color: #be6dff">
-		<br>
+		
+		
+				<h1 class="h1class"> 회원 가입 </h1>
+		
 		<div class="col-md-12">
-
 
 			<form name="joinForm" role="form" method="post" class="form-horizontal"
                       action="DO?command=member_Join">
@@ -60,13 +61,10 @@
 				<div class="member_login_menu">
 					<input type="submit" class="btn btn-default"
 						style="color: #271b65;" value="회원가입"> 
-						
-
 				</div>
-
-
 			</form>
-
+			
+			
 		</div>
 	</div>
 </div>
@@ -75,5 +73,5 @@
 
 
 
-
+</div>
 <%@ include file="../footer.jsp"%>

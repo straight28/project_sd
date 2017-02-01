@@ -1,5 +1,6 @@
 .member_login_menu {
-	margin-left: 60px;
+	margin:30px;
+	text-align:center;
 }
 
 html, body {
@@ -155,5 +156,46 @@ html, body {
 
     .clear { clear: both }
 
+	 /************ index.jsp 관련 ************/
+        .indexmenu{
 
+            text-align: center;
+            height: 500px;
+            background: linear-gradient(to top, #ffeedc, #fffbf0);  /* 그라데이션 효과를 주는 css */
+            border-radius: 50px  50px 50px;
+            /*border: 1px solid red;*/
+        }
+
+        .menucontent{
+
+            /*border: 1px solid #ffa608;*/
+        }
+
+        .content .content-title{
+            /*border: 1px solid #feff0a;*/
+            margin-top: 100px;
+            font-family: 굴림;
+
+        }
+        .content .content-read{
+            /*border: 1px solid #0fff09;*/
+            padding: 10px;
+            font-family: "맑은 고딕";
+        }
+
+
+        .indexmenu .content a{
+            /*border: 1px solid #ffe1bc;*/
+            font-family: "맑은 고딕";
+            font-size: 25px;
+            display: inline-block;
+            padding: 10px 20px 10px 20px;
+            margin: 20px;
+            box-shadow: 3px 1px 2px #ffa608;
+        }
+
+        .h1class{
+            text-align:center;
+            padding: 20px;
+        }
 

@@ -1,13 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp"%>
-<!-- 경로 확인 용 -->
+
+<!--
+경로 확인 용 
 <link rel="stylesheet" href="../css/bootstrap.css">
-<link href="../css/test.css" rel="stylesheet"> 
 <script src="../js/jquery-3.1.1.js"></script>
 <script src="../js/bootstrap.js"></script>
+<link href="../css/test.css" rel="stylesheet"> 
 	
-	<style>
+	 <style>
+	
         .col-sm-9 {
             background-color: #ff0005;
         }
@@ -21,16 +24,15 @@
             background-color: #00fff5
         }
     </style>
+ -->
+ 
 
-<div class="container" style="text-align: center">
 <div class="row">
 
 
-<h1>회원 로그인</h1>
+<h1 class="h1class">회원 로그인</h1>
 <form name="loginForm" role="form" method="post" class="form-inline" action="DO?command=member_Login">
 	<div class="col-md-12">
-	
-		
 		
 			<label for="userid" class="sr-only"></label> 
 			<input type="text" class="form-control" placeholder="아이디" name="userid">
@@ -40,19 +42,21 @@
 				name="userpass">
 	
 	</div>
+	<div class="col-md-12">
 	<div class="member_login_menu">
 		<input type="submit" class="btn btn-default" style="color: #271b65;" value="로그인"> 
-			<input type="submit" class="btn btn-default" style="color: #271b65;" value="회원가입"
+			<input type="button" class="btn btn-default" style="color: #271b65;" value="회원가입"
 			onclick="location='DO?command=member_Join_Form'"> 
-			<input type="submit" class="btn btn-default" style="color: #271b65;"
+			<input type="button" class="btn btn-default" style="color: #271b65;"
 			value="아이디 비밀번호 찾기" onclick="location='DO?command=find_id_form'">
 	</div>
+	</div>
 </form>
+</div>
+
 
 
 </div>
-</div>
-
 <%@ include file="../footer.jsp"%>
 
 
