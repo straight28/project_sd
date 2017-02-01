@@ -9,8 +9,8 @@ public class BoardDto {
 	private int adminnum; //운영자 작성자
 	private String boardcontent;
 	private Timestamp boarddate;
-	private String replequantity; //답수
-	private String hit; ///조회수
+	private int replequantity; //답수
+	private int hit; ///조회수
 	
 	
 	
@@ -51,16 +51,16 @@ public class BoardDto {
 	public void setBoarddate(Timestamp boarddate) {
 		this.boarddate = boarddate;
 	}
-	public String getReplequantity() {
+	public int getReplequantity() {
 		return replequantity;
 	}
-	public void setReplequantity(String replequantity) {
+	public void setReplequantity(int replequantity) {
 		this.replequantity = replequantity;
 	}
-	public String getHit() {
+	public int getHit() {
 		return hit;
 	}
-	public void setHit(String hit) {
+	public void setHit(int hit) {
 		this.hit = hit;
 	}
 	
