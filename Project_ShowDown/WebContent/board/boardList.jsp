@@ -48,7 +48,7 @@
 	<c:if test="${!empty loginUser }">
 	<c:forEach items="${boardList}" var="List">
     <tr style="border-bottom: 1px solid #DDDDDD;">
-	
+		
         <td>${List.boardnum}</td>
         <td><a href="DO?boardnum=${List.boardnum}"></a>${List.boardtitle}</td>
         <td>${List.usernum}</td>

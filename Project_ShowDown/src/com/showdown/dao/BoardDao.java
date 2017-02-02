@@ -85,7 +85,7 @@ public class BoardDao implements BoardDaoInterface{
 	
 	
 	/* 조회수 올리는 sql (미 테스트)*/
-	public void updateHit(int boardnum){
+	public void updateHit(String boardnum){
 		String sql = "update board set hit=hit+1 where boardnum = ?";
 		
 		Connection conn = null;
@@ -94,7 +94,7 @@ public class BoardDao implements BoardDaoInterface{
 		try {
 			conn = DBConnectManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, boardnum);
+			pstmt.setInt(1, Integer.parseInt(boardnum));
 			pstmt.executeUpdate();
 			
 		} catch (Exception e) {
@@ -107,7 +107,7 @@ public class BoardDao implements BoardDaoInterface{
 	
 	
 	/* 글 내용보기 */
-	public BoardDto selectOneBoardByBoardNum(int boardnum){
+	public BoardDto selectOneBoardByBoardNum(String boardnum){
 		String sql = "select * from board where boardnum = ?";
 		BoardDto bdto = null; /// 실패시 null값
 		
@@ -117,7 +117,7 @@ public class BoardDao implements BoardDaoInterface{
 		try {
 			conn = DBConnectManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, boardnum);
+			pstmt.setInt(1, Integer.parseInt(boardnum));
 			rs = pstmt.executeQuery();
 			if(rs.next()){
 				bdto = new BoardDto();
