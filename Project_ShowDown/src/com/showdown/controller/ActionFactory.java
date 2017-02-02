@@ -8,6 +8,7 @@ import com.showdown.controller.action.LoginFormAction;
 import com.showdown.controller.action.LogoutAction;
 import com.showdown.controller.action.MyMenuFormAction;
 import com.showdown.controller.action.UserBoardAction;
+import com.showdown.controller.action.ViewBoardAction;
 import com.showdown.controller.action.WriteBoardAction;
 import com.showdown.controller.action.WriteBoardFormAction;
 import com.showdown.controller.actionInterface.ActionInterface;
@@ -46,6 +47,8 @@ public class ActionFactory {
 			action = new UserBoardAction();
 		}else if(command.equals("board_write")){
 			action = new WriteBoardAction();
+		}else if(command.equals("board_view")){
+			action = new ViewBoardAction();
 		}
 		
 		

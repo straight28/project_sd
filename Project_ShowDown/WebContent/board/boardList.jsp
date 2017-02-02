@@ -3,9 +3,9 @@
 <%@ include file="../header.jsp"%>
 <!-- 경로 확인 용 -->
 <link rel="stylesheet" href="../css/bootstrap.css">
-<link href="../css/test.css" rel="stylesheet"> 
 <script src="../js/jquery-3.1.1.js"></script>
 <script src="../js/bootstrap.js"></script>
+<link href="../css/test.css" rel="stylesheet"> 
 
 <h1 class="h1class">유저 게시판</h1>
 <div class="container" >
@@ -21,36 +21,14 @@
     </thead>
 
     <tbody>
-    <!-- <tr style="border-bottom: 1px solid #DDDDDD;">
-        <td>1</td>
-        <td>이건 제목 제목 제목 입니다.</td>
-        <td>운영자</td>
-        <td>2016.12.02</td>
-        <td>234</td>
-    </tr>
-
-    <tr style="border-bottom: 1px solid #DDDDDD;">
-        <td>2</td>
-        <td>부트스트랩 트스트랩 스트랩 트랩</td>
-        <td>운영자</td>
-        <td>2016.12.02</td>
-        <td>234</td>
-    </tr>
-
-    <tr style="border-bottom: 1px solid #DDDDDD;">
-        <td>3</td>
-        <td>난 정말 자바를 공부한 적이 없다구요</td>
-        <td>운영자</td>
-        <td>2016.12.02</td>
-        <td>234</td>
-    </tr> -->
+    
 	
 	<c:if test="${!empty loginUser }">
 	<c:forEach items="${boardList}" var="List">
     <tr style="border-bottom: 1px solid #DDDDDD;">
 	
         <td>${List.boardnum}</td>
-        <td><a href="DO?boardnum=${List.boardnum}"></a>${List.boardtitle}</td>
+        <td><a href="DO?command=board_view&num=${List.boardnum}">${List.boardtitle}</a></td>
         <td>${List.usernum}</td>
         <td>${List.boarddate}</td>
         <td>${List.hit}</td>
