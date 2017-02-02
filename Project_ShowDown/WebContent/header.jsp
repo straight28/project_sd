@@ -31,7 +31,7 @@
                 <!-- 로고 들어가는 곳 시작 -->
                 <div id="logowrap">
                     <a href="DO?command=index">
-                        <img src="image/logo.png" class="logo" alt="showdown 로고 이미지" title="showdown 로고 이미지">
+                        <img src="images/logo.png" class="logo" alt="showdown 로고이미지" title="showdown 로고 이미지">
                     </a>
                 </div>
                 <!-- 로고 들어가는 곳 끝 -->
@@ -74,7 +74,7 @@
                             <a href="#">Doodle tak 이란</a>
                         </li>
                         <li>
-                            <a href="#">유저 게시판</a>
+                            <a href="DO?command=userboard">유저 게시판</a>
                         </li>
                         <li>
                             <a href="#">질문 게시판</a>

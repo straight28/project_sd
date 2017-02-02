@@ -9,12 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.showdown.controller.actionInterface.ActionInterface;
 
-public class LoginFailAction implements ActionInterface{
+public class WriteBoardFormAction implements ActionInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String url ="/error.jsp";
-		
+
+		String url = "board/boardWriteForm.jsp";
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 	}

@@ -50,9 +50,13 @@
 			<input type="button" class="btn btn-default" style="color: #271b65;"
 			value="아이디 비밀번호 찾기" onclick="location='DO?command=find_id_form'">
 	</div>
+	<h4>${message}</h4>
 	</div>
 </form>
 </div>
+
+
+
 
 
 

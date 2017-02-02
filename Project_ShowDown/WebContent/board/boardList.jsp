@@ -21,7 +21,7 @@
     </thead>
 
     <tbody>
-    <tr style="border-bottom: 1px solid #DDDDDD;">
+    <!-- <tr style="border-bottom: 1px solid #DDDDDD;">
         <td>1</td>
         <td>이건 제목 제목 제목 입니다.</td>
         <td>운영자</td>
@@ -43,23 +43,32 @@
         <td>운영자</td>
         <td>2016.12.02</td>
         <td>234</td>
-    </tr>
-
+    </tr> -->
+	
+	<c:if test="${!empty loginUser }">
+	<c:forEach items="${boardList}" var="List">
     <tr style="border-bottom: 1px solid #DDDDDD;">
-        <td>4</td>
-        <td>호호호호호호</td>
-        <td>운영자</td>
-        <td>2016.12.02</td>
-        <td>234</td>
+	
+        <td>${List.boardnum}</td>
+        <td><a href="DO?boardnum=${List.boardnum}"></a>${List.boardtitle}</td>
+        <td>${List.usernum}</td>
+        <td>${List.boarddate}</td>
+        <td>${List.hit}</td>
     </tr>
+	</c:forEach>
+	</c:if>
+	<c:if test="${empty loginUser}">
+			<tr style="border-bottom: 1px solid #DDDDDD;">
+				<td colspan="5">등록된 게시물이 없습니다.</td>
+			</tr>
+			</c:if>
 
 
     </tbody>
-
 </table>
 
-    <a class="btn btn-default pull-left">글작성</a>
-    <a class="btn btn-default pull-right">글쓰기</a>
+    <a class="btn btn-default pull-left" href="#">검색</a> <!-- 검색기능 넣을 곳 -->
+    <a class="btn btn-default pull-right" href="DO?command=board_Write_Form">글쓰기</a>
 
     <hr>
 

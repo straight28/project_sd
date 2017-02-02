@@ -198,4 +198,8 @@ html, body {
             text-align:center;
             padding: 20px;
         }
+        
+        th{
+        text-align: center;
+    }
 

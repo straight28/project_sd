@@ -10,7 +10,7 @@ import java.util.List;
 import com.showdown.DBConnect.DBConnectManager;
 import com.showdown.dto.BoardDto;
 
-public class BoardDao {
+public class BoardDao implements BoardDaoInterface{
 
 	private BoardDao() {}
 	
@@ -20,8 +20,11 @@ public class BoardDao {
 		return instance;
 	}
 	
+	
+	
+	
 	public List<BoardDto> selectAllBoards(){
-		String sql = "select * from board order by desc";   ///역 정렬
+		String sql = "select * from board order by boardnum desc";   ///역 정렬
 		
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		Connection conn = null;
@@ -39,15 +42,14 @@ public class BoardDao {
 				mdto.setUsernum(rs.getInt("usernum"));
 				mdto.setAdminnum(rs.getInt("adminnum"));
 				mdto.setBoardcontent(rs.getString("boardcontent"));
-				mdto.setBoarddate(rs.getTimestamp("boarddate"));
-				mdto.setReplequantity(rs.getInt("Replequantity"));
+				mdto.setBoarddate(rs.getDate("boarddate"));
+				mdto.setTotalcomment(rs.getInt("totalcomment"));
 				mdto.setHit(rs.getInt("hit"));
 				list.add(mdto);
-				
 			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("selectAllBoards 에러");
 		}finally{
 			DBConnectManager.disConnect(conn, stmt, rs);
 		}
@@ -55,26 +57,30 @@ public class BoardDao {
 	}
 	
 	
-	/* 게시글 만들기 boardnum에 seq 생성여부 확인*/
-	public void insertBoard(BoardDto bdto){ 
-		String sql ="insert into board(boardtitle, usernum, adminnum, boardcontent) "
-				+"values(?,?,?,?)";
+	/* 게시글 등록하기// boardnum에 seq 생성여부 확인*/
+	@Override
+	public int InsertBoards(BoardDto bDTO) {
+		int result = 0; 
+		
+		String sql ="insert into board(boardtitle, usernum, boardcontent) "
+				+"values(?,?,?)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
 			conn = DBConnectManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, bdto.getBoardtitle());
-			pstmt.setInt(2, bdto.getUsernum());
-			pstmt.setInt(3, bdto.getAdminnum());
-			pstmt.setString(4, bdto.getBoardcontent());
-			pstmt.executeUpdate();
+			pstmt.setString(1, bDTO.getBoardtitle());
+			pstmt.setInt(2, bDTO.getUsernum());
+			pstmt.setString(3, bDTO.getBoardcontent());
+			result = pstmt.executeUpdate(); // 등록되면 0이 아님.
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("insertBoard 에러");
 		} finally{
 			DBConnectManager.disConnect(conn, pstmt);
 		}
+		return result;
 	}
 	
 	
@@ -93,6 +99,7 @@ public class BoardDao {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("updateHit 에러");
 		} finally{
 			DBConnectManager.disConnect(conn, pstmt);
 		}
@@ -119,17 +126,70 @@ public class BoardDao {
 				bdto.setUsernum(rs.getInt("usernum"));
 				bdto.setAdminnum(rs.getInt("adminnum"));
 				bdto.setBoardcontent(rs.getString("boardcontent"));
-				bdto.setBoarddate(rs.getTimestamp("boarddate"));
-				bdto.setReplequantity(rs.getInt("replequantity"));
+				bdto.setBoarddate(rs.getDate("boarddate"));
+				bdto.setTotalcomment(rs.getInt("totalcomment"));
 				bdto.setHit(rs.getInt("hit"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("selectOneBoardByBoardNum 에러");
 		} finally{
 			DBConnectManager.disConnect(conn, pstmt, rs);
 		}
 		return bdto;
 	}
+	
+	
+	/* 글 삭제하기 */
+	@Override
+	public int DeleteBoards(int boardnum) {
+		
+		int result=0;
+		
+		String sql = "delete from board where boardnum=?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DBConnectManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardnum);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("deleteBoard 에러");
+		} finally{
+			DBConnectManager.disConnect(conn, pstmt);
+		}
+		return result;
+	}
+	
+	/* 글 수정하기 */
+	@Override
+	public int ModifyBoards(BoardDto bDTO) {
+		
+		int result =0;
+		
+		String sql = "update board set boardtitle=?,boardcontent=? where boardnum=?";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = DBConnectManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, bDTO.getBoardtitle());
+			pstmt.setString(2, bDTO.getBoardcontent());
+			pstmt.setInt(3, bDTO.getBoardnum());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("updateBoard 에러");
+		} finally{
+			DBConnectManager.disConnect(conn, pstmt);
+		}
+		return result;
+	}
+	
 	
 	
 	

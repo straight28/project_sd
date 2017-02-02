@@ -57,7 +57,8 @@ public class MemberDao implements MemberDaoInterface{
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("회원 가입  실패");
+			
+			System.out.println("InsertMember 에러");
 		} finally{
 			DBConnectManager.disConnect(conn, pstmt);
 		}
@@ -81,6 +82,7 @@ public class MemberDao implements MemberDaoInterface{
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("DeleteMember 에러");
 		} finally {
 			DBConnectManager.disConnect(conn, pstmt);
 		}
@@ -116,6 +118,7 @@ public class MemberDao implements MemberDaoInterface{
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("selectMemberByUserid 에러");
 		}finally{
 			DBConnectManager.disConnect(conn, pstmt, rs);
 		}
@@ -153,6 +156,7 @@ public class MemberDao implements MemberDaoInterface{
 		}
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("checkID 에러");
 		} finally{
 			DBConnectManager.disConnect(conn, pstmt, rs);
 		}
@@ -179,6 +183,7 @@ public class MemberDao implements MemberDaoInterface{
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("UpdateMember 에러");
 		} finally{
 			DBConnectManager.disConnect(conn, pstmt);
 		}

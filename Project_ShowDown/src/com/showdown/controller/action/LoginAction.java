@@ -16,7 +16,8 @@ public class LoginAction implements ActionInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int result = 0;
-		String url = "DO?command=login_Fail";
+
+		String url = "member/memberLogin.jsp";
 		String message = ""; //// 알림을 위한 메세지
 		String userid = request.getParameter("userid");
 		String userpass = request.getParameter("userpass");
