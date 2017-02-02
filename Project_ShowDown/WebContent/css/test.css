@@ -202,4 +202,39 @@ html, body {
         th{
         text-align: center;
     }
+    	
+    	#boardhead {
+            border-top: 2px solid #DDDDDD;
+            border-bottom: 2px solid #DDDDDD;
+            font-family: "맑은 고딕";
+            font-size: 20px;
+            font-weight: bold;
+            padding: 10px;
+        }
+
+        #boardinfo {
+            
+            font-size:11px;
+        }
+		
+		#boardinfo #infos{
+            margin-left: -30px;
+        }
+        #boardinfo #infos ul {
+            list-style: none;
+            display: inline-block;
+        }
+
+        #boardinfo #infos ul li {
+            display: inline-block;
+
+        }
+
+        #boardcontent {
+            
+            border-bottom: 1px solid #DDDDDD;
+            padding: 10px;
+            font-size: 15px;
+        }
+    
 

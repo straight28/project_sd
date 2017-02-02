@@ -14,6 +14,7 @@ import com.showdown.dto.BoardDto;
 public class ViewBoardAction implements ActionInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String url = "/board/boardView.jsp";
 		String boardnum = request.getParameter("num");
 		
@@ -26,4 +27,5 @@ public class ViewBoardAction implements ActionInterface {
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 	}
+
 }
