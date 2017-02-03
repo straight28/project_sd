@@ -10,18 +10,24 @@ import com.showdown.controller.actionInterface.ActionInterface;
 import com.showdown.dao.BoardDao;
 import com.showdown.dto.BoardDto;
 
-public class WriteBoardAction implements ActionInterface {
+public class ModifyBoardAction implements ActionInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
-		BoardDto bDTO = new BoardDto();
 
-		bDTO.setBoardtitle(request.getParameter("boardtitle"));
+		BoardDto bDTO = new BoardDto();
+		
+		bDTO.setBoardnum(Integer.parseInt(request.getParameter("boardnum")));
 		bDTO.setBoardcontent(request.getParameter("boardcontent"));
 		bDTO.setUsernum(Integer.parseInt(request.getParameter("usernum")));
-		BoardDao bDAO = BoardDao.getInstance();
-				
-		bDAO.InsertBoards(bDTO);
+		
+		System.out.println("boardnum"+request.getParameter("boardnum"));
+		System.out.println("boardcontent"+request.getParameter("boardcontent"));
+		System.out.println("usernum"+request.getParameter("usernum"));
+		
+		
+		
+		BoardDao bDao = BoardDao.getInstance();
+		bDao.ModifyBoards(bDTO);
 		
 		new UserBoardAction().execute(request, response);
 	}

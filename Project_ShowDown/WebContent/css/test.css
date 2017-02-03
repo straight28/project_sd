@@ -203,7 +203,20 @@ html, body {
         text-align: center;
     }
     	
-    	#boardhead {
+    	/************ board 관련 ************/
+    	
+    	
+    	.container .table{
+            table-layout: auto;
+        }
+        .container .table .col1{ width: 100px; }
+        .container .table .col2{ width: 400px; }
+        .container .table .col3{ width: 100px; }
+        .container .table .col4{ width: 100px; }
+        .container .table .col5{ width: 80px; }
+    	
+    	
+    	 #boardhead {
             border-top: 2px solid #DDDDDD;
             border-bottom: 2px solid #DDDDDD;
             font-family: "맑은 고딕";
@@ -213,11 +226,11 @@ html, body {
         }
 
         #boardinfo {
-            
+
             font-size:11px;
         }
-		
-		#boardinfo #infos{
+
+        #boardinfo #infos{
             margin-left: -30px;
         }
         #boardinfo #infos ul {
@@ -231,10 +244,9 @@ html, body {
         }
 
         #boardcontent {
-            
             border-bottom: 1px solid #DDDDDD;
-            padding: 10px;
+            padding: 15px;
             font-size: 15px;
+
         }
-    
 

@@ -1,11 +1,14 @@
 package com.showdown.controller;
 
+import com.showdown.controller.action.DeleteBoardAction;
 import com.showdown.controller.action.IndexPageAction;
 import com.showdown.controller.action.JoinAction;
 import com.showdown.controller.action.JoinFormAction;
 import com.showdown.controller.action.LoginAction;
 import com.showdown.controller.action.LoginFormAction;
 import com.showdown.controller.action.LogoutAction;
+import com.showdown.controller.action.ModifyBoardAction;
+import com.showdown.controller.action.ModifyBoardFormAction;
 import com.showdown.controller.action.MyMenuFormAction;
 import com.showdown.controller.action.UserBoardAction;
 import com.showdown.controller.action.ViewBoardAction;
@@ -49,6 +52,12 @@ public class ActionFactory {
 			action = new WriteBoardAction();
 		}else if(command.equals("board_view")){
 			action = new ViewBoardAction();
+		}else if(command.equals("board_delete")){
+			action = new DeleteBoardAction();
+		}else if(command.equals("board_modify_form")){
+			action = new ModifyBoardFormAction();
+		}else if(command.equals("board_update")){
+			action = new ModifyBoardAction();
 		}
 		
 		

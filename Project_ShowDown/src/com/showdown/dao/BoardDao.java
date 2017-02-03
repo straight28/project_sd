@@ -143,7 +143,7 @@ public class BoardDao implements BoardDaoInterface{
 	/* 글 삭제하기 */
 	@Override
 	public int DeleteBoards(int boardnum) {
-		
+		System.out.println("삭제되는 게시판 숫자는?"+boardnum);
 		int result=0;
 		
 		String sql = "delete from board where boardnum=?";
@@ -165,11 +165,9 @@ public class BoardDao implements BoardDaoInterface{
 	
 	/* 글 수정하기 */
 	@Override
-	public int ModifyBoards(BoardDto bDTO) {
+	public void ModifyBoards(BoardDto bDTO) {
 		
-		int result =0;
-		
-		String sql = "update board set boardtitle=?,boardcontent=? where boardnum=?";
+		String sql = "update board set boardcontent=?,usernum=? where boardnum=?";
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -177,17 +175,17 @@ public class BoardDao implements BoardDaoInterface{
 		try {
 			conn = DBConnectManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, bDTO.getBoardtitle());
-			pstmt.setString(2, bDTO.getBoardcontent());
+			pstmt.setString(1, bDTO.getBoardcontent());
+			pstmt.setInt(2, bDTO.getUsernum());
 			pstmt.setInt(3, bDTO.getBoardnum());
-			result = pstmt.executeUpdate();
+			pstmt.executeUpdate();
+			System.out.println("업데이트 성공");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("updateBoard 에러");
 		} finally{
 			DBConnectManager.disConnect(conn, pstmt);
 		}
-		return result;
 	}
 	
 	

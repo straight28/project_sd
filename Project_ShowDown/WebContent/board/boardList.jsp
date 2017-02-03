@@ -1,15 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp"%>
-<!-- 경로 확인 용 -->
+<!-- 경로 확인 용
+<link rel="stylesheet" href="../css/test.css"> 
 <link rel="stylesheet" href="../css/bootstrap.css">
 <script src="../js/jquery-3.1.1.js"></script>
 <script src="../js/bootstrap.js"></script>
-<link href="../css/test.css" rel="stylesheet"> 
-
+ -->
 <h1 class="h1class">유저 게시판</h1>
 <div class="container" >
 <table class="table table-hover">
+<colgroup>
+            <col class="col1"><col class="col2"><col class="col3"><col class="col4"><col class="col5">
+        </colgroup>
     <thead>
     <tr>
         <th>번호</th>
@@ -28,14 +31,14 @@
     <tr style="border-bottom: 1px solid #DDDDDD;">
 		
         <td>${List.boardnum}</td>
-        <td><a href="DO?command=board_view&num=${List.boardnum}">${List.boardtitle}</a></td>
+        <td style="text-align:left"><a href="DO?command=board_view&num=${List.boardnum}">${List.boardtitle}</a></td>
         <td>${List.usernum}</td>
         <td>${List.boarddate}</td>
         <td>${List.hit}</td>
     </tr>
 	</c:forEach>
 	</c:if>
-	<c:if test="${empty loginUser}">
+	<c:if test="${empty boardList}">
 			<tr style="border-bottom: 1px solid #DDDDDD;">
 				<td colspan="5">등록된 게시물이 없습니다.</td>
 			</tr>

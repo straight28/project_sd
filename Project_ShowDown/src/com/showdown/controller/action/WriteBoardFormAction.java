@@ -13,7 +13,7 @@ public class WriteBoardFormAction implements ActionInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String url = "board/boardWriteForm.jsp";
+		String url = "board/boardWrite.jsp";
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);

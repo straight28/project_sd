@@ -8,21 +8,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.showdown.controller.actionInterface.ActionInterface;
 import com.showdown.dao.BoardDao;
-import com.showdown.dto.BoardDto;
 
-public class WriteBoardAction implements ActionInterface {
+public class DeleteBoardAction implements ActionInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
-		BoardDto bDTO = new BoardDto();
 
-		bDTO.setBoardtitle(request.getParameter("boardtitle"));
-		bDTO.setBoardcontent(request.getParameter("boardcontent"));
-		bDTO.setUsernum(Integer.parseInt(request.getParameter("usernum")));
+		String num = request.getParameter("num");
+		int boardnum = Integer.parseInt(num);
 		BoardDao bDAO = BoardDao.getInstance();
-				
-		bDAO.InsertBoards(bDTO);
 		
+		bDAO.DeleteBoards(boardnum);
 		new UserBoardAction().execute(request, response);
 	}
 }
