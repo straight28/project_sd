@@ -26,7 +26,7 @@ String num = request.getParameter("num");
 
 				<ul>
 					<li>작성자:</li>
-					<li>${oneboard.usernum}</li>
+					<li>${oneboard.nickname}</li>
 				</ul>
 				<ul>
 					<li>등록일:</li>
@@ -47,11 +47,22 @@ String num = request.getParameter("num");
 		</div>
 	</div>
 <br><Br>
-
+	
+	<c:set var="user" value="${loginUser.usernum }"/> <!-- 로그인한 사람 정보 세션 -->
+	<c:set var="board" value="${oneboard.usernum }"/> <!-- 게시판 글 정보 세션 -->
+	
     <a class="btn btn-default pull-left" href="DO?command=userboard" >목록</a>
+
+	<c:choose>
+    <c:when test="${user == board}"> <!-- 로그인한 사람정보와 작성글 정보가 일치하면 아래메뉴 보임-->
     <a class="btn btn-default pull-right" href="DO?command=board_delete&num=${oneboard.boardnum }" >글 삭제</a>
     <a class="btn btn-default pull-right" href="DO?command=board_modify_form&num=${oneboard.boardnum }" >글 수정</a>
-	<p></p>
+	</c:when>
+	<c:otherwise>
+    <a class="btn btn-default pull-right" href="DO?command=userboard">뒤로</a>
+	</c:otherwise>
+	</c:choose>
+		
 </div>
 
 

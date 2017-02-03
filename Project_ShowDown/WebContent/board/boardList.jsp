@@ -26,13 +26,13 @@
     <tbody>
     
 	
-	<c:if test="${!empty loginUser }">
-	<c:forEach items="${boardList}" var="List">
+	<c:if test="${!empty loginUser}">
+	<c:forEach items="${boardList}" var="List"> <!-- 게시판들 정보를 가져와서 반복문 돌림 -->
     <tr style="border-bottom: 1px solid #DDDDDD;">
 		
         <td>${List.boardnum}</td>
         <td style="text-align:left"><a href="DO?command=board_view&num=${List.boardnum}">${List.boardtitle}</a></td>
-        <td>${List.usernum}</td>
+        <td>${List.nickname}</td>
         <td>${List.boarddate}</td>
         <td>${List.hit}</td>
     </tr>

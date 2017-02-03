@@ -22,10 +22,12 @@ public class BoardDao implements BoardDaoInterface{
 	
 	
 	
-	
 	public List<BoardDto> selectAllBoards(){
-		String sql = "select * from board order by boardnum desc";   ///역 정렬
-		
+//		String sql = "select * from board order by boardnum desc";   ///역 정렬
+		String sql = "select board.boardnum, board.boardtitle, board.usernum, board.adminnum, "
+		        		+"board.boardcontent, board.boarddate, board.totalcomment, "
+		        		+"board.hit, member.nickname from"
+						+" board, member where board.usernum = member.usernum ";
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		Connection conn = null;
 		Statement stmt = null;   ///이 메소드의 sql은 완성된 형태의 sql 문장임
@@ -45,6 +47,7 @@ public class BoardDao implements BoardDaoInterface{
 				mdto.setBoarddate(rs.getDate("boarddate"));
 				mdto.setTotalcomment(rs.getInt("totalcomment"));
 				mdto.setHit(rs.getInt("hit"));
+				mdto.setNickname(rs.getString("nickname"));
 				list.add(mdto);
 			}
 		} catch (Exception e) {
@@ -57,7 +60,7 @@ public class BoardDao implements BoardDaoInterface{
 	}
 	
 	
-	/* 게시글 등록하기// boardnum에 seq 생성여부 확인*/
+	/* 게시글 등록하기// boardnum에 seq 생성여부 확인 */
 	@Override
 	public int InsertBoards(BoardDto bDTO) {
 		int result = 0; 
@@ -108,7 +111,9 @@ public class BoardDao implements BoardDaoInterface{
 	
 	/* 글 내용보기 */
 	public BoardDto selectOneBoardByBoardNum(String boardnum){
-		String sql = "select * from board where boardnum = ?";
+		String sql = "select board.BOARDNUM, board.boardtitle, board.usernum, board.adminnum," 
+				     + "board.boardcontent,	board.boarddate, board.TOTALCOMMENT,board.HIT, member.nickname "
+				     + " from BOARD, member where board.usernum = member.usernum and BOARD.BOARDNUM=?";
 		BoardDto bdto = null; /// 실패시 null값
 		
 		Connection conn = null;
@@ -129,6 +134,7 @@ public class BoardDao implements BoardDaoInterface{
 				bdto.setBoarddate(rs.getDate("boarddate"));
 				bdto.setTotalcomment(rs.getInt("totalcomment"));
 				bdto.setHit(rs.getInt("hit"));
+				bdto.setNickname(rs.getString("nickname"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -12,12 +12,18 @@ public class BoardDto {
 	private Date boarddate;
 	private int totalcomment; 		//댓글수
 	private int hit; 				///조회수
-	
+	private String nickname;
 	private int board_re_group;  	//답글 그룹
 	private int board_re_lev;  		//답글 깊이
 	private int board_re_seq;		//답글 순서
 	
 	
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 	
 	
 	public int getBoardnum() {
