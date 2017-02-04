@@ -14,6 +14,7 @@ import com.showdown.controller.action.UserBoardAction;
 import com.showdown.controller.action.ViewBoardAction;
 import com.showdown.controller.action.WriteBoardAction;
 import com.showdown.controller.action.WriteBoardFormAction;
+import com.showdown.controller.action.WriteReplyAction;
 import com.showdown.controller.actionInterface.ActionInterface;
 
 public class ActionFactory {
@@ -58,6 +59,8 @@ public class ActionFactory {
 			action = new ModifyBoardFormAction();
 		}else if(command.equals("board_update")){
 			action = new ModifyBoardAction();
+		}else if(command.equals("repleWrite")){
+			action = new WriteReplyAction();
 		}
 		
 		

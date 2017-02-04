@@ -15,11 +15,9 @@ public class ModifyBoardFormAction implements ActionInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = "board/boardModify.jsp";
-		String boardnum = request.getParameter("num");
+		int boardnum = Integer.parseInt(request.getParameter("num"));
 		
 		BoardDao bDAO = BoardDao.getInstance();
-		bDAO.updateHit(boardnum);
-		
 		BoardDto bDTO = bDAO.selectOneBoardByBoardNum(boardnum);
 		request.setAttribute("oneboard", bDTO);
 		

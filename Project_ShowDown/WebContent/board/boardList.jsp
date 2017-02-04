@@ -23,15 +23,25 @@
     </tr>
     </thead>
 
-    <tbody>
+    <tbody class="boardList">
     
 	
 	<c:if test="${!empty loginUser}">
 	<c:forEach items="${boardList}" var="List"> <!-- 게시판들 정보를 가져와서 반복문 돌림 -->
     <tr style="border-bottom: 1px solid #DDDDDD;">
 		
+		
         <td>${List.boardnum}</td>
-        <td style="text-align:left"><a href="DO?command=board_view&num=${List.boardnum}">${List.boardtitle}</a></td>
+        <td style="text-align:left"><a href="DO?command=board_view&num=${List.boardnum}">${List.boardtitle}</a> 
+        
+        <!-- 댓글이 있으면 갯구 보여주고 없으면 공백처리 -->
+        <c:if test="${List.totalcomment > 0}">
+        <span style="color:#204040">
+        [${List.totalcomment}]
+        </span>
+       </c:if>
+       </td> 
+       
         <td>${List.nickname}</td>
         <td>${List.boarddate}</td>
         <td>${List.hit}</td>

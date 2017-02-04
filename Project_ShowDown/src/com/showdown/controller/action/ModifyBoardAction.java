@@ -17,8 +17,13 @@ public class ModifyBoardAction implements ActionInterface {
 		BoardDto bDTO = new BoardDto();
 		
 		bDTO.setBoardnum(Integer.parseInt(request.getParameter("boardnum")));
-		bDTO.setBoardcontent(request.getParameter("boardcontent"));
+		
+		String boardcontent = request.getParameter("boardcontent");
+		/* 수정시마다 <br> 늘어나는 것 방지 */
+		boardcontent = boardcontent.replace("<br>", "");
+		bDTO.setBoardcontent(boardcontent);
 		bDTO.setUsernum(Integer.parseInt(request.getParameter("usernum")));
+		
 		
 		System.out.println("boardnum"+request.getParameter("boardnum"));
 		System.out.println("boardcontent"+request.getParameter("boardcontent"));

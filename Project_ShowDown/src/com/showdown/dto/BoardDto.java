@@ -12,7 +12,7 @@ public class BoardDto {
 	private Date boarddate;
 	private int totalcomment; 		//댓글수
 	private int hit; 				///조회수
-	private String nickname;
+	private String nickname;		///유저 닉네임
 	private int board_re_group;  	//답글 그룹
 	private int board_re_lev;  		//답글 깊이
 	private int board_re_seq;		//답글 순서
