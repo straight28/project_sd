@@ -32,7 +32,16 @@
 		
 		
         <td>${List.boardnum}</td>
-        <td style="text-align:left"><a href="DO?command=board_view&num=${List.boardnum}">${List.boardtitle}</a> 
+        <td style="text-align:left">
+        <!-- 답변들여쓰기 -->
+        <c:forEach var="i" begin="1" end="${List.re_level }">
+        
+        <c:if test="${List.re_level != 0}">
+        <img src='images/reply_icon1.gif' />
+        </c:if>
+        </c:forEach>
+        
+        <a href="DO?command=board_view&num=${List.boardnum}">${List.boardtitle}</a> 
         
         <!-- 댓글이 있으면 갯구 보여주고 없으면 공백처리 -->
         <c:if test="${List.totalcomment > 0}">

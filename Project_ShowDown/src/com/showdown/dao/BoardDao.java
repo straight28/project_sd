@@ -43,10 +43,11 @@ public class BoardDao implements BoardDaoInterface{
 //		String sql = "select * from board order by boardnum desc";   ///역 정렬
 		String sql = "select board.boardnum, board.boardtitle, board.usernum, board.adminnum, " 
 		        		+" board.boardcontent, board.boarddate, board.hit, "
+		        		+" board.ref, board.re_step, board.re_level, "	
 		        		+" member.nickname,(select count(*) from board_comment "
 		        		+" where boardnum=board.boardnum) totalcomment "
 		        		+" from board, member where board.usernum = member.usernum "
-		        		+" order by boardnum desc"  ;
+		        		+" order by ref desc, re_step asc "  ;
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		Connection conn = null;
 		Statement stmt = null;   ///이 메소드의 sql은 완성된 형태의 sql 문장임
@@ -73,6 +74,9 @@ public class BoardDao implements BoardDaoInterface{
 				Bdto.setBoarddate(rs.getDate("boarddate"));
 				Bdto.setTotalcomment(rs.getInt("totalcomment"));
 				Bdto.setHit(rs.getInt("hit"));
+				Bdto.setRef(rs.getInt("ref"));
+				Bdto.setRe_step(rs.getInt("re_step"));
+				Bdto.setRe_level(rs.getInt("re_level"));
 				Bdto.setNickname(rs.getString("nickname"));
 				list.add(Bdto);
 			}
@@ -91,8 +95,8 @@ public class BoardDao implements BoardDaoInterface{
 	public int InsertBoards(BoardDto bDTO) {
 		int result = 0; 
 		
-		String sql ="insert into board(boardnum,boardtitle, usernum, boardcontent, board_re_group, board_re_lev, board_re_seq) "
-				+"values((select nvl(max(boardnum)+1,1) from board),?,?,?,(select nvl(max(boardnum)+1,1) from board),?,?)";
+		String sql ="insert into board(boardnum,boardtitle, usernum, boardcontent, ref, re_step, re_level) "
+				+"values((select nvl(max(boardnum)+1,1) from board),?,?,?,(select nvl(max(boardnum)+1,1) from board),1,0)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -101,8 +105,6 @@ public class BoardDao implements BoardDaoInterface{
 			pstmt.setString(1, bDTO.getBoardtitle());
 			pstmt.setInt(2, bDTO.getUsernum());
 			pstmt.setString(3, bDTO.getBoardcontent());
-			pstmt.setInt(4, bDTO.getBoard_re_lev());
-			pstmt.setInt(5, bDTO.getBoard_re_seq());
 			result = pstmt.executeUpdate(); // 등록되면 0이 아님.
 
 		} catch (Exception e) {
@@ -154,7 +156,8 @@ public class BoardDao implements BoardDaoInterface{
 	/* 글 내용보기 */
 	public BoardDto selectOneBoardByBoardNum(int boardnum){
 		String sql = "select board.BOARDNUM, board.boardtitle, board.usernum, board.adminnum," 
-				     + "board.boardcontent,	board.boarddate, board.HIT, member.nickname "
+				     + "board.boardcontent,	board.boarddate, board.HIT, board.ref, "
+				     + "board.re_step, board.re_level, member.nickname "
 				     + " from BOARD, member where board.usernum = member.usernum and BOARD.BOARDNUM=?";
 		BoardDto bdto = null; /// 실패시 null값
 		
@@ -181,8 +184,10 @@ public class BoardDao implements BoardDaoInterface{
 				bdto.setAdminnum(rs.getInt("adminnum"));
 				bdto.setBoardcontent(boardcontent);
 				bdto.setBoarddate(rs.getDate("boarddate"));
-//				bdto.setTotalcomment(rs.getInt("totalcomment"));
 				bdto.setHit(rs.getInt("hit"));
+				bdto.setRef(rs.getInt("ref"));
+				bdto.setRe_step(rs.getInt("re_step"));
+				bdto.setRe_level(rs.getInt("re_level"));
 				bdto.setNickname(rs.getString("nickname"));
 			}
 		} catch (Exception e) {
@@ -326,26 +331,36 @@ public class BoardDao implements BoardDaoInterface{
 	} 
 	
 	
-	/* 게시판아래에 답글달기 */
+	/* 게시판 아래에 답글달기 */
 	public int InsertBoardReply(BoardDto bDTO) {
 		int result = 0; 
 		
-		String sql ="insert into board(boardnum,boardtitle, usernum, boardcontent, board_re_group, board_re_lev, board_re_seq) "
-				+"values((select nvl(max(boardnum)+1,1) from board),?,?,?,(select nvl(max(boardnum)+1,1) from board),?,?)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
 			conn = DBConnectManager.getConnection();
 			
-			int ref = bDTO.getBoard_re_group();
-			int re_step = bDTO.getBoard_re_seq()+1;
-			int re_lev = bDTO.getBoard_re_lev()+1;
+			int re_lev = bDTO.getRe_level()+1;
+			int re_step = bDTO.getRe_step()+1;
+			
+			/* 답글 들어가기 전에 기존 스텝들을 1 증가시켜줌 */
+			String updateSql = "update board set re_step = re_step+1"
+								+ " where ref=? and re_step >= ?";
+			pstmt = conn.prepareStatement(updateSql);
+			pstmt.setInt(1, bDTO.getRef());
+			pstmt.setInt(2, re_step);
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			/* 기존 스템 증가후 새로운 답글 스텝 입력 */
+			String sql ="insert into board(boardnum,boardtitle, usernum, boardcontent, ref, re_step, re_level) "
+					+"values((select nvl(max(boardnum)+1,1) from board),?,?,?,?,?,?)";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, bDTO.getBoardtitle());
 			pstmt.setInt(2, bDTO.getUsernum());
 			pstmt.setString(3, bDTO.getBoardcontent());
-			pstmt.setInt(4, ref);
+			pstmt.setInt(4, bDTO.getRef());
 			pstmt.setInt(5, re_step);
 			pstmt.setInt(6, re_lev);
 			result = pstmt.executeUpdate(); // 등록되면 0이 아님.

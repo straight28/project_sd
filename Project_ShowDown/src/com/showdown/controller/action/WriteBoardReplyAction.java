@@ -19,8 +19,10 @@ public class WriteBoardReplyAction implements ActionInterface {
 		bDTO.setBoardtitle(request.getParameter("boardtitle"));
 		bDTO.setBoardcontent(request.getParameter("boardcontent"));
 		bDTO.setUsernum(Integer.parseInt(request.getParameter("usernum")));
+		bDTO.setRef(Integer.parseInt(request.getParameter("ref")));
+		bDTO.setRe_step(Integer.parseInt(request.getParameter("re_step")));
+		bDTO.setRe_level(Integer.parseInt(request.getParameter("re_level")));
 		BoardDao bDAO = BoardDao.getInstance();
-				
 				
 		bDAO.InsertBoardReply(bDTO);
 		

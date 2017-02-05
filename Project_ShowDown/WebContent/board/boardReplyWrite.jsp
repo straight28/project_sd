@@ -41,6 +41,9 @@
 					</tr>
 				</tbody>
 			</table>
+			<input type="hidden" name="ref" value=${oneboard.ref }>
+			<input type="hidden" name="re_step" value=${oneboard.re_step }>
+			<input type="hidden" name="re_level" value=${oneboard.re_level }>
 			<input type="hidden" name="boardnum" value=${oneboard.boardnum }>
 			<input type="hidden" name="usernum" value=<%=mDTO.getUsernum()%>>
 		</form>
