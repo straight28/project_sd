@@ -37,26 +37,59 @@ public class BoardDao implements BoardDaoInterface{
 		}
 		return article;
 	}
-	
-	
-	public List<BoardDto> selectAllBoards(){
-//		String sql = "select * from board order by boardnum desc";   ///역 정렬
-		String sql = "select board.boardnum, board.boardtitle, board.usernum, board.adminnum, " 
-		        		+" board.boardcontent, board.boarddate, board.hit, "
-		        		+" board.ref, board.re_step, board.re_level, "	
-		        		+" member.nickname,(select count(*) from board_comment "
-		        		+" where boardnum=board.boardnum) totalcomment "
-		        		+" from board, member where board.usernum = member.usernum "
-		        		+" order by ref desc, re_step asc "  ;
-		List<BoardDto> list = new ArrayList<BoardDto>();
+		
+	/* 전체 게시판 글 갯수 */
+	public int countBoard(){
+		int result = 0;
+		
+		String sql = "select count(*) from board";
 		Connection conn = null;
-		Statement stmt = null;   ///이 메소드의 sql은 완성된 형태의 sql 문장임
+		Statement stmt = null;
 		ResultSet rs = null;
 		
 		try {
 			conn = DBConnectManager.getConnection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{
+			DBConnectManager.disConnect(conn, stmt, rs);
+		}
+		
+		return result;
+	}
+	
+	public List<BoardDto> selectAllBoards(int pageStart, int pageEnd){
+//		String sql = "select * from board order by boardnum desc";   ///역 정렬
+		String sql = "select * "
+				 		+ "   from (  "
+						+ "   select rownum as rn, A.* "
+						+ "   from (  "
+						      + "   select board.boardnum, board.boardtitle, board.usernum, board.adminnum,  " 
+							  + "   board.boardcontent, board.boarddate, board.hit,  "
+							  + "   board.ref, board.re_step, board.re_level, "
+							  + "   member.nickname,(select count(*) from board_comment  "
+							  + "   where boardnum=board.boardnum) totalcomment  "
+							  + "   from board, member where board.usernum = member.usernum  "
+						      + "   order by ref desc, re_step asc "
+						      + "   ) A "
+						 + "  )    where rn between ? and ? ";
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;   ///이 메소드의 sql은 완성된 형태의 sql 문장임
+		ResultSet rs = null;
+		
+		try {
+			conn = DBConnectManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pageStart);
+			pstmt.setInt(2, pageEnd);
+			rs = pstmt.executeQuery();
 			while(rs.next()){
 				BoardDto Bdto = new BoardDto();
 				
@@ -84,7 +117,7 @@ public class BoardDao implements BoardDaoInterface{
 			e.printStackTrace();
 			System.out.println("selectAllBoards 에러");
 		}finally{
-			DBConnectManager.disConnect(conn, stmt, rs);
+			DBConnectManager.disConnect(conn, pstmt, rs);
 		}
 		return list;
 	}
@@ -222,9 +255,6 @@ public class BoardDao implements BoardDaoInterface{
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, boardnum);
 			result = pstmt.executeUpdate();
-			
-			
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("deleteBoard 에러");
