@@ -25,6 +25,7 @@ public class BoardDao implements BoardDaoInterface{
 	
 	public String checkArticle(String article){
 		/* 태그 방지 원래 insert에서 하는게 가장 좋음 */
+		if(article != null){
 		if(article.toLowerCase().indexOf("xmp") != -1 || article.indexOf("script")!= -1){
 		}
 		article = article.replace("<", "&lt");
@@ -33,6 +34,7 @@ public class BoardDao implements BoardDaoInterface{
 		article = article.replace("  ", "&nbsp;&nbsp;");
 		/* 줄바꿈 처리  */
 		article = article.replace("\n", "<br>");
+		}
 		return article;
 	}
 	
@@ -89,8 +91,8 @@ public class BoardDao implements BoardDaoInterface{
 	public int InsertBoards(BoardDto bDTO) {
 		int result = 0; 
 		
-		String sql ="insert into board(boardtitle, usernum, boardcontent) "
-				+"values(?,?,?)";
+		String sql ="insert into board(boardnum,boardtitle, usernum, boardcontent, board_re_group, board_re_lev, board_re_seq) "
+				+"values((select nvl(max(boardnum)+1,1) from board),?,?,?,(select nvl(max(boardnum)+1,1) from board),?,?)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -99,6 +101,8 @@ public class BoardDao implements BoardDaoInterface{
 			pstmt.setString(1, bDTO.getBoardtitle());
 			pstmt.setInt(2, bDTO.getUsernum());
 			pstmt.setString(3, bDTO.getBoardcontent());
+			pstmt.setInt(4, bDTO.getBoard_re_lev());
+			pstmt.setInt(5, bDTO.getBoard_re_seq());
 			result = pstmt.executeUpdate(); // 등록되면 0이 아님.
 
 		} catch (Exception e) {
@@ -197,14 +201,25 @@ public class BoardDao implements BoardDaoInterface{
 		System.out.println("삭제되는 게시판 숫자는?"+boardnum);
 		int result=0;
 		
-		String sql = "delete from board where boardnum=?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
+			////코멘트 모두 삭제후
+			String commentsql = "delete from board_comment where boardnum=?";
 			conn = DBConnectManager.getConnection();
+			pstmt = conn.prepareStatement(commentsql);
+			pstmt.setInt(1, boardnum);
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			////코멘트 모두 삭제후 게시판 삭제
+			String sql = "delete from board where boardnum=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, boardnum);
 			result = pstmt.executeUpdate();
+			
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("deleteBoard 에러");
@@ -242,7 +257,6 @@ public class BoardDao implements BoardDaoInterface{
 	
 	
 	/* 댓글 목록 보여주기 */
-	
 	public List<BoardCommentDto> commentList(int boardnum){
 		List<BoardCommentDto> commentlist = new ArrayList<BoardCommentDto>();
 		String sql = "select board_comment.commentnum, board_comment.content, board_comment.usernum, "
@@ -284,6 +298,8 @@ public class BoardDao implements BoardDaoInterface{
 		return commentlist;
 	}
 	
+	
+	/* 게시글 안에 댓글 등록 */
 	public int InsertBoardComment(BoardCommentDto bcdto) {
 		int result = 0; 
 		
@@ -310,8 +326,61 @@ public class BoardDao implements BoardDaoInterface{
 	} 
 	
 	
+	/* 게시판아래에 답글달기 */
+	public int InsertBoardReply(BoardDto bDTO) {
+		int result = 0; 
+		
+		String sql ="insert into board(boardnum,boardtitle, usernum, boardcontent, board_re_group, board_re_lev, board_re_seq) "
+				+"values((select nvl(max(boardnum)+1,1) from board),?,?,?,(select nvl(max(boardnum)+1,1) from board),?,?)";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DBConnectManager.getConnection();
+			
+			int ref = bDTO.getBoard_re_group();
+			int re_step = bDTO.getBoard_re_seq()+1;
+			int re_lev = bDTO.getBoard_re_lev()+1;
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, bDTO.getBoardtitle());
+			pstmt.setInt(2, bDTO.getUsernum());
+			pstmt.setString(3, bDTO.getBoardcontent());
+			pstmt.setInt(4, ref);
+			pstmt.setInt(5, re_step);
+			pstmt.setInt(6, re_lev);
+			result = pstmt.executeUpdate(); // 등록되면 0이 아님.
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("InsertBoardReply 에러");
+		} finally{
+			DBConnectManager.disConnect(conn, pstmt);
+		}
+		return result;
+	}
 	
-	
+	/* 댓글 삭제하기 */
+	public int DeleteBoardReply(int commentnum) {
+		
+		int result=0;
+		
+		String sql = "delete from BOARD_COMMENT where commentnum=?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DBConnectManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, commentnum);
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("DeleteBoardReply 에러");
+		} finally{
+			DBConnectManager.disConnect(conn, pstmt);
+		}
+		return result;
+	}
 	
 	
 	

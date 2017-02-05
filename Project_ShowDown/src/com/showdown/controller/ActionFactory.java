@@ -1,6 +1,7 @@
 package com.showdown.controller;
 
 import com.showdown.controller.action.DeleteBoardAction;
+import com.showdown.controller.action.DeleteReplyInBoard;
 import com.showdown.controller.action.IndexPageAction;
 import com.showdown.controller.action.JoinAction;
 import com.showdown.controller.action.JoinFormAction;
@@ -14,6 +15,8 @@ import com.showdown.controller.action.UserBoardAction;
 import com.showdown.controller.action.ViewBoardAction;
 import com.showdown.controller.action.WriteBoardAction;
 import com.showdown.controller.action.WriteBoardFormAction;
+import com.showdown.controller.action.WriteBoardReplyAction;
+import com.showdown.controller.action.WriteBoardReplyFormAction;
 import com.showdown.controller.action.WriteReplyAction;
 import com.showdown.controller.actionInterface.ActionInterface;
 
@@ -61,6 +64,12 @@ public class ActionFactory {
 			action = new ModifyBoardAction();
 		}else if(command.equals("repleWrite")){
 			action = new WriteReplyAction();
+		}else if(command.equals("writeboardreply")){
+			action = new WriteBoardReplyFormAction();
+		}else if(command.equals("boardReply_write")){
+			action = new WriteBoardReplyAction();
+		}else if(command.equals("deletereplyinboard")){
+			action = new DeleteReplyInBoard();
 		}
 		
 		

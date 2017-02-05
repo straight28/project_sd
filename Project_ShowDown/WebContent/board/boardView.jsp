@@ -59,7 +59,6 @@
 	<!-- 게시판 글 정보 세션 -->
 
 	<a class="btn btn-default pull-left" href="DO?command=userboard">목록</a>
-
 	<c:choose>
 		<c:when test="${user == board}">
 			<!-- 로그인한 사람정보와 작성글 정보가 일치하면 아래메뉴 보임-->
@@ -73,6 +72,7 @@
 			<a class="btn btn-default pull-right" href="DO?command=userboard">뒤로</a>
 		</c:otherwise>
 	</c:choose>
+	<a class="btn btn-default pull-right" href="DO?command=writeboardreply&num=${oneboard.boardnum }">답글</a>
 
 </div>
 <hr>
@@ -86,7 +86,7 @@
                 <div class="replytr" ><b>${commentList.nickname}</b>
                 <span >&nbsp;( <fmt:formatDate value="${commentList.regdate}"
                 				pattern="yyyy-MM-dd HH:mm:ss"/>)</span> <!-- 왜 시간이 안나오능가!? -->
-                <span class ="pull-right"><a href="#" >수정</a>&nbsp;<a href="#" >삭제</a></span>
+                <span class ="pull-right"><a href="#" >수정</a>&nbsp;<a href="DO?command=deletereplyinboard&commentnum=${commentList.commentnum}&num=${oneboard.boardnum}" >삭제</a></span>
                 </div> 
 				
                 
