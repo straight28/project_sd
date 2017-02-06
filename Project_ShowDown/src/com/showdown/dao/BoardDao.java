@@ -65,6 +65,48 @@ public class BoardDao implements BoardDaoInterface{
 		return result;
 	}
 	
+	/* 검색한 게시판 글 갯수 */
+	public int searchCountBoard(String search_option, String keyword){
+		int result = 0;
+		
+		String nicksql =" select count(*) from BOARD, member where board.usernum = member.usernum and nickname like '%'||?||'%'";
+		String titlesql =" select count(*) from board where boardtitle like '%'||?||'%'";
+		String contentsql =" select count(*) from board where boardcontent like '%'||?||'%'";
+		
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBConnectManager.getConnection();
+			if (search_option.equals("nickname")) {
+				pstmt = conn.prepareStatement(nicksql);
+				
+			}else if(search_option.equals("title")){
+				pstmt = conn.prepareStatement(titlesql);
+				
+			}else if(search_option.equals("content")){
+				pstmt = conn.prepareStatement(contentsql);
+			}
+			
+			pstmt.setString(1, keyword);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{
+			DBConnectManager.disConnect(conn, pstmt, rs);
+		}
+		return result;
+	}
+	
+	
+	
+	
+	
 	public List<BoardDto> selectAllBoards(int pageStart, int pageEnd){
 //		String sql = "select * from board order by boardnum desc";   ///역 정렬
 		String sql = "select * "
@@ -165,8 +207,8 @@ public class BoardDao implements BoardDaoInterface{
 		}
 		//현재 시간
 		long current_time = System.currentTimeMillis();
-		System.out.println(update_time);
-		System.out.println(current_time);
+		System.out.println("업데이트 시간 "+update_time);
+		System.out.println("현재 시간 "+current_time);
 		try {
 			///현재시간 - 업데이트 시간이 5초이상일 시 조회수 업데이트 
 			if (current_time - update_time > 5*1000) {
@@ -174,7 +216,7 @@ public class BoardDao implements BoardDaoInterface{
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, boardnum);
 				pstmt.executeUpdate();
-				///업데이트한 시간을 세션에 저장
+				///업데이트한 시간을 세션에 저장 setArrtibute(변수명(최근열람한게시글) , 값) 
 			count_session.setAttribute("update_time_"+boardnum, current_time);
 			}
 			
@@ -428,6 +470,129 @@ public class BoardDao implements BoardDaoInterface{
 		return result;
 	}
 	
+	
+	/* 검색을 위한 dao */
+	public List<BoardDto> searchList(String search_option, String keyword, int pageStart, int pageEnd){
+		
+		List<BoardDto> searchlist = new ArrayList<BoardDto>();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		/* 검색 후 검색 결과에 대해서도 페이징 처리를 하기 위해 sql 수정 */
+		
+		/*String nicksql = "select board.BOARDNUM, board.boardtitle, board.usernum, board.adminnum, "
+							+" board.boardcontent,	board.boarddate, board.HIT, board.ref, "
+							+" board.re_step, board.re_level, member.nickname "
+							+" from BOARD, member where board.usernum = member.usernum and nickname like '%'||?||'%'"
+							+" order by ref desc, re_step asc";*/
+		
+		String nicksql = "select * "
+		 		+ "   from (  "
+				+ "   select rownum as rn, A.* "
+				+ "   from (  "
+				      + "   select board.BOARDNUM, board.boardtitle, board.usernum, board.adminnum,  " 
+					  + "   board.boardcontent,	board.boarddate, board.HIT, board.ref, "
+					  + "   board.re_step, board.re_level, member.nickname "
+					  + " 	from BOARD, member where board.usernum = member.usernum and nickname like '%'||?||'%' "
+				      + "   order by ref desc, re_step asc "
+				      + "   ) A "
+				 + "  )    where rn between ? and ? ";
+		
+		/*
+		String titlesql = "select board.BOARDNUM, board.boardtitle, board.usernum, board.adminnum, "
+				+" board.boardcontent,	board.boarddate, board.HIT, board.ref, "
+				+" board.re_step, board.re_level, member.nickname "
+				+" from BOARD, member where board.usernum = member.usernum and boardtitle like '%'||?||'%'"
+				+" order by ref desc, re_step asc";*/
+		
+
+		String titlesql = "select * "
+		 		+ "   from (  "
+				+ "   select rownum as rn, A.* "
+				+ "   from (  "
+				      + "   select board.BOARDNUM, board.boardtitle, board.usernum, board.adminnum, " 
+					  + "  board.boardcontent,	board.boarddate, board.HIT, board.ref, "
+					  + "   board.re_step, board.re_level, member.nickname"
+					  + " 	from BOARD, member where board.usernum = member.usernum and boardtitle like '%'||?||'%'"
+				      + "   order by ref desc, re_step asc "
+				      + "   ) A "
+				 + "  )    where rn between ? and ? ";
+		
+		/*
+		String contentsql = "select board.BOARDNUM, board.boardtitle, board.usernum, board.adminnum, "
+				+" board.boardcontent,	board.boarddate, board.HIT, board.ref, "
+				+" board.re_step, board.re_level, member.nickname "
+				+" from BOARD, member where board.usernum = member.usernum and boardcontent like '%'||?||'%'"
+				+" order by ref desc, re_step asc";*/
+
+		String contentsql = "select * "
+		 		+ "   from (  "
+				+ "   select rownum as rn, A.* "
+				+ "   from (  "
+				      + "   select board.BOARDNUM, board.boardtitle, board.usernum, board.adminnum,  " 
+					  + "   board.boardcontent,	board.boarddate, board.HIT, board.ref, "
+					  + "   board.re_step, board.re_level, member.nickname "
+					  + " 	from BOARD, member where board.usernum = member.usernum and boardcontent like '%'||?||'%'"
+				      + "   order by ref desc, re_step asc "
+				      + "   ) A "
+				 + "  )    where rn between ? and ? ";	
+		
+		
+		
+		try {
+			conn = DBConnectManager.getConnection();
+			if (search_option.equals("nickname")) {
+				pstmt = conn.prepareStatement(nicksql);
+				
+			}else if(search_option.equals("title")){
+				pstmt = conn.prepareStatement(titlesql);
+				
+			}else if(search_option.equals("content")){
+				pstmt = conn.prepareStatement(contentsql);
+			}
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, pageStart);
+			pstmt.setInt(3, pageEnd);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				BoardDto bdto = new BoardDto();
+				
+				/*  태그 방지, 공백추가 , 줄바꿈 */
+				String boardtitle = rs.getString("boardtitle");
+				boardtitle = checkArticle(boardtitle);
+				////검색 한내용이 곧 keyword 이므로 keyword 값을 변경해주면 검색시 값을 변경해 줄 수 있음
+				boardtitle = boardtitle.replace(keyword, "<span style='color:#ff3d4a'>"+keyword+"<span>"); 
+				String boardcontent = rs.getString("boardcontent");
+				boardcontent = checkArticle(boardcontent);
+				boardcontent = boardcontent.replace(keyword, "<span style='color:#ff3d4a'>"+keyword+"<span>");
+				String nickname = rs.getString("nickname");
+				nickname = nickname.replace(keyword, "<span style='color:#ff3d4a'>"+keyword+"<span>");
+				
+				bdto.setBoardnum(rs.getInt("boardnum"));
+				bdto.setBoardtitle(boardtitle);
+				bdto.setUsernum(rs.getInt("usernum"));
+				bdto.setAdminnum(rs.getInt("adminnum"));
+				bdto.setBoardcontent(boardcontent);
+				bdto.setBoarddate(rs.getTimestamp("boarddate"));
+				bdto.setHit(rs.getInt("hit"));
+				bdto.setRef(rs.getInt("ref"));
+				bdto.setRe_step(rs.getInt("re_step"));
+				bdto.setRe_level(rs.getInt("re_level"));
+				bdto.setNickname(nickname);
+				searchlist.add(bdto);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			DBConnectManager.disConnect(conn, pstmt, rs);
+		}
+		return searchlist;
+		
+	}
 	
 	
 	

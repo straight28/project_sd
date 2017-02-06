@@ -11,6 +11,7 @@ import com.showdown.controller.action.LogoutAction;
 import com.showdown.controller.action.ModifyBoardAction;
 import com.showdown.controller.action.ModifyBoardFormAction;
 import com.showdown.controller.action.MyMenuFormAction;
+import com.showdown.controller.action.SearchKeyword;
 import com.showdown.controller.action.UserBoardAction;
 import com.showdown.controller.action.ViewBoardAction;
 import com.showdown.controller.action.WriteBoardAction;
@@ -70,6 +71,8 @@ public class ActionFactory {
 			action = new WriteBoardReplyAction();
 		}else if(command.equals("deletereplyinboard")){
 			action = new DeleteReplyInBoard();
+		}else if(command.equals("searchkeyword")){
+			action = new SearchKeyword();  //// 리스트로 보냄
 		}
 		
 		

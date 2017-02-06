@@ -76,15 +76,40 @@
 
     </tbody>
 </table>
-
-    <a class="btn btn-default pull-left" href="#">검색</a> <!-- 검색기능 넣을 곳 -->
+	
+	
+	<form name="searchform" method="post" action="DO?command=searchkeyword" >
+	<select name = "search_option" class="form-control pull-left" style="width:90px">
+	<c:if test="${search_option != 'title'}">
+	<option value="nickname">작성자</option>
+	<option value="title">제목</option>
+	<option value="content">내용</option>
+	</c:if>
+	<c:if test="${search_option == 'title'}">
+	<option value="nickname">작성자</option>
+	<option value="title" selected >제목</option> <!-- 제목에 셀렉트 고정 -->
+	<option value="content">내용</option>
+	</c:if>
+	<c:if test="${search_option == 'content'}">
+	<option value="nickname">작성자</option>
+	<option value="title">제목</option>
+	<option value="content" selected>내용</option> <!-- 내용에 셀렉트 고정 -->
+	</c:if>
+	</select>
+	<input type="text" name="keyword" value="${keyword }" class="form-control pull-left" style="width:120px">
+	<input type="submit" value="검색" class="btn btn-default pull-left" id="btnSearch">
     <a class="btn btn-default pull-right" href="DO?command=board_Write_Form">글쓰기</a>
+    </form>
+	
 
-    <hr>
+<hr>
+<br>
 
 
     <div class="text-center">
+    
         <ul class="pagination">
+       
     <!-- 처음 -->
     <c:if test="${page.curBlock > 1}">
 	<li><a href="javascript:list('1')">처음</a></li>
