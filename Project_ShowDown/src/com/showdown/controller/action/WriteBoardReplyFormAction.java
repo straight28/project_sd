@@ -11,19 +11,20 @@ import com.showdown.controller.actionInterface.ActionInterface;
 import com.showdown.dao.BoardDao;
 import com.showdown.dto.BoardDto;
 
-public class ModifyBoardFormAction implements ActionInterface {
+public class WriteBoardReplyFormAction implements ActionInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String url = "board/boardModify.jsp";
+
+		String url = "board/boardReplyWrite.jsp";
 		int boardnum = Integer.parseInt(request.getParameter("num"));
+		System.out.println(boardnum);
 		
-		BoardDao bDAO = BoardDao.getInstance();
-		BoardDto bDTO = bDAO.selectOneBoardByBoardNum(boardnum);
-		request.setAttribute("oneboard", bDTO);
+		BoardDao bdao = BoardDao.getInstance();
+		BoardDto bdto = bdao.selectOneBoardByBoardNum(boardnum);
+		request.setAttribute("oneboard", bdto);
+		
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
-		
 	}
-	
 }

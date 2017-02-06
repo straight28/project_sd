@@ -9,37 +9,41 @@
 <script src="../js/bootstrap.js"></script>
  -->
 <%
-MemberDto mDTO = (MemberDto)session.getAttribute("loginUser");
+	MemberDto mDTO = (MemberDto) session.getAttribute("loginUser");
 %>
 
 
 
-<h1 class="h1class">유저 게시판</h1>
-<div class="container">
-    <table class="table table-striped">
 
-        <div class="col-sm-12">
-            <form method="post" action="DO">
+<h1 class="h1class">유저 게시판</h1>
+<div class="col-sm-12">
+	<div class="container">
+		<form name="userboard" method="post" action="DO">
 			<input type="hidden" name="command" value="board_write">
-                <tbody>
-                <tr>
-                    <th>제목</th>
-                    <td><input type="text" placeholder="제목을 입력하세요. " name="boardtitle" class="form-control"/></td>
-                </tr>
-                <tr>
-                    <th>내용</th>
-                    <td><textarea cols="10" rows="10" placeholder="내용을 입력하세요. " name="boardcontent"
-                                  class="form-control"></textarea></td>
-                </tr>
-                <tr>
-                    <td><a class="btn btn-default pull-left" href="DO?command=userboard">목록</a></td>
-                    <td><input type="submit" class="btn btn-default pull-right" value="등록" onclick="#"> </td>
-                </tr>
-                </tbody>
-                <input type="hidden" name="usernum" value=<%=mDTO.getUsernum()%>>
-            </form>
-        </div>
-    </table>
+			<table class="table table-striped">
+
+				<tbody>
+					<tr>
+						<th>제목</th>
+						<td><input type="text" placeholder="제목을 입력하세요. "
+							name="boardtitle" id="boardtitle" class="form-control" /></td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td><textarea cols="10" rows="10" placeholder="내용을 입력하세요. "
+								name="boardcontent" id="boardcontent" class="form-control"></textarea></td>
+					</tr>
+					<tr>
+						<td><a class="btn btn-default pull-left"
+							href="DO?command=userboard">목록</a></td>
+						<td><input type="submit" class="btn btn-default pull-right"
+							value="등록" id="btnSave"></td>
+					</tr>
+				</tbody>
+			</table>
+			<input type="hidden" name="usernum" value=<%=mDTO.getUsernum()%>>
+		</form>
+	</div>
 </div>
 
 

@@ -9,7 +9,7 @@
 <script src="../js/bootstrap.js"></script>
  -->
 <%
-String num = request.getParameter("num");
+	String num = request.getParameter("num");
 %>
 
 
@@ -17,13 +17,17 @@ String num = request.getParameter("num");
 
 
 
-<div class="container" style="text-align: left" >
+<div class="container" style="text-align: left">
 
 	<div id="wrap">
-		
+
 		<div id="boardinfo">
 			<div id="infos">
 
+				<ul>
+					<li>글번호:</li>
+					<li>${oneboard.boardnum}</li>
+				</ul>
 				<ul>
 					<li>작성자:</li>
 					<li>${oneboard.nickname}</li>
@@ -38,7 +42,7 @@ String num = request.getParameter("num");
 				</ul>
 			</div>
 		</div>
-		
+
 		<div id="boardhead">
 			<div>${oneboard.boardtitle}</div>
 		</div>
@@ -46,24 +50,78 @@ String num = request.getParameter("num");
 			<div>${oneboard.boardcontent}</div>
 		</div>
 	</div>
-<br><Br>
-	
-	<c:set var="user" value="${loginUser.usernum }"/> <!-- 로그인한 사람 정보 세션 -->
-	<c:set var="board" value="${oneboard.usernum }"/> <!-- 게시판 글 정보 세션 -->
-	
-    <a class="btn btn-default pull-left" href="DO?command=userboard" >목록</a>
+	<br>
+	<Br>
 
+	<c:set var="user" value="${loginUser.usernum }" />
+	<!-- 로그인한 사람 정보 세션 -->
+	<c:set var="board" value="${oneboard.usernum }" />
+	<!-- 게시판 글 정보 세션 -->
+
+	<a class="btn btn-default pull-left" href="DO?command=userboard">목록</a>
 	<c:choose>
-    <c:when test="${user == board}"> <!-- 로그인한 사람정보와 작성글 정보가 일치하면 아래메뉴 보임-->
-    <a class="btn btn-default pull-right" href="DO?command=board_delete&num=${oneboard.boardnum }" >글 삭제</a>
-    <a class="btn btn-default pull-right" href="DO?command=board_modify_form&num=${oneboard.boardnum }" >글 수정</a>
-	</c:when>
-	<c:otherwise>
-    <a class="btn btn-default pull-right" href="DO?command=userboard">뒤로</a>
-	</c:otherwise>
+		<c:when test="${user == board}">
+			<!-- 로그인한 사람정보와 작성글 정보가 일치하면 아래메뉴 보임-->
+			<a class="btn btn-default pull-right"
+				href="DO?command=board_delete&num=${oneboard.boardnum }">글 삭제</a>
+			<a class="btn btn-default pull-right"
+				href="DO?command=board_modify_form&num=${oneboard.boardnum }">글
+				수정</a>
+		</c:when>
+		<c:otherwise>
+			<a class="btn btn-default pull-right" href="DO?command=userboard">뒤로</a>
+		</c:otherwise>
 	</c:choose>
-		
+	<a class="btn btn-default pull-right" href="DO?command=writeboardreply&num=${oneboard.boardnum }">답글</a>
+
 </div>
+<hr>
+	<div class="col-sm-12">
+    <div class="container" style="text-align: left">
+
+                
+                <c:if test="${!empty commentList}">
+				<c:forEach items="${commentList}" var="commentList"> <!-- 게시판들 정보를 가져와서 반복문 돌림 -->
+                
+                <div class="replytr" ><b>${commentList.nickname}</b>
+                <span >&nbsp;( <fmt:formatDate value="${commentList.regdate}"
+                				pattern="yyyy-MM-dd HH:mm:ss"/>)</span> <!-- 왜 시간이 안나오능가!? -->
+                <span class ="pull-right"><a href="#" >수정</a>&nbsp;<a href="DO?command=deletereplyinboard&commentnum=${commentList.commentnum}&num=${oneboard.boardnum}" >삭제</a></span>
+                </div> 
+				
+                
+                <div class="replywindow">
+                    <td class="replywindow">${commentList.content}</td>
+                </div>
+                </c:forEach>
+					</c:if>
+                
+        <form name="userboard" method="post" action="DO?command=repleWrite">
+            <table class="table table-striped">
+				<tr>                
+                <th style="text-align: left">댓글<span class="pull-right">
+                </tr>
+                <br>
+                
+                <tr>
+                    <td><textarea cols="10" rows="2" name="boardcomment" class="form-control"></textarea></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" class="btn btn-default pull-right"
+                               value="리플 등록"></td>
+                </tr>
+            </table>
+            <input type="hidden" name="num" value="${oneboard.boardnum}">
+            <input type="hidden" name="usernum" value="${loginUser.usernum} ">
+        </form>
+    </div>
+    
+</div>
+
+
+	
+
 
 
 

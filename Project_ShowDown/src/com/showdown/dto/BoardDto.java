@@ -12,20 +12,39 @@ public class BoardDto {
 	private Date boarddate;
 	private int totalcomment; 		//댓글수
 	private int hit; 				///조회수
-	private String nickname;
-	private int board_re_group;  	//답글 그룹
-	private int board_re_lev;  		//답글 깊이
-	private int board_re_seq;		//답글 순서
+	private String nickname;		///유저 닉네임
+	
+	private int ref;
+	private int re_step;
+	private int re_level;
 	
 	
+	
+	
+	public int getRef() {
+		return ref;
+	}
+	public void setRef(int ref) {
+		this.ref = ref;
+	}
+	public int getRe_step() {
+		return re_step;
+	}
+	public void setRe_step(int re_step) {
+		this.re_step = re_step;
+	}
+	public int getRe_level() {
+		return re_level;
+	}
+	public void setRe_level(int re_level) {
+		this.re_level = re_level;
+	}
 	public String getNickname() {
 		return nickname;
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	
-	
 	public int getBoardnum() {
 		return boardnum;
 	}
@@ -74,24 +93,7 @@ public class BoardDto {
 	public void setHit(int hit) {
 		this.hit = hit;
 	}
-	public int getBoard_re_group() {
-		return board_re_group;
-	}
-	public void setBoard_re_group(int board_re_group) {
-		this.board_re_group = board_re_group;
-	}
-	public int getBoard_re_lev() {
-		return board_re_lev;
-	}
-	public void setBoard_re_lev(int board_re_lev) {
-		this.board_re_lev = board_re_lev;
-	}
-	public int getBoard_re_seq() {
-		return board_re_seq;
-	}
-	public void setBoard_re_seq(int board_re_seq) {
-		this.board_re_seq = board_re_seq;
-	}
+	
 	
 	
 	

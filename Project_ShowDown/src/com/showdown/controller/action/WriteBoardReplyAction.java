@@ -10,29 +10,21 @@ import com.showdown.controller.actionInterface.ActionInterface;
 import com.showdown.dao.BoardDao;
 import com.showdown.dto.BoardDto;
 
-public class ModifyBoardAction implements ActionInterface {
+public class WriteBoardReplyAction implements ActionInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		/* 게시판글에 대한 답글달기 */
 		BoardDto bDTO = new BoardDto();
-		
 		bDTO.setBoardnum(Integer.parseInt(request.getParameter("boardnum")));
-		
-		String boardcontent = request.getParameter("boardcontent");
-		/* 수정시마다 <br> 늘어나는 것 방지 */
-		boardcontent = boardcontent.replace("<br>", "");
-		bDTO.setBoardcontent(boardcontent);
+		bDTO.setBoardtitle(request.getParameter("boardtitle"));
+		bDTO.setBoardcontent(request.getParameter("boardcontent"));
 		bDTO.setUsernum(Integer.parseInt(request.getParameter("usernum")));
-		
-		
-		System.out.println("boardnum"+request.getParameter("boardnum"));
-		System.out.println("boardcontent"+request.getParameter("boardcontent"));
-		System.out.println("usernum"+request.getParameter("usernum"));
-		
-		
-		
-		BoardDao bDao = BoardDao.getInstance();
-		bDao.ModifyBoards(bDTO);
+		bDTO.setRef(Integer.parseInt(request.getParameter("ref")));
+		bDTO.setRe_step(Integer.parseInt(request.getParameter("re_step")));
+		bDTO.setRe_level(Integer.parseInt(request.getParameter("re_level")));
+		BoardDao bDAO = BoardDao.getInstance();
+				
+		bDAO.InsertBoardReply(bDTO);
 		
 		new UserBoardAction().execute(request, response);
 	}

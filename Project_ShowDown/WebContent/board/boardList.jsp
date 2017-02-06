@@ -7,6 +7,8 @@
 <script src="../js/jquery-3.1.1.js"></script>
 <script src="../js/bootstrap.js"></script>
  -->
+ 
+
 <h1 class="h1class">유저 게시판</h1>
 <div class="container" >
 <table class="table table-hover">
@@ -23,15 +25,34 @@
     </tr>
     </thead>
 
-    <tbody>
+    <tbody class="boardList">
     
 	
 	<c:if test="${!empty loginUser}">
 	<c:forEach items="${boardList}" var="List"> <!-- 게시판들 정보를 가져와서 반복문 돌림 -->
     <tr style="border-bottom: 1px solid #DDDDDD;">
 		
+		
         <td>${List.boardnum}</td>
-        <td style="text-align:left"><a href="DO?command=board_view&num=${List.boardnum}">${List.boardtitle}</a></td>
+        <td style="text-align:left">
+        <!-- 답변들여쓰기 -->
+        <c:forEach var="i" begin="1" end="${List.re_level }">
+        
+        <c:if test="${List.re_level != 0}">
+        <img src='images/reply_icon1.gif' />
+        </c:if>
+        </c:forEach>
+        
+        <a href="DO?command=board_view&num=${List.boardnum}">${List.boardtitle}</a> 
+        
+        <!-- 댓글이 있으면 갯구 보여주고 없으면 공백처리 -->
+        <c:if test="${List.totalcomment > 0}">
+        <span style="color:#204040">
+        [${List.totalcomment}]
+        </span>
+       </c:if>
+       </td> 
+       
         <td>${List.nickname}</td>
         <td>${List.boarddate}</td>
         <td>${List.hit}</td>
@@ -55,14 +76,36 @@
 
 
     <div class="text-center">
-    <ul class="pagination">
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-    </ul>
-
+        <ul class="pagination">
+    <!-- 처음 -->
+    <c:if test="${page.curBlock > 1}">
+	<li><a href="javascript:list('1')">처음</a></li>
+	</c:if>
+	<!-- 이전 -->
+    <c:if test="${page.curBlock > 1}">
+	<li><a href="javascript:list('${page.prevPage }')">이전</a></li>
+	</c:if>
+	<!-- 페이징 -->
+    <c:forEach var="num" begin="${page.blockStart }" end="${page.blockEnd }">
+    <c:choose>
+    	<c:when test="${num == page.curPage }">
+        <li><a href="javascript:list('${num }')"><span style="color:red">${num }</span></a></li>
+        </c:when>
+        <c:otherwise>
+        <li> <a href="javascript:list('${num }')">${num }</a></li>
+        </c:otherwise>
+    	</c:choose>
+	</c:forEach>
+	<!-- 다음 -->
+	<c:if test="${page.curBlock <= page.totBlock}">
+	<li><a href="javascript:list('${page.nextPage }')">다음</a></li>
+	</c:if>
+	<!-- 끝 -->
+	 <c:if test="${page.curPage < page.totPage}">
+	<li><a href="javascript:list('${page.totPage }')">끝</a></li>
+	</c:if>
+  		</ul>
+    
 </div>
 </div>
 
