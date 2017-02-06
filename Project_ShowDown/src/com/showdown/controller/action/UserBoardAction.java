@@ -37,15 +37,16 @@ public class UserBoardAction implements ActionInterface {
 		if(request.getParameter("curPage") != null){
 			curPage = Integer.parseInt(request.getParameter("curPage"));
 		}
-		pageDao pageDao = new pageDao(count, curPage);
+		pageDao pageDAO = new pageDao(count, curPage);
 		//현재 페이지의 시작, 끝 번호 계산
-		int start = pageDao.getPageBegin();
-		int end = pageDao.getPageEnd();
+		int start = pageDAO.getPageBegin();
+		int end = pageDAO.getPageEnd();
 		/// 계시물 목록을 리턴받음
+		
 		List<BoardDto> boardList = bDAO.selectAllBoards(start,end);
 		request.setAttribute("boardList", boardList);
 		/// 페이지 객체 전달
-		request.setAttribute("page", pageDao);
+		request.setAttribute("page", pageDAO);
 		
 		
 		

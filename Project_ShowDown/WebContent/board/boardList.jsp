@@ -26,14 +26,19 @@
     </thead>
 
     <tbody class="boardList">
-    
-	
+    <!-- 페이지 넘버가 역순 순서대로 feat. 기대형 -->
+		<c:set var="firstcount" value="${page.totalBoard - (page.curPage-1)*10}" />
+		
 	<c:if test="${!empty loginUser}">
 	<c:forEach items="${boardList}" var="List"> <!-- 게시판들 정보를 가져와서 반복문 돌림 -->
+
     <tr style="border-bottom: 1px solid #DDDDDD;">
 		
-		
-        <td>${List.boardnum}</td>
+        <td>
+        ${firstcount}
+       <c:set var="firstcount" value="${firstcount-1}" />
+        </td>
+        
         <td style="text-align:left">
         <!-- 답변들여쓰기 -->
         <c:forEach var="i" begin="1" end="${List.re_level }">
@@ -45,7 +50,7 @@
         
         <a href="DO?command=board_view&num=${List.boardnum}">${List.boardtitle}</a> 
         
-        <!-- 댓글이 있으면 갯구 보여주고 없으면 공백처리 -->
+        <!-- 댓글이 있으면 갯수 보여주고 없으면 공백처리 -->
         <c:if test="${List.totalcomment > 0}">
         <span style="color:#204040">
         [${List.totalcomment}]
@@ -54,7 +59,10 @@
        </td> 
        
         <td>${List.nickname}</td>
-        <td>${List.boarddate}</td>
+        <td>
+        <fmt:formatDate value="${List.boarddate}"
+                				pattern="yyyy-MM-dd"/>
+        </td>
         <td>${List.hit}</td>
     </tr>
 	</c:forEach>

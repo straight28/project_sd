@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Doodle Dak</title>
+<title>Doodle Tak</title>
 
 <%-- 부트스트랩을 위한 주소와 링크 시작 --%>
 		<link rel="stylesheet" href="css/bootstrap.css">
@@ -72,7 +72,7 @@
                 <div id="header_Nav">
                     <ul>
                         <li>
-                            <a href="#">Doodle tak 이란</a>
+                            <a href="#">Doodle Tak이란</a>
                         </li>
                         <li>
                             <a href="DO?command=userboard">유저 게시판</a>

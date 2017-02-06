@@ -34,7 +34,10 @@
 				</ul>
 				<ul>
 					<li>등록일:</li>
-					<li>${oneboard.boarddate}</li>
+					<li>
+					<fmt:formatDate value="${oneboard.boarddate}"
+                				pattern="yyyy-MM-dd HH:mm:ss"/>
+					</li>
 				</ul>
 				<ul>
 					<li>조회수:</li>
@@ -86,7 +89,7 @@
                 <div class="replytr" ><b>${commentList.nickname}</b>
                 <span >&nbsp;( <fmt:formatDate value="${commentList.regdate}"
                 				pattern="yyyy-MM-dd HH:mm:ss"/>)</span> <!-- 왜 시간이 안나오능가!? -->
-                <span class ="pull-right"><a href="#" >수정</a>&nbsp;<a href="DO?command=deletereplyinboard&commentnum=${commentList.commentnum}&num=${oneboard.boardnum}" >삭제</a></span>
+                <span class ="pull-right"><a href="DO?command=deletereplyinboard&commentnum=${commentList.commentnum}&num=${oneboard.boardnum}" >삭제</a></span>
                 </div> 
 				
                 

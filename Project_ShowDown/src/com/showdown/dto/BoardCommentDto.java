@@ -1,6 +1,7 @@
 package com.showdown.dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class BoardCommentDto {
 	private int commentnum;
@@ -8,7 +9,8 @@ public class BoardCommentDto {
 	private int usernum;
 	private String nickname;
 	private String content;
-	private Date regdate;
+	private Timestamp regdate;
+	
 	
 	
 	public String getNickname() {
@@ -41,10 +43,10 @@ public class BoardCommentDto {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Date getRegdate() {
+	public Timestamp getRegdate() {
 		return regdate;
 	}
-	public void setRegdate(Date regdate) {
+	public void setRegdate(Timestamp regdate) {
 		this.regdate = regdate;
 	}
 	

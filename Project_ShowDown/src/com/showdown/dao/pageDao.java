@@ -18,15 +18,25 @@ public class pageDao {
 	private int pageEnd;		///현재 페이지의 끝 번호
 	private int blockStart;  	///현재 블록의 시작 블록
 	private int blockEnd;		///현재 블록의 끝 블록
+	private int totalBoard;     ///전체 글 개수
 	
+	public int getTotalBoard() {
+		return totalBoard;
+	}
+
+	public void setTotalBoard(int totalBoard) {
+		this.totalBoard = totalBoard;
+	}
+
 	//생성자(레코드 갯수, 현재 페이지 번호)
 	public pageDao(int count, int curPage) {
 	curBlock = 1;   		// 현재 페이지 블록 번호
-	this.curPage = curPage; // 전체 페이지 갯수 계산
+	this.curPage = curPage; // 현재 페이지
 	setTotPage(count); 		// 전체 페이지 갯수 계산
 	setPageRange(); 		// 페이지의 시작, 끝 번호 계산
 	setTotBlock();			// 전체 페이지 블록 갯수
 	setBlockRange(); 		// 블록의 시작, 끝 번호 계산
+	setTotalBoard(count);   // 총 게시글 수
 	}
 	
 	public void setPageRange(){
@@ -51,6 +61,20 @@ public class pageDao {
 			nextPage = totPage;
 		}
 	}
+	
+	
+	/* ${page.totalBoard - (page.curPage-1)*PAGE_SCALE}"
+	
+	
+			반복문
+        <td>
+        ${firstcount} 출력
+       						${firstcount-1} 반복문 돌면서 하나씩 값을 빼줌
+        	반복문
+        
+        </td>*/
+	
+	
 	
 	public int getCurPage() {
 		return curPage;

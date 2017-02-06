@@ -1,6 +1,7 @@
 package com.showdown.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -104,7 +105,7 @@ public class BoardDao implements BoardDaoInterface{
 				Bdto.setUsernum(rs.getInt("usernum"));
 				Bdto.setAdminnum(rs.getInt("adminnum"));
 				Bdto.setBoardcontent(boardcontent);
-				Bdto.setBoarddate(rs.getDate("boarddate"));
+				Bdto.setBoarddate(rs.getTimestamp("boarddate"));
 				Bdto.setTotalcomment(rs.getInt("totalcomment"));
 				Bdto.setHit(rs.getInt("hit"));
 				Bdto.setRef(rs.getInt("ref"));
@@ -216,7 +217,7 @@ public class BoardDao implements BoardDaoInterface{
 				bdto.setUsernum(rs.getInt("usernum"));
 				bdto.setAdminnum(rs.getInt("adminnum"));
 				bdto.setBoardcontent(boardcontent);
-				bdto.setBoarddate(rs.getDate("boarddate"));
+				bdto.setBoarddate(rs.getTimestamp("boarddate"));
 				bdto.setHit(rs.getInt("hit"));
 				bdto.setRef(rs.getInt("ref"));
 				bdto.setRe_step(rs.getInt("re_step"));
@@ -315,14 +316,14 @@ public class BoardDao implements BoardDaoInterface{
 				/*  태그 방지, 공백추가 , 줄바꿈 */
 				String content = rs.getString("content");
 				content = checkArticle(content);
-								
 				bcDto.setCommentnum(rs.getInt("commentnum"));
 				bcDto.setBoardnum(rs.getInt("boardnum"));
 				bcDto.setUsernum(rs.getInt("usernum"));
 				bcDto.setContent(content);
-				bcDto.setRegdate(rs.getDate("regdate"));
+				bcDto.setRegdate(rs.getTimestamp("regdate"));
 				bcDto.setNickname(rs.getString("nickname"));
 				commentlist.add(bcDto);
+					
 			}
 			
 		} catch (Exception e) {
@@ -426,10 +427,6 @@ public class BoardDao implements BoardDaoInterface{
 		}
 		return result;
 	}
-	
-	
-	
-	
 	
 	
 	

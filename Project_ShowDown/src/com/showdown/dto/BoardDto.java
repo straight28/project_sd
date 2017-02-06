@@ -9,7 +9,7 @@ public class BoardDto {
 	private int usernum; 			//유저 작성자
 	private int adminnum; 			//운영자 작성자
 	private String boardcontent;
-	private Date boarddate;
+	private Timestamp boarddate;
 	private int totalcomment; 		//댓글수
 	private int hit; 				///조회수
 	private String nickname;		///유저 닉네임
@@ -75,10 +75,10 @@ public class BoardDto {
 	public void setBoardcontent(String boardcontent) {
 		this.boardcontent = boardcontent;
 	}
-	public Date getBoarddate() {
+	public Timestamp getBoarddate() {
 		return boarddate;
 	}
-	public void setBoarddate(Date boarddate) {
+	public void setBoarddate(Timestamp boarddate) {
 		this.boarddate = boarddate;
 	}
 	public int getTotalcomment() {
