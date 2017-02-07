@@ -1,13 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp"%>
+<jsp:useBean id="now" class="java.util.Date"/> <!-- 오늘날짜 확인을 위한 usebean -->
+<fmt:formatDate value="${now }" pattern="yyyy-MM-dd" var="today"/> <!-- 오늘날짜 확인을 위한 jstl -->
+
 <!-- 경로 확인 용
 <link rel="stylesheet" href="../css/test.css"> 
 <link rel="stylesheet" href="../css/bootstrap.css">
 <script src="../js/jquery-3.1.1.js"></script>
 <script src="../js/bootstrap.js"></script>
  -->
-
 
 <h1 class="h1class">유저 게시판</h1>
 <div class="container">
@@ -49,11 +51,18 @@
 								<c:if test="${List.re_level != 0}">
 									<img src='images/reply_icon1.gif' />
 								</c:if>
-							</c:forEach> <a href="DO?command=board_view&num=${List.boardnum}">${List.boardtitle}</a>
+							</c:forEach> 
+							<a href="DO?command=board_view&num=${List.boardnum}">
+							${List.boardtitle}
+							</a>
 
 							<!-- 댓글이 있으면 갯수 보여주고 없으면 공백처리 --> 
 							<c:if test="${List.totalcomment > 0}">
 								<span style="color: #204040"> [${List.totalcomment}] </span>
+							</c:if>
+							<!-- 오늘 글 올렸다면 new 표시 뜸 --> 
+							<c:if test="${List.shortdate == today}">
+							<img src='images/new.jpg' />
 							</c:if>
 						</td>
 

@@ -1,6 +1,8 @@
 package com.showdown.controller.action;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -42,9 +44,21 @@ public class UserBoardAction implements ActionInterface {
 		//현재 페이지의 시작, 끝 번호 계산
 		int start = pageDAO.getPageBegin();
 		int end = pageDAO.getPageEnd();
-		/// 계시물 목록을 리턴받음
 		
+		
+		Date date = new Date();
+		SimpleDateFormat simple = new SimpleDateFormat("yyyy-MM-dd");
+		String year=(String)simple.format(date);
+
+		/// 모든 게시물 목록 가져오기 
 		List<BoardDto> boardList = bDAO.selectAllBoards(start,end);
+		/// shortdate에 잘라낸 시간를 넣어줌
+		for (BoardDto boardDto : boardList) {
+			String time1 = String.valueOf(boardDto.getBoarddate());
+			String yea = time1.substring(0,10);
+			boardDto.setShortdate(yea);
+		}
+		
 		request.setAttribute("boardList", boardList);
 		/// 페이지 객체 전달
 		request.setAttribute("page", pageDAO);

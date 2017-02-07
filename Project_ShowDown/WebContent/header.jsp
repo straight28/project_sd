@@ -3,6 +3,7 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <% request.setCharacterEncoding("UTF-8");%>    
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,9 +21,16 @@
 		<link href="css/test.css" rel="stylesheet">  
 		
 </head>
-<body>
-
-
+<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
+<!-- 마우스 오른쪽 버튼 비활성화 
+<body oncontextmenu="return false">
+-->
+<!-- 드래그 금지 
+<body ondragstart="return false">
+-->
+<!-- 블럭 금지 
+<body onselectstart="return false">
+-->
 
 <div class="container-fluid" style="text-align: center">
     <div class="row">

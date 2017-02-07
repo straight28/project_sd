@@ -5,11 +5,13 @@
 
 html, body {
 	height: 100%; /* 전체 넓이 100%로 정함 */
+	
 }
 
 body {
 	background-color: #ffffff; /* 아직 완전 흰색 아님. 완전 흰색 되면 지울것 */
 }
+
 
 .container-fluid {
 	min-height: 100%; /* 아무런 내용이 없어도 최소 100% 자리를 차지하게 함. */

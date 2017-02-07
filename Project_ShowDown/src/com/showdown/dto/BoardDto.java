@@ -13,6 +13,14 @@ public class BoardDto {
 	private int totalcomment; 		//댓글수
 	private int hit; 				///조회수
 	private String nickname;		///유저 닉네임
+	private String shortdate;       ///잘린 날짜
+	
+	public String getShortdate() {
+		return shortdate;
+	}
+	public void setShortdate(String shortdate) {
+		this.shortdate = shortdate;
+	}
 	
 	private int ref;
 	private int re_step;
