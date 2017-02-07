@@ -63,16 +63,7 @@ public class pageDao {
 	}
 	
 	
-	/* ${page.totalBoard - (page.curPage-1)*PAGE_SCALE}"
-	
-	
-			반복문
-        <td>
-        ${firstcount} 출력
-       						${firstcount-1} 반복문 돌면서 하나씩 값을 빼줌
-        	반복문
-        
-        </td>*/
+
 	
 	
 	

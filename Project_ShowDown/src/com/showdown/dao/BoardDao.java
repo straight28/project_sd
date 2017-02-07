@@ -24,11 +24,13 @@ public class BoardDao implements BoardDaoInterface{
 		return instance;
 	}
 	
+	/********** 태그 방지 (원래 insert에서 하는게 가장 좋음) **********/
 	public String checkArticle(String article){
-		/* 태그 방지 원래 insert에서 하는게 가장 좋음 */
 		if(article != null){
-		if(article.toLowerCase().indexOf("xmp") != -1 || article.indexOf("script")!= -1){
+		/* whiteList 방식을 쓴다면 사용하지만 지금은 사용하지 않음
+		 * if(article.toLowerCase().indexOf("xmp") != -1 || article.indexOf("script")!= -1){
 		}
+		*/
 		article = article.replace("<", "&lt");
 		article = article.replace(">", "&gt");
 		/* 공백 처리 */
@@ -39,7 +41,7 @@ public class BoardDao implements BoardDaoInterface{
 		return article;
 	}
 		
-	/* 전체 게시판 글 갯수 */
+	/********** 전체 게시판 글 갯수 **********/
 	public int countBoard(){
 		int result = 0;
 		
@@ -47,7 +49,6 @@ public class BoardDao implements BoardDaoInterface{
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		
 		try {
 			conn = DBConnectManager.getConnection();
 			stmt = conn.createStatement();
@@ -55,24 +56,23 @@ public class BoardDao implements BoardDaoInterface{
 			if (rs.next()) {
 				result = rs.getInt(1);
 			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally{
 			DBConnectManager.disConnect(conn, stmt, rs);
 		}
-		
 		return result;
 	}
 	
-	/* 검색한 게시판 글 갯수 */
+	
+	
+	/********** 검색한 게시판 글 갯수 **********/
 	public int searchCountBoard(String search_option, String keyword){
 		int result = 0;
 		
+		/*  nickname을 불러오는 sql이 달라서 안정성을 위해 sql을 분리시킴  */
 		String nicksql =" select count(*) from BOARD, member where board.usernum = member.usernum and nickname like '%'||?||'%'";
 		String titlesql =" select count(*) from board where boardtitle like '%'||?||'%'";
-		String contentsql =" select count(*) from board where boardcontent like '%'||?||'%'";
-		
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -83,13 +83,9 @@ public class BoardDao implements BoardDaoInterface{
 			if (search_option.equals("nickname")) {
 				pstmt = conn.prepareStatement(nicksql);
 				
-			}else if(search_option.equals("title")){
+			}else if(search_option.equals("boardtitle")){
 				pstmt = conn.prepareStatement(titlesql);
-				
-			}else if(search_option.equals("content")){
-				pstmt = conn.prepareStatement(contentsql);
-			}
-			
+			}	
 			pstmt.setString(1, keyword);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -104,11 +100,8 @@ public class BoardDao implements BoardDaoInterface{
 	}
 	
 	
-	
-	
-	
+	/********** 모든 게시판 글을 가져옴  **********/
 	public List<BoardDto> selectAllBoards(int pageStart, int pageEnd){
-//		String sql = "select * from board order by boardnum desc";   ///역 정렬
 		String sql = "select * "
 				 		+ "   from (  "
 						+ "   select rownum as rn, A.* "
@@ -124,7 +117,7 @@ public class BoardDao implements BoardDaoInterface{
 						 + "  )    where rn between ? and ? ";
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		Connection conn = null;
-		PreparedStatement pstmt = null;   ///이 메소드의 sql은 완성된 형태의 sql 문장임
+		PreparedStatement pstmt = null;   
 		ResultSet rs = null;
 		
 		try {
@@ -166,7 +159,7 @@ public class BoardDao implements BoardDaoInterface{
 	}
 	
 	
-	/* 게시글 등록하기// boardnum에 seq 생성여부 확인 */
+	/********** 게시글 등록  **********/
 	@Override
 	public int InsertBoards(BoardDto bDTO) {
 		int result = 0; 
@@ -193,10 +186,9 @@ public class BoardDao implements BoardDaoInterface{
 	}
 	
 	
-	/* 조회수 올리는 sql */
+	/********** 조회수 올리는 sql **********/
 	public void updateHit(int boardnum, HttpSession count_session){
 		String sql = "update board set hit=hit+1 where boardnum = ?";
-		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
@@ -216,10 +208,9 @@ public class BoardDao implements BoardDaoInterface{
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, boardnum);
 				pstmt.executeUpdate();
-				///업데이트한 시간을 세션에 저장 setArrtibute(변수명(최근열람한게시글) , 값) 
+				///업데이트한 시간을 세션에 저장 setArrtibute(변수명(최근열람한게시글), 값) 
 			count_session.setAttribute("update_time_"+boardnum, current_time);
 			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("updateHit 에러");
@@ -229,7 +220,7 @@ public class BoardDao implements BoardDaoInterface{
 	}
 	
 	
-	/* 글 내용보기 */
+	/********** 글 내용보기 **********/
 	public BoardDto selectOneBoardByBoardNum(int boardnum){
 		String sql = "select board.BOARDNUM, board.boardtitle, board.usernum, board.adminnum," 
 				     + "board.boardcontent,	board.boarddate, board.HIT, board.ref, "
@@ -276,7 +267,7 @@ public class BoardDao implements BoardDaoInterface{
 	}
 	
 	
-	/* 글 삭제하기 */
+	/********** 글 삭제하기 **********/
 	@Override
 	public int DeleteBoards(int boardnum) {
 		System.out.println("삭제되는 게시판 숫자는?"+boardnum);
@@ -285,7 +276,7 @@ public class BoardDao implements BoardDaoInterface{
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
-			////코멘트 모두 삭제후
+			////코멘트 모두 삭제
 			String commentsql = "delete from board_comment where boardnum=?";
 			conn = DBConnectManager.getConnection();
 			pstmt = conn.prepareStatement(commentsql);
@@ -293,7 +284,7 @@ public class BoardDao implements BoardDaoInterface{
 			pstmt.executeUpdate();
 			pstmt.close();
 			
-			////코멘트 모두 삭제후 게시판 삭제
+			////코멘트 모두 삭제 후 게시판 삭제
 			String sql = "delete from board where boardnum=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, boardnum);
@@ -307,12 +298,10 @@ public class BoardDao implements BoardDaoInterface{
 		return result;
 	}
 	
-	/* 글 수정하기 */
+	/********** 글 수정하기 **********/
 	@Override
 	public void ModifyBoards(BoardDto bDTO) {
-		
 		String sql = "update board set boardcontent=?,usernum=? where boardnum=?";
-		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
@@ -334,7 +323,7 @@ public class BoardDao implements BoardDaoInterface{
 	
 	
 	
-	/* 댓글 목록 보여주기 */
+	/*********** 댓글 list 보여주기 **********/
 	public List<BoardCommentDto> commentList(int boardnum){
 		List<BoardCommentDto> commentlist = new ArrayList<BoardCommentDto>();
 		String sql = "select board_comment.commentnum, board_comment.content, board_comment.usernum, "
@@ -358,6 +347,7 @@ public class BoardDao implements BoardDaoInterface{
 				/*  태그 방지, 공백추가 , 줄바꿈 */
 				String content = rs.getString("content");
 				content = checkArticle(content);
+				
 				bcDto.setCommentnum(rs.getInt("commentnum"));
 				bcDto.setBoardnum(rs.getInt("boardnum"));
 				bcDto.setUsernum(rs.getInt("usernum"));
@@ -377,10 +367,9 @@ public class BoardDao implements BoardDaoInterface{
 	}
 	
 	
-	/* 게시글 안에 댓글 등록 */
+	/********** 게시글 안에 댓글 등록 **********/
 	public int InsertBoardComment(BoardCommentDto bcdto) {
 		int result = 0; 
-		
 		String sql ="insert into board_comment (commentnum,boardnum,usernum,content) "
 				+" values((select nvl(max(commentnum)+1,1) from board_comment) ,?,?,?)";
 		
@@ -393,7 +382,6 @@ public class BoardDao implements BoardDaoInterface{
 			pstmt.setInt(2, bcdto.getUsernum());
 			pstmt.setString(3, bcdto.getContent());
 			result = pstmt.executeUpdate();
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("InsertBoardComment 에러");
@@ -404,7 +392,7 @@ public class BoardDao implements BoardDaoInterface{
 	} 
 	
 	
-	/* 게시판 아래에 답글달기 */
+	/********** 게시판 아래에 답글달기 **********/
 	public int InsertBoardReply(BoardDto bDTO) {
 		int result = 0; 
 		
@@ -413,10 +401,10 @@ public class BoardDao implements BoardDaoInterface{
 		try {
 			conn = DBConnectManager.getConnection();
 			
-			int re_lev = bDTO.getRe_level()+1;
-			int re_step = bDTO.getRe_step()+1;
+			int re_lev = bDTO.getRe_level()+1; //답글의 레벨을 올려줌
+			int re_step = bDTO.getRe_step()+1; //답글의 단계를 올려줌
 			
-			/* 답글 들어가기 전에 기존 스텝들을 1 증가시켜줌 */
+			/* 답글 들어가기 전에 기존 단계들을 1 증가시켜줌 */
 			String updateSql = "update board set re_step = re_step+1"
 								+ " where ref=? and re_step >= ?";
 			pstmt = conn.prepareStatement(updateSql);
@@ -425,7 +413,7 @@ public class BoardDao implements BoardDaoInterface{
 			pstmt.executeUpdate();
 			pstmt.close();
 			
-			/* 기존 스템 증가후 새로운 답글 스텝 입력 */
+			/* 기존 단계 증가후 새로운 답글 단계 입력 */
 			String sql ="insert into board(boardnum,boardtitle, usernum, boardcontent, ref, re_step, re_level) "
 					+"values((select nvl(max(boardnum)+1,1) from board),?,?,?,?,?,?)";
 			
@@ -447,9 +435,8 @@ public class BoardDao implements BoardDaoInterface{
 		return result;
 	}
 	
-	/* 댓글 삭제하기 */
+	/********** 댓글 삭제하기 **********/
 	public int DeleteBoardReply(int commentnum) {
-		
 		int result=0;
 		
 		String sql = "delete from BOARD_COMMENT where commentnum=?";
@@ -471,11 +458,9 @@ public class BoardDao implements BoardDaoInterface{
 	}
 	
 	
-	/* 검색을 위한 dao */
+	/********** 검색을 위한 dao **********/
 	public List<BoardDto> searchList(String search_option, String keyword, int pageStart, int pageEnd){
-		
 		List<BoardDto> searchlist = new ArrayList<BoardDto>();
-		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -520,37 +505,25 @@ public class BoardDao implements BoardDaoInterface{
 				      + "   ) A "
 				 + "  )    where rn between ? and ? ";
 		
-		/*
-		String contentsql = "select board.BOARDNUM, board.boardtitle, board.usernum, board.adminnum, "
-				+" board.boardcontent,	board.boarddate, board.HIT, board.ref, "
-				+" board.re_step, board.re_level, member.nickname "
-				+" from BOARD, member where board.usernum = member.usernum and boardcontent like '%'||?||'%'"
-				+" order by ref desc, re_step asc";*/
-
-		String contentsql = "select * "
+		/********** 중복을 줄이기 위해 코드로 ? ? ? ? 4개주고 preparedStatement했으나 검색 되지 않음
+		String sql = "select * "
 		 		+ "   from (  "
 				+ "   select rownum as rn, A.* "
 				+ "   from (  "
-				      + "   select board.BOARDNUM, board.boardtitle, board.usernum, board.adminnum,  " 
-					  + "   board.boardcontent,	board.boarddate, board.HIT, board.ref, "
-					  + "   board.re_step, board.re_level, member.nickname "
-					  + " 	from BOARD, member where board.usernum = member.usernum and boardcontent like '%'||?||'%'"
+				      + "   select board.BOARDNUM, board.boardtitle, board.usernum, board.adminnum, " 
+					  + "  board.boardcontent,	board.boarddate, board.HIT, board.ref, "
+					  + "   board.re_step, board.re_level, member.nickname"
+					  + " 	from BOARD, member where board.usernum = member.usernum and ? like '%'||?||'%'"
 				      + "   order by ref desc, re_step asc "
 				      + "   ) A "
-				 + "  )    where rn between ? and ? ";	
-		
-		
+				 + "  )    where rn between ? and ? "; */
 		
 		try {
 			conn = DBConnectManager.getConnection();
 			if (search_option.equals("nickname")) {
 				pstmt = conn.prepareStatement(nicksql);
-				
-			}else if(search_option.equals("title")){
+			}else if(search_option.equals("boardtitle")){
 				pstmt = conn.prepareStatement(titlesql);
-				
-			}else if(search_option.equals("content")){
-				pstmt = conn.prepareStatement(contentsql);
 			}
 			pstmt.setString(1, keyword);
 			pstmt.setInt(2, pageStart);
@@ -567,7 +540,6 @@ public class BoardDao implements BoardDaoInterface{
 				boardtitle = boardtitle.replace(keyword, "<span style='color:#ff3d4a'>"+keyword+"<span>"); 
 				String boardcontent = rs.getString("boardcontent");
 				boardcontent = checkArticle(boardcontent);
-				boardcontent = boardcontent.replace(keyword, "<span style='color:#ff3d4a'>"+keyword+"<span>");
 				String nickname = rs.getString("nickname");
 				nickname = nickname.replace(keyword, "<span style='color:#ff3d4a'>"+keyword+"<span>");
 				

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import com.showdown.DBConnect.DBConnectManager;
 import com.showdown.dto.MemberDto;
 
-/* 회원 정보 dao */
+/*********** 회원 정보 dao **********/
 public class MemberDao implements MemberDaoInterface{
 
 	private static MemberDao instance = new MemberDao();
@@ -37,7 +37,7 @@ public class MemberDao implements MemberDaoInterface{
 */
 	
 	
-	/*  회원가입을 위한 메소드 "C"  */
+	/**********  회원가입을 위한 메소드 "C"  **********/
 	@Override
 	public int InsertMember(MemberDto mDTO) {
 		int result = 0;
@@ -62,16 +62,14 @@ public class MemberDao implements MemberDaoInterface{
 		} finally{
 			DBConnectManager.disConnect(conn, pstmt);
 		}
-		
 		return result;
 	}
 	
 	
-	/* 회원탈퇴   */
+	/********** 회원탈퇴   **********/
 	@Override
 	public void DeleteMember(String userid) {
 		String sql = "delete from member where userid=?";
-		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
@@ -89,7 +87,7 @@ public class MemberDao implements MemberDaoInterface{
 		
 	}
 	
-	/* 1명의 회원정보 가져오기  */
+	/********** 1명의 회원정보 가져오기 **********/
 	public MemberDto selectMemberByUserid(String userid){
 		MemberDto mDTO = null;
 		
@@ -128,7 +126,7 @@ public class MemberDao implements MemberDaoInterface{
 
 
 	
-	/* 로그인시 회원 검사 */
+	/********** 로그인시 회원 검사 **********/
 	public int checkID(String userid, String userpass){
 		int result = -1; //-1이면 아이디가 db에 없는 상태
 		String sql = "SELECT USERPASS FROM MEMBER WHERE USERID=?";
@@ -164,7 +162,7 @@ public class MemberDao implements MemberDaoInterface{
 	}
 	
 	 
-	/* 회원 정보 업데이트 */
+	/********** 회원 정보 업데이트 **********/
 	@Override
 	public int UpdateMember(MemberDto mDTO) {
 		int result = -1;
