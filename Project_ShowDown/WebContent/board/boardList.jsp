@@ -86,14 +86,14 @@
 
 	<form name="searchform" method="post" action="DO?command=searchkeyword">
 		<select name="search_option" class="form-control pull-left" style="width: 90px">
-			<c:if test="${search_option != 'title'}">
-				<option value="boardtitle">제목</option>
-				<option value="nickname">작성자</option>
+			<c:if test="${search_option != 'nickname'}">
+				<option value="boardtitle" selected>제목</option>
+				<option value="nickname" >작성자</option>
 			</c:if>
-			<c:if test="${search_option == 'title'}">
-				<option value="title" selected>제목</option>
+			<c:if test="${search_option == 'nickname'}">
+				<option value="title" >제목</option>
 				<!-- 제목에 셀렉트 고정 -->
-				<option value="nickname">작성자</option>
+				<option value="nickname" selected>작성자</option>
 			</c:if>
 
 		</select> <input type="text" name="keyword" value="${keyword }"
