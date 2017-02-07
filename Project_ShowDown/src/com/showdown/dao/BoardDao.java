@@ -103,18 +103,18 @@ public class BoardDao implements BoardDaoInterface{
 	/********** 모든 게시판 글을 가져옴  **********/
 	public List<BoardDto> selectAllBoards(int pageStart, int pageEnd){
 		String sql = "select * "
-				 		+ "   from (  "
-						+ "   select rownum as rn, A.* "
-						+ "   from (  "
-						      + "   select board.boardnum, board.boardtitle, board.usernum, board.adminnum,  " 
-							  + "   board.boardcontent, board.boarddate, board.hit,  "
-							  + "   board.ref, board.re_step, board.re_level, "
-							  + "   member.nickname,(select count(*) from board_comment  "
-							  + "   where boardnum=board.boardnum) totalcomment  "
-							  + "   from board, member where board.usernum = member.usernum  "
-						      + "   order by ref desc, re_step asc "
-						      + "   ) A "
-						 + "  )    where rn between ? and ? ";
+				 	+ "   from (  "
+					+ "   select rownum as rn, A.* "
+					+ "   from (  "
+					+ "   select board.boardnum, board.boardtitle, board.usernum, board.adminnum,  " 
+					+ "   board.boardcontent, board.boarddate, board.hit,  "
+					+ "   board.ref, board.re_step, board.re_level, "
+					+ "   member.nickname,(select count(*) from board_comment  "
+					+ "   where boardnum=board.boardnum) totalcomment  "
+					+ "   from board, member where board.usernum = member.usernum  "
+					+ "   order by ref desc, re_step asc "
+					+ "   ) A "
+					+ "  )    where rn between ? and ? ";
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;   
@@ -223,9 +223,9 @@ public class BoardDao implements BoardDaoInterface{
 	/********** 글 내용보기 **********/
 	public BoardDto selectOneBoardByBoardNum(int boardnum){
 		String sql = "select board.BOARDNUM, board.boardtitle, board.usernum, board.adminnum," 
-				     + "board.boardcontent,	board.boarddate, board.HIT, board.ref, "
-				     + "board.re_step, board.re_level, member.nickname "
-				     + " from BOARD, member where board.usernum = member.usernum and BOARD.BOARDNUM=?";
+				   + "board.boardcontent,	board.boarddate, board.HIT, board.ref, "
+				   + "board.re_step, board.re_level, member.nickname "
+				   + " from BOARD, member where board.usernum = member.usernum and BOARD.BOARDNUM=?";
 		BoardDto bdto = null; /// 실패시 null값
 		
 		Connection conn = null;
@@ -327,10 +327,10 @@ public class BoardDao implements BoardDaoInterface{
 	public List<BoardCommentDto> commentList(int boardnum){
 		List<BoardCommentDto> commentlist = new ArrayList<BoardCommentDto>();
 		String sql = "select board_comment.commentnum, board_comment.content, board_comment.usernum, "
-            		+" board_comment.regdate, board_comment.boardnum,  member.nickname "
-            		+" from board_comment, member where board_comment.usernum = member.usernum "
-            		+" and boardnum = ? "
-					+" order by board_comment.commentnum asc ";
+            	   +" board_comment.regdate, board_comment.boardnum,  member.nickname "
+            	   +" from board_comment, member where board_comment.usernum = member.usernum "
+            	   +" and boardnum = ? "
+				   +" order by board_comment.commentnum asc ";
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -474,16 +474,16 @@ public class BoardDao implements BoardDaoInterface{
 							+" order by ref desc, re_step asc";*/
 		
 		String nicksql = "select * "
-		 		+ "   from (  "
-				+ "   select rownum as rn, A.* "
-				+ "   from (  "
-				      + "   select board.BOARDNUM, board.boardtitle, board.usernum, board.adminnum,  " 
-					  + "   board.boardcontent,	board.boarddate, board.HIT, board.ref, "
-					  + "   board.re_step, board.re_level, member.nickname "
-					  + " 	from BOARD, member where board.usernum = member.usernum and nickname like '%'||?||'%' "
-				      + "   order by ref desc, re_step asc "
-				      + "   ) A "
-				 + "  )    where rn between ? and ? ";
+		 			   + "   from (  "
+		 			   + "   select rownum as rn, A.* "
+				       + "   from (  "
+				       + "   select board.BOARDNUM, board.boardtitle, board.usernum, board.adminnum,  " 
+					   + "   board.boardcontent,	board.boarddate, board.HIT, board.ref, "
+					   + "   board.re_step, board.re_level, member.nickname "
+					   + " 	from BOARD, member where board.usernum = member.usernum and nickname like '%'||?||'%' "
+				       + "   order by ref desc, re_step asc "
+				       + "   ) A "
+				       + "  )    where rn between ? and ? ";
 		
 		/*
 		String titlesql = "select board.BOARDNUM, board.boardtitle, board.usernum, board.adminnum, "
@@ -494,16 +494,16 @@ public class BoardDao implements BoardDaoInterface{
 		
 
 		String titlesql = "select * "
-		 		+ "   from (  "
-				+ "   select rownum as rn, A.* "
-				+ "   from (  "
-				      + "   select board.BOARDNUM, board.boardtitle, board.usernum, board.adminnum, " 
-					  + "  board.boardcontent,	board.boarddate, board.HIT, board.ref, "
-					  + "   board.re_step, board.re_level, member.nickname"
-					  + " 	from BOARD, member where board.usernum = member.usernum and boardtitle like '%'||?||'%'"
-				      + "   order by ref desc, re_step asc "
-				      + "   ) A "
-				 + "  )    where rn between ? and ? ";
+		 				+ "   from (  "
+		 				+ "   select rownum as rn, A.* "
+		 				+ "   from (  "
+		 				+ "   select board.BOARDNUM, board.boardtitle, board.usernum, board.adminnum, " 
+		 				+ "  board.boardcontent,	board.boarddate, board.HIT, board.ref, "
+		 				+ "   board.re_step, board.re_level, member.nickname"
+		 				+ " 	from BOARD, member where board.usernum = member.usernum and boardtitle like '%'||?||'%'"
+		 				+ "   order by ref desc, re_step asc "
+		 				+ "   ) A "
+		 				+ "  )    where rn between ? and ? ";
 		
 		/********** 중복을 줄이기 위해 코드로 ? ? ? ? 4개주고 preparedStatement했으나 검색 되지 않음
 		String sql = "select * "
