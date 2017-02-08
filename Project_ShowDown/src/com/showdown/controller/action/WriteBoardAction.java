@@ -20,7 +20,9 @@ public class WriteBoardAction implements ActionInterface {
 		bDTO.setBoardcontent(request.getParameter("boardcontent"));
 		bDTO.setUsernum(Integer.parseInt(request.getParameter("usernum")));
 		BoardDao bDAO = BoardDao.getInstance();
-				
+		
+		System.out.println(request.getParameter("boardcontent"));
+		
 		bDAO.InsertBoards(bDTO);
 		
 		new UserBoardAction().execute(request, response);

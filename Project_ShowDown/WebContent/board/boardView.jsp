@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp"%>
+<%@ include file="../sesstionCheck.jsp"%>
 <!-- 경로 확인 용
 <link rel="stylesheet" href="../css/test.css"> 
 <link rel="stylesheet" href="../css/bootstrap.css">
@@ -104,7 +105,7 @@
 		<form name="userboard" method="post" action="DO?command=repleWrite">
 			<table class="table table-striped">
 				<tr>
-					<th style="text-align: left">댓글<span class="pull-right">
+					<th style="text-align: left">댓글
 				</tr>
 				
 				<br>

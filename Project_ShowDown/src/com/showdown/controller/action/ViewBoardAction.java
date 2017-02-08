@@ -13,6 +13,7 @@ import com.showdown.controller.actionInterface.ActionInterface;
 import com.showdown.dao.BoardDao;
 import com.showdown.dto.BoardCommentDto;
 import com.showdown.dto.BoardDto;
+import com.showdown.dto.MemberDto;
 
 public class ViewBoardAction implements ActionInterface {
 	@Override

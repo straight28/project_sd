@@ -4,12 +4,9 @@
 <jsp:useBean id="now" class="java.util.Date"/> <!-- 오늘날짜 확인을 위한 usebean -->
 <fmt:formatDate value="${now }" pattern="yyyy-MM-dd" var="today"/> <!-- 오늘날짜 확인을 위한 jstl -->
 
-<!-- 경로 확인 용
-<link rel="stylesheet" href="../css/test.css"> 
-<link rel="stylesheet" href="../css/bootstrap.css">
-<script src="../js/jquery-3.1.1.js"></script>
-<script src="../js/bootstrap.js"></script>
- -->
+
+
+<div class="clear"></div>
 
 <h1 class="h1class">유저 게시판</h1>
 <div class="container">
@@ -22,17 +19,19 @@
 			<col class="col5">
 		</colgroup>
 		<thead>
-			<tr>
-				<th>번호</th>
+			<tr >
+				<th style="text-align: center">번호</th>
 				<th>제목</th>
-				<th>작성자</th>
-				<th>날짜</th>
-				<th>조회</th>
+				<th style="text-align: center">작성자</th>
+				<th style="text-align: center">날짜</th>
+				<th style="text-align: center">조회</th>
 			</tr>
 		</thead>
 
-		<tbody class="boardList">
-			<!--<!--<!--중요 !!!! 페이지 넘버가 역순 순서대로 feat.기대형 이 코드 덕분에 게시글 번호가 역순순서대로 시작  시작-->
+		<tbody class="boardList" >
+			<!--
+			<!-- 중요 !!!! 페이지 넘버가 역순 순서대로 feat.기대형
+			<!-- 이 코드 덕분에 게시글 번호가 역순순서대로 시작  시작-->
 			<c:set var="firstcount" value="${page.totalBoard - (page.curPage-1)*10}" />
 
 			<c:if test="${!empty loginUser}">
@@ -44,8 +43,10 @@
 						<c:set var="firstcount" value="${firstcount-1}" />
 						</td>
 						
-						<!--<!--<!--중요 !!!! 페이지 넘버가 역순 순서대로 feat.기대형 끝-->
-						<td style="text-align: left">
+						<!--
+						<!--
+						<!--중요 !!!! 페이지 넘버가 역순 순서대로 feat.기대형 끝-->
+						<td style="text-align: left" >
 							<!-- 답변들여쓰기 --> 
 							<c:forEach var="i" begin="1" end="${List.re_level }">
 								<c:if test="${List.re_level != 0}">

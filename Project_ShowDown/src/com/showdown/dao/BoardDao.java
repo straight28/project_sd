@@ -27,12 +27,12 @@ public class BoardDao implements BoardDaoInterface{
 	/********** 태그 방지 (원래 insert에서 하는게 가장 좋음) **********/
 	public String checkArticle(String article){
 		if(article != null){
-		/* whiteList 방식을 쓴다면 사용하지만 지금은 사용하지 않음
-		 * if(article.toLowerCase().indexOf("xmp") != -1 || article.indexOf("script")!= -1){
-		}
-		*/
+		
+		 if(article.toLowerCase().indexOf("<xmp>") != -1 || article.indexOf("script")!= -1){
+		
 		article = article.replace("<", "&lt");
 		article = article.replace(">", "&gt");
+		 }
 		/* 공백 처리 */
 		article = article.replace("  ", "&nbsp;&nbsp;");
 		/* 줄바꿈 처리  */
@@ -174,8 +174,10 @@ public class BoardDao implements BoardDaoInterface{
 			pstmt.setString(1, bDTO.getBoardtitle());
 			pstmt.setInt(2, bDTO.getUsernum());
 			pstmt.setString(3, bDTO.getBoardcontent());
+			
 			result = pstmt.executeUpdate(); // 등록되면 0이 아님.
-
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("insertBoard 에러");
