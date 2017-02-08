@@ -133,6 +133,14 @@ body {
 	text-align: start;
 }
 
+.loginDiv {
+	height: 600px;
+	text-align: center;
+}
+#loginImg{
+	padding-top: 180px;
+}
+
 .footerDiv {
 	text-align: center;
 	height: 80px;
@@ -196,16 +204,19 @@ body {
 }
 
 th {
-	text-align: center;
+	align: center;
 }
 
 /************ board 관련 ************/
 .container .table {
 	table-layout: auto;
+	align: center;
 }
 
 .container .table .col1 {
-	width: 100px;
+	
+	align: center;
+	width: 50px;
 }
 
 .container .table .col2 {

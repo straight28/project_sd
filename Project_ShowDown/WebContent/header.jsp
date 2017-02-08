@@ -11,17 +11,28 @@
 <title>Doodle Tak</title>
 
 <%-- 부트스트랩을 위한 주소와 링크 시작 --%>
-		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" href="css/bootstrap.css"> 
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <!-- javascript -->
-		<script src="js/jquery-3.1.1.js"></script>
-		<script src="js/bootstrap.js"></script>
-		<script src="js/test.js"></script>
+		<script src="js/jquery-3.1.1.js"></script>  
+	 	<!-- <script src="js/bootstrap.js"></script> -->
+		<script src="js/test.js"></script>  
 <!-- css -->
-		<link href="css/test.css" rel="stylesheet">  
+ 	<link href="css/test.css" rel="stylesheet">   
+		
+		<!--  섬머노트 -->
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script> 
+		
+ 
 		
 </head>
-<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
+
+<body>
+<!-- <body oncontextmenu="return false" ondragstart="return false" onselectstart="return false"> -->
 <!-- 마우스 오른쪽 버튼 비활성화 
 <body oncontextmenu="return false">
 -->
@@ -32,7 +43,7 @@
 <body onselectstart="return false">
 -->
 
-<div class="container-fluid" style="text-align: center">
+<div class="container" style="text-align: center">
     <div class="row">
         <div class="headerDiv">
             <div class="col-sm-3">
