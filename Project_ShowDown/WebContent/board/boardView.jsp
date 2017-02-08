@@ -104,7 +104,7 @@
 		<form name="userboard" method="post" action="DO?command=repleWrite">
 			<table class="table table-striped">
 				<tr>
-					<th style="text-align: left">댓글<span class="pull-right">
+					<th style="text-align: left">댓글
 				</tr>
 				
 				<br>
