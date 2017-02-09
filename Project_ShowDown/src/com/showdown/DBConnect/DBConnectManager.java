@@ -15,17 +15,14 @@ public class DBConnectManager {
 
 	public static Connection getConnection() {
 		Connection conn = null;
-
 		try {
-
-			
 			 // 아래처럼 간소하게 줄일 수 있음 
 			  Context initContext = new InitialContext();
 			  Context envContext = (Context)initContext.lookup("java:/comp/env"); 
 			  ///jdb/myoracle 이란   이름의 객체를 찾아서 dataSource가 받음 
-			  DataSource ds = (DataSource) envContext.lookup("jdbc/myoracle"); conn = ds.getConnection();
+			  DataSource ds = (DataSource) envContext.lookup("jdbc/myoracle"); 
+			  conn = ds.getConnection();
 			  /// getConnection은 DataSource 안쪽의 인터페이스
-			 
 
 			/*Context context = new InitialContext();
 			DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/oracle");
@@ -36,7 +33,6 @@ public class DBConnectManager {
 		}
 		return conn;
 	}
-	
 	
 	// public 메소드는 어디서나 이 메소드가 호출 될 수 있다는 의미
 	// static 메소드는 지정된 메모리에 상주한다는 의미
@@ -71,7 +67,6 @@ public class DBConnectManager {
 			}catch (SQLException e){}
 		}
 	}
-	
 	
 	
 /*	// test를 위한 Connection 가져오기..
