@@ -4,12 +4,9 @@
 <jsp:useBean id="now" class="java.util.Date"/> <!-- 오늘날짜 확인을 위한 usebean -->
 <fmt:formatDate value="${now }" pattern="yyyy-MM-dd" var="today"/> <!-- 오늘날짜 확인을 위한 jstl -->
 
-<!-- 경로 확인 용
-<link rel="stylesheet" href="../css/test.css"> 
-<link rel="stylesheet" href="../css/bootstrap.css">
-<script src="../js/jquery-3.1.1.js"></script>
-<script src="../js/bootstrap.js"></script>
- -->
+
+
+<div class="clear"></div>
 
 <div class="clear"></div>
 

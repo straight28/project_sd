@@ -3,17 +3,20 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp"%>
 
-
-<!-- 경로 확인 용
-<link rel="stylesheet" href="../css/test.css"> 
-<link rel="stylesheet" href="../css/bootstrap.css">
-<script src="../js/jquery-3.1.1.js"></script>
-<script src="../js/bootstrap.js"></script>
- -->
 <%
 	MemberDto mDTO = (MemberDto) session.getAttribute("loginUser");
 %>
 
+
+
+<script> 
+$(document).ready(function () {
+    $('#summernote').summernote({
+    	 height: 400,
+         placeholder : "사진이 대용량인 경우 업로드 되지 않을 수 있습니다."
+    });
+});
+</script>
 
 
 <h1 class="h1class">유저 게시판</h1>
@@ -31,7 +34,7 @@
 					</tr>
 					<tr>
 						<th>내용</th>
-						 <td><textarea cols="10" rows="10" 	placeholder="내용을 입력하세요." name="boardcontent" id="summernote" class="form-control"></textarea></td>  
+						 <td><textarea cols="10" rows="10"  name="boardcontent" id="summernote" class="form-control"></textarea></td>  
 						
 							
 								
@@ -60,17 +63,6 @@
 
 
 
-
-
-<script> 
-$(document).ready(function () {
-    $('#summernote').summernote({
-    	 height: 200,
-         placeholder : "게시판 내용을 입력하세요."
-    });
-});
-
-</script>
 
 
 
