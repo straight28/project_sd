@@ -8,6 +8,7 @@
 
 <div class="clear"></div>
 
+
 <h1 class="h1class">유저 게시판</h1>
 <div class="container">
 	<table class="table table-hover">

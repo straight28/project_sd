@@ -9,6 +9,7 @@
 
 
 
+
 <script> 
 $(document).ready(function () {
     $('#summernote').summernote({
@@ -16,7 +17,6 @@ $(document).ready(function () {
          placeholder : "사진이 대용량인 경우 업로드 되지 않을 수 있습니다."
     });
 });
-
 </script>
 
 
