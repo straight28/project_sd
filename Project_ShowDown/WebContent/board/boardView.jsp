@@ -86,8 +86,12 @@
 					<c:choose>
 						<c:when test="${commentList.usernum == user}">
 							<!-- 로그인한 사람정보와 댓글 정보가 일치하면 삭제 보임-->
-							<span class="pull-right"><a
-								href="DO?command=deletereplyinboard&commentnum=${commentList.commentnum}&num=${oneboard.boardnum}">삭제</a></span>
+							<span class="pull-right">
+								<a href="#" onclick="BtnReply(this)">댓글</a>&nbsp;&nbsp;
+								
+								<a href="DO?command=deletereplyinboard&commentnum=${commentList.commentnum}&num=${oneboard.boardnum}">삭제</a>
+							</span>
+							<br>
 						</c:when>
 						<c:otherwise>
 							<!-- 일치하지 않으면 아무것도 나타나지 않음 -->
@@ -99,6 +103,7 @@
 					<div>${commentList.content}</div>
 				</div>
 				
+				<div></div>
 			</c:forEach>
 		</c:if>
 
@@ -126,6 +131,29 @@
 </div>
 
 
+<script>
+
+function BtnReply(e){
+	$('.replyBoardForm').remove();
+	
+	$(e).parent().parent().next().next().html('<form name="userboard" method="post" class="replyBoardForm" action="DO?command=repleWrite">'
+			+ '<table class="table table-striped">'
+			+ 	'<tr>'
+			+ 		'<th style="text-align: left">댓글'
+			+	'</tr>'
+			+	'<tr>'
+			+		'<td><textarea cols="10" rows="2" name="boardcomment" class="form-control"></textarea></td>'
+			+	'</tr>'
+			+	'<tr>'
+			+		'<td><input type="submit" class="btn btn-default pull-right" value="리플 등록"></td>'
+			+	'</tr>'
+			+ '</table>'
+			+ '<input type="hidden" name="num" value="${oneboard.boardnum}">'
+			+ '<input type="hidden" name="usernum" value="${loginUser.usernum} ">'
+			+ '</form>');
+}
+
+</script>
 
 
 
