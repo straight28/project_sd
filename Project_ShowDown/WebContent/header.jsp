@@ -15,7 +15,7 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <!-- javascript -->
 		<script src="js/jquery-3.1.1.js"></script>  
-	 	<!-- <script src="js/bootstrap.js"></script> -->
+	<!-- <script src="js/bootstrap.js"></script> -->
 		<script src="js/test.js"></script>  
 <!-- css -->
  	<link href="css/test.css" rel="stylesheet">   
