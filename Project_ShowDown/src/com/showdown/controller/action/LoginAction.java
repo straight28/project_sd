@@ -20,7 +20,9 @@ public class LoginAction implements ActionInterface {
 		String url = "member/memberLogin.jsp";
 		String message = ""; //// 알림을 위한 메세지
 		String userid = request.getParameter("userid");
+		System.out.println("아이디는"+userid);
 		String userpass = request.getParameter("userpass");
+		System.out.println("비밀번호는 "+userpass);
 		
 		MemberDao mDAO = MemberDao.getInstance();
 		
@@ -33,7 +35,7 @@ public class LoginAction implements ActionInterface {
 			if(mDTO != null){
 				HttpSession session = request.getSession();
 				session.setAttribute("loginUser", mDTO);
-				url = "mainPage.jsp";      ///url 완성되면 페이지 전환 필요한 부분
+				url = "DO?command=userboard";      ///url 완성되면 페이지 전환 필요한 부분
 				message= "로그인 성공";
 			}else{
 				message= "정보를 가져올 수 없습니다.";
