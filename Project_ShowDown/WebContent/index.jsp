@@ -6,8 +6,6 @@
     <div class="row">
         <div class="bodyDiv">
             <br>
-
-
                 <div class="indexmenu">
                     <div class="menucontent">
                         <div class="content">
@@ -26,12 +24,9 @@
                         </div>
                     </div>
                 </div>
-
-
-
         </div>
     </div>
-</div> <!-- container-fluid 영역 -->
+ <!-- container-fluid 영역 -->
 
-
+</div>
 <%@ include file="../footer.jsp" %>

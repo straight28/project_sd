@@ -37,15 +37,10 @@
 					</div>
 					<h4><span style="color:red; font-size:1.2em">${message}</span></h4>
 				</div>
-			</form>
-			
-			<div id="loginImg">			
 			<img src='images/matcha.jpg' />
-			</div>
+			</form>
 		</div>
-		
 	</div>
-
 </div>
 
 </div>

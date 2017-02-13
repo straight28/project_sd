@@ -43,13 +43,15 @@
 <body onselectstart="return false">
 -->
 
+    <div class="wrap">  <!-- 전체 폭을 감쌈 -->
 <div class="container" style="text-align: center">
     <div class="row">
         <div class="headerDiv">
             <div class="col-sm-3">
 
                 <!-- 로고 들어가는 곳 시작 -->
-                <div id="logowrap">
+                <div id="logowrap"> 
+                                   
                     <a href="DO?command=index">
                         <img src="images/logo.png" class="logo" alt="showdown 로고이미지" title="showdown 로고 이미지">
                     </a>

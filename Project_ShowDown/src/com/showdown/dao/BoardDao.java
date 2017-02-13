@@ -187,6 +187,49 @@ public class BoardDao implements BoardDaoInterface{
 		return result;
 	}
 	
+	/********** 게시판 아래에 답글달기 **********/
+	public int InsertBoardReply(BoardDto bDTO) {
+		int result = 0; 
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DBConnectManager.getConnection();
+			
+			int re_lev = bDTO.getRe_level()+1; //답글의 레벨을 올려줌
+			int re_step = bDTO.getRe_step()+1; //답글의 단계를 올려줌
+			
+			/* 답글 들어가기 전에 기존 단계들을 1 증가시켜줌 */
+			String updateSql = "update board set re_step = re_step+1"
+								+ " where ref=? and re_step >= ?";
+			pstmt = conn.prepareStatement(updateSql);
+			pstmt.setInt(1, bDTO.getRef());
+			pstmt.setInt(2, re_step);
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			/* 기존 단계 증가후 새로운 답글 단계 입력 */
+			String sql ="insert into board(boardnum,boardtitle, usernum, boardcontent, ref, re_step, re_level) "
+					+"values((select nvl(max(boardnum)+1,1) from board),?,?,?,?,?,?)";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, bDTO.getBoardtitle());
+			pstmt.setInt(2, bDTO.getUsernum());
+			pstmt.setString(3, bDTO.getBoardcontent());
+			pstmt.setInt(4, bDTO.getRef());
+			pstmt.setInt(5, re_step);
+			pstmt.setInt(6, re_lev);
+			result = pstmt.executeUpdate(); // 등록되면 0이 아님.
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("InsertBoardReply 에러");
+		} finally{
+			DBConnectManager.disConnect(conn, pstmt);
+		}
+		return result;
+	}
+	
 	
 	/********** 조회수 올리는 sql **********/
 	public void updateHit(int boardnum, HttpSession count_session){
@@ -329,8 +372,8 @@ public class BoardDao implements BoardDaoInterface{
 	public List<BoardCommentDto> commentList(int boardnum){
 		List<BoardCommentDto> commentlist = new ArrayList<BoardCommentDto>();
 		String sql = "select board_comment.commentnum, board_comment.content, board_comment.usernum, "
-            	   +" board_comment.regdate, board_comment.boardnum,  member.nickname "
-            	   +" from board_comment, member where board_comment.usernum = member.usernum "
+            	   +" board_comment.regdate, board_comment.boardnum, board_comment.ref, board_comment.re_step, board_comment.re_level, "
+            	   +" member.nickname from board_comment, member where board_comment.usernum = member.usernum "
             	   +" and boardnum = ? "
 				   +" order by board_comment.commentnum asc ";
 			Connection conn = null;
@@ -356,6 +399,9 @@ public class BoardDao implements BoardDaoInterface{
 				bcDto.setContent(content);
 				bcDto.setRegdate(rs.getTimestamp("regdate"));
 				bcDto.setNickname(rs.getString("nickname"));
+				bcDto.setRef(rs.getInt("ref"));
+				bcDto.setRe_step(rs.getInt("re_step"));
+				bcDto.setRe_level(rs.getInt("re_level"));
 				commentlist.add(bcDto);
 					
 			}
@@ -372,8 +418,8 @@ public class BoardDao implements BoardDaoInterface{
 	/********** 게시글 안에 댓글 등록 **********/
 	public int InsertBoardComment(BoardCommentDto bcdto) {
 		int result = 0; 
-		String sql ="insert into board_comment (commentnum,boardnum,usernum,content) "
-				+" values((select nvl(max(commentnum)+1,1) from board_comment) ,?,?,?)";
+		String sql ="insert into board_comment (commentnum,boardnum,usernum,content, ref, re_step, re_level) "
+				+" values((select nvl(max(commentnum)+1,1) from board_comment) ,?,?,?,(select nvl(max(commentnum)+1,1) from board_comment),1,0)";
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -393,9 +439,8 @@ public class BoardDao implements BoardDaoInterface{
 		return result;
 	} 
 	
-	
-	/********** 게시판 아래에 답글달기 **********/
-	public int InsertBoardReply(BoardDto bDTO) {
+	/********** 게시글 안에 대댓글 등록 **********/
+	public int InsertTwoBoardComment(BoardCommentDto bcdto) {
 		int result = 0; 
 		
 		Connection conn = null;
@@ -403,38 +448,72 @@ public class BoardDao implements BoardDaoInterface{
 		try {
 			conn = DBConnectManager.getConnection();
 			
-			int re_lev = bDTO.getRe_level()+1; //답글의 레벨을 올려줌
-			int re_step = bDTO.getRe_step()+1; //답글의 단계를 올려줌
+			int re_lev = bcdto.getRe_level()+1;
+			int re_step = bcdto.getRe_step()+1;
 			
-			/* 답글 들어가기 전에 기존 단계들을 1 증가시켜줌 */
-			String updateSql = "update board set re_step = re_step+1"
-								+ " where ref=? and re_step >= ?";
+			/* 댓글 들어가기 전에 기존 단계들을 1 증가시켜줌 */
+			String updateSql = "update board_comment set re_step = re_step+1"
+					+ " where ref=? and re_step >= ?";
 			pstmt = conn.prepareStatement(updateSql);
-			pstmt.setInt(1, bDTO.getRef());
+			pstmt.setInt(1, bcdto.getRef());
 			pstmt.setInt(2, re_step);
 			pstmt.executeUpdate();
 			pstmt.close();
 			
-			/* 기존 단계 증가후 새로운 답글 단계 입력 */
-			String sql ="insert into board(boardnum,boardtitle, usernum, boardcontent, ref, re_step, re_level) "
-					+"values((select nvl(max(boardnum)+1,1) from board),?,?,?,?,?,?)";
+			String sql ="insert into board_comment (commentnum,boardnum,usernum,content, ref, re_step, re_level) "
+					+" values((select nvl(max(commentnum)+1,1) from board_comment) ,?,?,?,?,?,?)";
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, bDTO.getBoardtitle());
-			pstmt.setInt(2, bDTO.getUsernum());
-			pstmt.setString(3, bDTO.getBoardcontent());
-			pstmt.setInt(4, bDTO.getRef());
+			pstmt.setInt(1, bcdto.getBoardnum());
+			pstmt.setInt(2, bcdto.getUsernum());
+			pstmt.setString(3, bcdto.getContent());
+			pstmt.setInt(4, bcdto.getRef());
 			pstmt.setInt(5, re_step);
 			pstmt.setInt(6, re_lev);
-			result = pstmt.executeUpdate(); // 등록되면 0이 아님.
+			result = pstmt.executeUpdate();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("InsertBoardReply 에러");
+			System.out.println("InsertTwoBoardComment 에러");
 		} finally{
 			DBConnectManager.disConnect(conn, pstmt);
 		}
 		return result;
+	} 
+	
+	public BoardCommentDto selectOneBoardReplyCommentByCommentNum(int commentnum){
+		String sql = " select board_comment.COMMENTNUM, board_comment.boardnum, board_comment.usernum,  "
+				  + " board_comment.content, board_comment.regdate, board_comment.ref, "
+				  + " board_comment.re_step, board_comment.re_level, member.nickname "
+				  + " from board_comment, member where board_comment.usernum = member.usernum and board_comment.COMMENTNUM='?'";
+		BoardCommentDto bcdto = new BoardCommentDto();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBConnectManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, commentnum);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+							
+				bcdto.setCommentnum(rs.getInt("COMMENTNUM"));
+				bcdto.setBoardnum(rs.getInt("boardnum"));
+				bcdto.setUsernum(rs.getInt("usernum"));
+				bcdto.setContent(rs.getString("content"));
+				bcdto.setRegdate(rs.getTimestamp("regdate"));
+				bcdto.setRef(rs.getInt("ref"));
+				bcdto.setRe_step(rs.getInt("re_step"));
+				bcdto.setRe_level(rs.getInt("re_level"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("selectOneBoardReplyCommentByCommentNum 에러");
+		} finally{
+			DBConnectManager.disConnect(conn, pstmt, rs);
+		}
+		return bcdto;
 	}
 	
 	/********** 댓글 삭제하기 **********/

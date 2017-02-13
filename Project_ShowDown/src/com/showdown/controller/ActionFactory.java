@@ -18,6 +18,7 @@ import com.showdown.controller.action.WriteBoardAction;
 import com.showdown.controller.action.WriteBoardFormAction;
 import com.showdown.controller.action.WriteBoardReplyAction;
 import com.showdown.controller.action.WriteBoardReplyFormAction;
+import com.showdown.controller.action.WriteDeepReply;
 import com.showdown.controller.action.WriteReplyAction;
 import com.showdown.controller.actionInterface.ActionInterface;
 
@@ -73,6 +74,8 @@ public class ActionFactory {
 			action = new DeleteReplyInBoard();
 		}else if(command.equals("searchkeyword")){
 			action = new SearchKeyword();  //// 리스트로 보냄
+		}else if(command.equals("deepRepleWrite")){
+			action = new WriteDeepReply();
 		}
 		
 		

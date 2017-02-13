@@ -1,6 +1,5 @@
 package com.showdown.dto;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 public class BoardDto {

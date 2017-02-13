@@ -13,6 +13,7 @@ import com.showdown.dto.BoardDto;
 public class WriteBoardReplyAction implements ActionInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		/* 게시판글에 대한 답글달기 */
 		BoardDto bDTO = new BoardDto();
 		bDTO.setBoardnum(Integer.parseInt(request.getParameter("boardnum")));

@@ -14,7 +14,7 @@
 %>
 <h1 class="h1class">유저 게시판</h1>
 <div class="container" style="text-align: left">
-	<div id="wrap">
+	
 		<div id="boardinfo">
 			<div id="infos">
 				<ul>
@@ -45,7 +45,6 @@
 		</div>
 	</div>
 	
-	<br> <Br>
 
 	<c:set var="user" value="${loginUser.usernum }" />
 	<!-- 로그인한 사람 정보 세션 -->
@@ -71,13 +70,14 @@
 		href="DO?command=writeboardreply&num=${oneboard.boardnum }">답글</a>
 </div>
 
-<hr>
+
 
 <div class="col-sm-12">
+<div id="commentList">
 	<div class="container" style="text-align: left">
 		<c:if test="${!empty commentList}">
 			<c:forEach items="${commentList}" var="commentList">
-				<!-- 게시판들 정보를 가져와서 반복문 돌림 -->
+				<!-- 코멘트 정보를 가져와서 반복문 돌림 -->
 				<div class="replytr">
 					<b>${commentList.nickname}</b> 
 					<span>&nbsp;( <fmt:formatDate value="${commentList.regdate}" pattern="yyyy-MM-dd HH:mm:ss" />)
@@ -87,7 +87,8 @@
 						<c:when test="${commentList.usernum == user}">
 							<!-- 로그인한 사람정보와 댓글 정보가 일치하면 삭제 보임-->
 							<span class="pull-right">
-								<a href="#" onclick="BtnReply(this)">댓글</a>&nbsp;&nbsp;
+							<c:set var="comment" value="${commentList.commentnum }" />
+								<a href="javascript:;" onclick="BtnReply(this)" >댓글</a>&nbsp;&nbsp;
 								
 								<a href="DO?command=deletereplyinboard&commentnum=${commentList.commentnum}&num=${oneboard.boardnum}">삭제</a>
 							</span>
@@ -101,6 +102,7 @@
 
 				<div class="replywindow">
 					<div>${commentList.content}</div>
+					
 				</div>
 				
 				<div></div>
@@ -108,7 +110,7 @@
 		</c:if>
 
 		<form name="userboard" method="post" action="DO?command=repleWrite">
-			<table class="table table-striped">
+			<table class="table table-bordered">
 				<tr>
 					<th style="text-align: left">댓글
 				</tr>
@@ -127,16 +129,19 @@
 			<input type="hidden" name="usernum" value="${loginUser.usernum} ">
 		</form>
 	</div>
-
+</div>
 </div>
 
 
 <script>
 
+
+/* commentnum이 옮겨지지 않음 */
 function BtnReply(e){
+
 	$('.replyBoardForm').remove();
 	
-	$(e).parent().parent().next().next().html('<form name="userboard" method="post" class="replyBoardForm" action="DO?command=repleWrite">'
+	$(e).parent().parent().next().next().html('<form  method="post" class="replyBoardForm" action="DO?command=deepRepleWrite">'
 			+ '<table class="table table-striped">'
 			+ 	'<tr>'
 			+ 		'<th style="text-align: left">댓글'
