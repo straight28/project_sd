@@ -1,3 +1,7 @@
+#doodle{
+	text-align: center;
+}
+
 .member_login_menu {
 	margin: 30px;
 	text-align: center;
@@ -76,7 +80,7 @@ body .container {
 	text-decoration: none;
 	display: inline-block;
 	height: 40px;
-	width: 80px;
+	width: 70px;
 	text-align: center;
 	color: #262626;
 	font-size: 12px;
@@ -115,7 +119,7 @@ body .container {
 #header_Nav ul li a {
 	text-decoration: none;
 	display: block; /* 블록 박스로 만듬*/
-	width: 140px;
+	width: 120px;
 	text-align: center;
 	color: #232323;
 	font-weight: bold;
@@ -128,6 +132,7 @@ body .container {
 
 /************ body ************/
 .bodyDiv {
+	height:560px;
 	background-color: #ffffff;
 	text-align: start;
 }
@@ -166,7 +171,6 @@ body .container {
 
 /************ index.jsp 관련 ************/
 .indexmenu {
-	width:100%;
 	height: 400px;
 	text-align: center;
 	background: linear-gradient(to top, #ffeedc, #fffbf0);
@@ -234,7 +238,7 @@ th {
 }
 
 .container .table .col4 {
-	width: 100px;
+	width: 80px;
 }
 
 .container .table .col5 {

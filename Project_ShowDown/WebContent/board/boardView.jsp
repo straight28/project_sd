@@ -14,7 +14,8 @@
 %>
 <h1 class="h1class">유저 게시판</h1>
 <div class="container" style="text-align: left">
-	
+	<div id="wrap">
+
 		<div id="boardinfo">
 			<div id="infos">
 				<ul>
@@ -45,6 +46,8 @@
 		</div>
 	</div>
 	
+	<br> <Br>
+	
 
 	<c:set var="user" value="${loginUser.usernum }" />
 	<!-- 로그인한 사람 정보 세션 -->
@@ -70,47 +73,53 @@
 		href="DO?command=writeboardreply&num=${oneboard.boardnum }">답글</a>
 </div>
 
-
+<hr>
 
 <div class="col-sm-12">
-<div id="commentList">
 	<div class="container" style="text-align: left">
 		<c:if test="${!empty commentList}">
 			<c:forEach items="${commentList}" var="commentList">
-				<!-- 코멘트 정보를 가져와서 반복문 돌림 -->
+				<!-- 게시판내용 정보를 가져와서 반복문 돌림 -->
+				
+				
+				
 				<div class="replytr">
-					<b>${commentList.nickname}</b> 
+				           <!-- 답글 들여쓰기!! -->
+							<c:forEach var="i" begin="1" end="${commentList.re_level }">
+								<c:if test="${commentList.re_level != 0}">
+									<img src='images/reply_icon2.jpg' />
+								</c:if>
+							</c:forEach> 
+				
+				
+					<b>${commentList.nickname} </b> 
+					
 					<span>&nbsp;( <fmt:formatDate value="${commentList.regdate}" pattern="yyyy-MM-dd HH:mm:ss" />)
 					</span>
-
-					<c:choose>
-						<c:when test="${commentList.usernum == user}">
+					
+						<c:if test="${commentList.usernum == user}">
 							<!-- 로그인한 사람정보와 댓글 정보가 일치하면 삭제 보임-->
 							<span class="pull-right">
-							<c:set var="comment" value="${commentList.commentnum }" />
-								<a href="javascript:;" onclick="BtnReply(this)" >댓글</a>&nbsp;&nbsp;
+								<a href="javascript:0;" onclick="BtnReply(this,${commentList.commentnum},${commentList.ref },${commentList.re_step },${commentList.re_level } )">댓글</a>&nbsp;&nbsp;
 								
 								<a href="DO?command=deletereplyinboard&commentnum=${commentList.commentnum}&num=${oneboard.boardnum}">삭제</a>
 							</span>
 							<br>
-						</c:when>
-						<c:otherwise>
-							<!-- 일치하지 않으면 아무것도 나타나지 않음 -->
-						</c:otherwise>
-					</c:choose>
+						</c:if>
+							
+					
 				</div>
 
 				<div class="replywindow">
-					<div>${commentList.content}</div>
-					
+					<div>${commentList.content} </div>
 				</div>
-				
 				<div></div>
 			</c:forEach>
 		</c:if>
 
+
 		<form name="userboard" method="post" action="DO?command=repleWrite">
-			<table class="table table-bordered">
+			<table class="table table-striped">
 				<tr>
 					<th style="text-align: left">댓글
 				</tr>
@@ -129,19 +138,20 @@
 			<input type="hidden" name="usernum" value="${loginUser.usernum} ">
 		</form>
 	</div>
-</div>
+
 </div>
 
 
 <script>
 
-
-/* commentnum이 옮겨지지 않음 */
-function BtnReply(e){
-
+function BtnReply(e,num,reff,stepp,levell){
 	$('.replyBoardForm').remove();
+	var comment = num;
+	var ref = reff;
+	var step = stepp;
+	var level = levell;
 	
-	$(e).parent().parent().next().next().html('<form  method="post" class="replyBoardForm" action="DO?command=deepRepleWrite">'
+	$(e).parent().parent().next().next().html('<form name="userboard" method="post" class="replyBoardForm" action="DO?command=deepRepleWrite">'
 			+ '<table class="table table-striped">'
 			+ 	'<tr>'
 			+ 		'<th style="text-align: left">댓글'
@@ -154,8 +164,17 @@ function BtnReply(e){
 			+	'</tr>'
 			+ '</table>'
 			+ '<input type="hidden" name="num" value="${oneboard.boardnum}">'
+			+ '<input type="hidden" name="comment" id="comment" value="">'
+			+ '<input type="hidden" name="ref" id="ref" value="">'
+			+ '<input type="hidden" name="step" id="step" value="">'
+			+ '<input type="hidden" name="level" id="level" value="">'
 			+ '<input type="hidden" name="usernum" value="${loginUser.usernum} ">'
 			+ '</form>');
+	document.getElementById("comment").value = comment;
+	document.getElementById("ref").value = ref;
+	document.getElementById("step").value = step;
+	document.getElementById("level").value = level;
+	console.log(comment);
 }
 
 </script>

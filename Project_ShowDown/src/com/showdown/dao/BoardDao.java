@@ -24,7 +24,7 @@ public class BoardDao implements BoardDaoInterface{
 		return instance;
 	}
 	
-	/********** 태그 방지 (원래 insert에서 하는게 가장 좋음) **********/
+	/********** 태그 방지 ( 원래 insert에서 하는게 가장 좋음 ) **********/
 	public String checkArticle(String article){
 		if(article != null){
 		
@@ -375,7 +375,8 @@ public class BoardDao implements BoardDaoInterface{
             	   +" board_comment.regdate, board_comment.boardnum, board_comment.ref, board_comment.re_step, board_comment.re_level, "
             	   +" member.nickname from board_comment, member where board_comment.usernum = member.usernum "
             	   +" and boardnum = ? "
-				   +" order by board_comment.commentnum asc ";
+				   +" order by board_comment.ref asc, board_comment.re_step asc ";
+		
 			Connection conn = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -481,11 +482,12 @@ public class BoardDao implements BoardDaoInterface{
 		return result;
 	} 
 	
-	public BoardCommentDto selectOneBoardReplyCommentByCommentNum(int commentnum){
+	
+	public BoardCommentDto selectOneBoardReplyCommentByCommentNum(int COMMENTNUM){
 		String sql = " select board_comment.COMMENTNUM, board_comment.boardnum, board_comment.usernum,  "
 				  + " board_comment.content, board_comment.regdate, board_comment.ref, "
-				  + " board_comment.re_step, board_comment.re_level, member.nickname "
-				  + " from board_comment, member where board_comment.usernum = member.usernum and board_comment.COMMENTNUM='?'";
+				  + " board_comment.re_step, board_comment.re_level "
+				  + " from board_comment where board_comment.COMMENTNUM=? ";
 		BoardCommentDto bcdto = new BoardCommentDto();
 		
 		Connection conn = null;
@@ -494,7 +496,7 @@ public class BoardDao implements BoardDaoInterface{
 		try {
 			conn = DBConnectManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, commentnum);
+			pstmt.setInt(1, COMMENTNUM);
 			rs = pstmt.executeQuery();
 			if(rs.next()){
 							
@@ -506,6 +508,7 @@ public class BoardDao implements BoardDaoInterface{
 				bcdto.setRef(rs.getInt("ref"));
 				bcdto.setRe_step(rs.getInt("re_step"));
 				bcdto.setRe_level(rs.getInt("re_level"));
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

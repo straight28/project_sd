@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
     <div class="footerDiv">
-<div class="row">
+		<div class="row">
         <div class="col-sm-12">
             <h5> Copyright. Doodle tak.net All Right Reserved.</h5>
             <h5>Contact us, poem32@naver.com

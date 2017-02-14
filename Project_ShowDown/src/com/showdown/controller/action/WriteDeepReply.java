@@ -17,23 +17,29 @@ public class WriteDeepReply implements ActionInterface {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		
-/*		int commentnum = Integer.parseInt(request.getParameter("commentnum"));*/
+		int commentnum = Integer.parseInt(request.getParameter("comment"));
+		System.out.println("코멘트번호 내용"+request.getParameter("comment"));
+		
 		/* 게시판글에 대한 대댓글 달기 */
 		HttpSession session = request.getSession();
 		MemberDto loginUser =(MemberDto) session.getAttribute("loginUser");
 
 		BoardCommentDto bcDTO = new BoardCommentDto();
 		BoardDao bDAO = BoardDao.getInstance();
-		/*BoardCommentDto bcDTO = bDAO.selectOneBoardReplyCommentByCommentNum(commentnum);
+		bcDTO = bDAO.selectOneBoardReplyCommentByCommentNum(commentnum);
 		
-		bcDTO.setCommentnum(commentnum);*/
+		bcDTO.setCommentnum(commentnum);
 		bcDTO.setBoardnum(Integer.parseInt(request.getParameter("num")));
 		bcDTO.setUsernum(loginUser.getUsernum());
 		bcDTO.setContent(request.getParameter("boardcomment"));
 		System.out.println("리플컨텐츠 내용"+request.getParameter("boardcomment"));
-		/*bcDTO.setRef(Integer.parseInt(request.getParameter("ref")));
-		bcDTO.setRe_step(Integer.parseInt(request.getParameter("re_step")));
-		bcDTO.setRe_level(Integer.parseInt(request.getParameter("re_level")));*/
+		
+		bcDTO.setRef(Integer.parseInt(request.getParameter("ref")));
+		System.out.println(request.getParameter("ref"));
+		bcDTO.setRe_step(Integer.parseInt(request.getParameter("step")));
+		System.out.println(request.getParameter("step"));
+		bcDTO.setRe_level(Integer.parseInt(request.getParameter("level")));
+		System.out.println(request.getParameter("level"));
 		
 		bDAO.InsertTwoBoardComment(bcDTO);
 		

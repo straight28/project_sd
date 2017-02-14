@@ -93,7 +93,7 @@
                 <div id="header_Nav">
                     <ul>
                         <li>
-                            <a href="#">Doodle Tak이란</a>
+                            <a href="DO?command=index">Doodle</a>
                         </li>
                         <li>
                             <a href="DO?command=userboard">유저 게시판</a>
