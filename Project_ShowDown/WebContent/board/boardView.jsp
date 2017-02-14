@@ -143,7 +143,6 @@
 
 
 <script>
-
 function BtnReply(e,num,reff,stepp,levell){
 	$('.replyBoardForm').remove();
 	var comment = num;
@@ -175,8 +174,7 @@ function BtnReply(e,num,reff,stepp,levell){
 	document.getElementById("step").value = step;
 	document.getElementById("level").value = level;
 	console.log(comment);
-}
-
+};
 </script>
 
 
