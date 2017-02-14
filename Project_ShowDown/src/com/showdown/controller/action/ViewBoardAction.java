@@ -35,6 +35,9 @@ public class ViewBoardAction implements ActionInterface {
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
+		
+		
+		
 	}
 
 }

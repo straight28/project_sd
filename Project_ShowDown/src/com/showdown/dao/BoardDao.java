@@ -482,7 +482,7 @@ public class BoardDao implements BoardDaoInterface{
 		return result;
 	} 
 	
-	
+	/* 댓글 번호에 따른 댓글 정보를 가져옴 */
 	public BoardCommentDto selectOneBoardReplyCommentByCommentNum(int COMMENTNUM){
 		String sql = " select board_comment.COMMENTNUM, board_comment.boardnum, board_comment.usernum,  "
 				  + " board_comment.content, board_comment.regdate, board_comment.ref, "

@@ -38,8 +38,6 @@ public class JoinAction implements ActionInterface {
 			url = "member/memberLogin.jsp";
 		}
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-		dispatcher.forward(request, response);
-		
+		response.sendRedirect(url);
 	}
 }
