@@ -232,29 +232,29 @@ public class BoardDao implements BoardDaoInterface{
 	
 	
 	/********** 조회수 올리는 sql **********/
-	public void updateHit(int boardnum, HttpSession count_session){
+	public void updateHit(int boardnum, HttpSession countSession){
 		String sql = "update board set hit=hit+1 where boardnum = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
 		//현재 열람 시간 조회(세션 변수)
-		long update_time = 0;
-		if (count_session.getAttribute("update_time_"+boardnum)!=null) {
-			update_time = (long)count_session.getAttribute("update_time_"+boardnum);
+		long updateTime = 0;
+		if (countSession.getAttribute("update_time_"+boardnum)!=null) {
+			updateTime = (long)countSession.getAttribute("update_time_"+boardnum);
 		}
 		//현재 시간
-		long current_time = System.currentTimeMillis();
-		System.out.println("업데이트 시간 "+update_time);
-		System.out.println("현재 시간 "+current_time);
+		long currentTime = System.currentTimeMillis();
+		System.out.println("업데이트 시간 "+updateTime);
+		System.out.println("현재 시간 "+currentTime);
 		try {
 			///현재시간 - 업데이트 시간이 5초이상일 시 조회수 업데이트 
-			if (current_time - update_time > 5*1000) {
+			if (currentTime - updateTime > 5*1000) {
 				conn = DBConnectManager.getConnection();
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, boardnum);
 				pstmt.executeUpdate();
-				///업데이트한 시간을 세션에 저장 setArrtibute(변수명(최근열람한게시글), 값) 
-			count_session.setAttribute("update_time_"+boardnum, current_time);
+				///업데이트한 시간을 세션에 저장 setAttribute(변수명(최근열람한게시글), 값) 
+				countSession.setAttribute("update_time_"+boardnum, currentTime);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

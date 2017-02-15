@@ -49,7 +49,7 @@
 								</c:if>
 							</c:forEach>
 							-->
-			<!-- 추가 해야함 --> <a href="DO?command=board_view&num=${List.questboardnum}">
+							<a href="DO?command=questboard_view&num=${List.questboardnum}">
 							${List.questboardtitle}
 							</a>
 							

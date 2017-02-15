@@ -15,6 +15,7 @@ import com.showdown.controller.action.QuestionBoardAction;
 import com.showdown.controller.action.SearchKeyword;
 import com.showdown.controller.action.UserBoardAction;
 import com.showdown.controller.action.ViewBoardAction;
+import com.showdown.controller.action.ViewQuestBoardAction;
 import com.showdown.controller.action.WriteBoardAction;
 import com.showdown.controller.action.WriteBoardFormAction;
 import com.showdown.controller.action.WriteBoardReplyAction;
@@ -85,6 +86,8 @@ public class ActionFactory {
 			action = new WriteQuestionBoardFormAction();
 		}else if(command.equals("questionboard_write")){
 			action = new WriteQuestionBoardAction();
+		}else if(command.equals("questboard_view")){
+			action = new ViewQuestBoardAction();
 		}
 		
 		
