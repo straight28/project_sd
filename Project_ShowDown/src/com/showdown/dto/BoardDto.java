@@ -14,19 +14,18 @@ public class BoardDto {
 	private String nickname;		///유저 닉네임
 	private String shortdate;       ///잘린 날짜
 	
-	public String getShortdate() {
-		return shortdate;
-	}
-	public void setShortdate(String shortdate) {
-		this.shortdate = shortdate;
-	}
-	
 	private int ref;
 	private int re_step;
 	private int re_level;
 	
 	
 	
+	public String getShortdate() {
+		return shortdate;
+	}
+	public void setShortdate(String shortdate) {
+		this.shortdate = shortdate;
+	}
 	
 	public int getRef() {
 		return ref;

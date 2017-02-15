@@ -11,6 +11,7 @@ import com.showdown.controller.action.LogoutAction;
 import com.showdown.controller.action.ModifyBoardAction;
 import com.showdown.controller.action.ModifyBoardFormAction;
 import com.showdown.controller.action.MyMenuFormAction;
+import com.showdown.controller.action.QuestionBoardAction;
 import com.showdown.controller.action.SearchKeyword;
 import com.showdown.controller.action.UserBoardAction;
 import com.showdown.controller.action.ViewBoardAction;
@@ -19,6 +20,8 @@ import com.showdown.controller.action.WriteBoardFormAction;
 import com.showdown.controller.action.WriteBoardReplyAction;
 import com.showdown.controller.action.WriteBoardReplyFormAction;
 import com.showdown.controller.action.WriteDeepReply;
+import com.showdown.controller.action.WriteQuestionBoardAction;
+import com.showdown.controller.action.WriteQuestionBoardFormAction;
 import com.showdown.controller.action.WriteReplyAction;
 import com.showdown.controller.actionInterface.ActionInterface;
 
@@ -73,10 +76,17 @@ public class ActionFactory {
 		}else if(command.equals("deletereplyinboard")){
 			action = new DeleteReplyInBoard();
 		}else if(command.equals("searchkeyword")){
-			action = new SearchKeyword();  //// 리스트로 보냄
+			action = new SearchKeyword();  				//// 리스트로 보냄
 		}else if(command.equals("deepRepleWrite")){
 			action = new WriteDeepReply();
+		}else if(command.equals("questionboard")){ 		/// questionBoard 
+			action = new QuestionBoardAction();
+		}else if(command.equals("questboard_Write_Form")){
+			action = new WriteQuestionBoardFormAction();
+		}else if(command.equals("questionboard_write")){
+			action = new WriteQuestionBoardAction();
 		}
+		
 		
 		
 		return action;

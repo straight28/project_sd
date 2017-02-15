@@ -99,7 +99,7 @@
                             <a href="DO?command=userboard">유저 게시판</a>
                         </li>
                         <li>
-                            <a href="#">질문 게시판</a>
+                            <a href="DO?command=questionboard">질문 게시판</a>
                         </li>
                         <li>
                             <a href="#">다른 서비스</a>

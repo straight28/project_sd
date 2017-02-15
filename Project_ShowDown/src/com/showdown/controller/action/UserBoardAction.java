@@ -31,7 +31,7 @@ public class UserBoardAction implements ActionInterface {
 			
 		//db에서 모든 게시글 수 계산
 		int count = bDAO.countBoard();
-		System.out.println("총 게시글 수는 ?"+count);
+		System.out.println("유저 게시판의 총 게시물 수는 ?"+count);
 		//페이지 번호 설정
 		int curPage = 1;
 		if(request.getParameter("curPage") != null){

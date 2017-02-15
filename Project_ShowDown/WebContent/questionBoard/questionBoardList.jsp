@@ -1,11 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp"%>
-<jsp:useBean id="now" class="java.util.Date"/> <!-- 오늘날짜 확인을 위한 usebean -->
-<fmt:formatDate value="${now }" pattern="yyyy-MM-dd" var="today"/> <!-- 오늘날짜 확인을 위한 jstl -->
+<jsp:useBean id="now" class="java.util.Date" />
 
 
-<h1 class="h1class">유저 게시판</h1>
+
+<!-- 오늘날짜 확인을 위한 usebean -->
+<fmt:formatDate value="${now }" pattern="yyyy-MM-dd" var="today" />
+<!-- 오늘날짜 확인을 위한 jstl -->
+
+<h1 class="h1class">질문 게시판</h1>
+
 <div class="container">
 	<table class="table table-hover">
 		<colgroup>
@@ -16,7 +21,7 @@
 			<col class="col5">
 		</colgroup>
 		<thead>
-			<tr >
+			<tr>
 				<th style="text-align: center">번호</th>
 				<th>제목</th>
 				<th style="text-align: center">작성자</th>
@@ -25,53 +30,50 @@
 			</tr>
 		</thead>
 
-		<tbody class="boardList" >
-			<!--
-			<!-- 중요 !!!! 페이지 넘버가 역순 순서대로 feat.기대형
-			<!-- 이 코드 덕분에 게시글 번호가 역순순서대로 시작  시작-->
-			<c:set var="firstcount" value="${page.totalBoard - (page.curPage-1)*10}" />
-
+		<tbody class="boardList">
+				<!-- 페이징을 위한 변수 -->			
+			<c:set var="firstcount" value="${page.totalBoard - (page.curPage-1)*10 }"/>
 			<c:if test="${!empty loginUser}">
-				<c:forEach items="${boardList}" var="List">
+				<c:forEach items="${questionBoardList}" var="List">
 					<!-- 게시판들 정보를 가져와서 반복문 돌림 -->
-
 					<tr style="border-bottom: 1px solid #DDDDDD;">
-						<td>${firstcount} 
-						<c:set var="firstcount" value="${firstcount-1}" />
-						</td>
-						
-						<!--
-						<!--
-						<!--중요 !!!! 페이지 넘버가 역순 순서대로 feat.기대형 끝-->
+						<td>${firstcount}
+						<c:set var="firstcount" value="${firstcount-1 }"/>
+							</td>
+
 						<td style="text-align: left" >
-							<!-- 답변들여쓰기 --> 
+							<!-- 답변들여쓰기 사용안 함  
 							<c:forEach var="i" begin="1" end="${List.re_level }">
-								<c:if test="${List.re_level != 0}">
+								<c:if test="${List.re_level !=0 }">
 									<img src='images/reply_icon1.gif' />
 								</c:if>
-							</c:forEach> 
-							<a href="DO?command=board_view&num=${List.boardnum}">
-							${List.boardtitle}
+							</c:forEach>
+							-->
+			<!-- 추가 해야함 --> <a href="DO?command=board_view&num=${List.questboardnum}">
+							${List.questboardtitle}
 							</a>
-
-							<!-- 댓글이 있으면 갯수 보여주고 없으면 공백처리 --> 
-							<c:if test="${List.totalcomment > 0}">
-								<span style="color: #204040"> [${List.totalcomment}] </span>
+							
+							<!-- 댓글이 있으면 갯수 보여주고 없으면 공백처리 -->
+							<c:if test="${List.totalcomment > 0 }">
+								<span style="color: #204040">[${List.totalcomment }]</span>
 							</c:if>
-							<!-- 오늘 글 올렸다면 new 표시 뜸 --> 
+							
+							<!-- 오늘 글 올렸다면 new 표시 뜸 -->
 							<c:if test="${List.shortdate == today}">
-							<img src='images/new.jpg' />
+								<img src='images/new.jpg' />
 							</c:if>
+							
+							
 						</td>
 
 						<td>${List.nickname}</td>
-						<td><fmt:formatDate value="${List.boarddate}"
+						<td><fmt:formatDate value="${List.questdate}"
 								pattern="yyyy-MM-dd" /></td>
 						<td>${List.hit}</td>
 					</tr>
 				</c:forEach>
 			</c:if>
-			<c:if test="${empty boardList}">
+			<c:if test="${empty questionBoardList}">
 				<tr style="border-bottom: 1px solid #DDDDDD;">
 					<td colspan="5">등록된 게시물이 없습니다.</td>
 				</tr>
@@ -81,28 +83,26 @@
 		</tbody>
 	</table>
 
-
-	<form name="searchform" method="post" action="DO?command=searchkeyword">
+	<form name="searchform" method="post" action="#">
 		<select name="search_option" class="form-control pull-left" style="width: 90px">
 			<c:if test="${search_option != 'nickname'}">
-				<option value="boardtitle" selected>제목</option>
-				<option value="nickname" >작성자</option>
+				<option value="#" selected>제목</option>
+				<option value="#" >작성자</option>
 			</c:if>
 			<c:if test="${search_option == 'nickname'}">
-				<option value="title" >제목</option>
+				<option value="#" >제목</option>
 				<!-- 제목에 셀렉트 고정 -->
-				<option value="nickname" selected>작성자</option>
+				<option value="#" selected>작성자</option>
 			</c:if>
 
-		</select> <input type="text" name="keyword" value="${keyword }"
-			class="form-control pull-left" style="width: 120px"> 
-			<input type="submit" value="검색" class="btn btn-default pull-left" id="btnSearch"> 
-			<a class="btn btn-default pull-right" href="DO?command=board_Write_Form">
-			글쓰기</a>
+		</select> 
+		
+		<input type="text" name="keyword" value="${keyword }" class="form-control pull-left" style="width: 120px"> 
+		<input type="submit" value="검색" class="btn btn-default pull-left" id="btnSearch"> 
+		<a class="btn btn-default pull-right" href="DO?command=questboard_Write_Form"> 글쓰기</a>
 	</form>
 
-
-	<hr>
+<hr>
 	<br>
 
 

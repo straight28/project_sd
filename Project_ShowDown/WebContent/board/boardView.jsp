@@ -14,7 +14,7 @@
 %>
 <h1 class="h1class">유저 게시판</h1>
 <div class="container" style="text-align: left">
-	<div id="wrap">
+
 
 		<div id="boardinfo">
 			<div id="infos">
@@ -100,8 +100,8 @@
 						<c:if test="${commentList.usernum == user}">
 							<!-- 로그인한 사람정보와 댓글 정보가 일치하면 삭제 보임-->
 							<span class="pull-right">
-								<a href="javascript:0;" onclick="BtnReply(this,${commentList.commentnum},${commentList.ref },${commentList.re_step },${commentList.re_level } )">댓글</a>&nbsp;&nbsp;
-								
+								<a href="javascript:0;" onclick="BtnReply(this,${commentList.commentnum},${commentList.ref },${commentList.re_step },${commentList.re_level } )">댓글</a>
+								&nbsp;&nbsp;
 								<a href="DO?command=deletereplyinboard&commentnum=${commentList.commentnum}&num=${oneboard.boardnum}">삭제</a>
 							</span>
 							<br>
