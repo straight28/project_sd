@@ -13,7 +13,7 @@ import com.showdown.dto.BoardDto;
 public class WriteBoardReplyAction implements ActionInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		String url ="DO?command=userboard";
 		/* 게시판글에 대한 답글달기 */
 		BoardDto bDTO = new BoardDto();
 		bDTO.setBoardnum(Integer.parseInt(request.getParameter("boardnum")));
@@ -26,7 +26,7 @@ public class WriteBoardReplyAction implements ActionInterface {
 		BoardDao bDAO = BoardDao.getInstance();
 				
 		bDAO.InsertBoardReply(bDTO);
+		response.sendRedirect(url);
 		
-		new UserBoardAction().execute(request, response);
 	}
 }

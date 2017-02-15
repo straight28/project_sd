@@ -13,7 +13,8 @@ import com.showdown.dto.BoardDto;
 public class WriteBoardAction implements ActionInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
+		
+		String url ="DO?command=userboard";
 		BoardDto bDTO = new BoardDto();
 
 		bDTO.setBoardtitle(request.getParameter("boardtitle"));
@@ -25,6 +26,6 @@ public class WriteBoardAction implements ActionInterface {
 		
 		bDAO.InsertBoards(bDTO);
 		
-		new UserBoardAction().execute(request, response);
+		response.sendRedirect(url);
 	}
 }
