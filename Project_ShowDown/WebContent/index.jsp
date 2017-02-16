@@ -2,6 +2,36 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp" %>	
 	
+<script>
+$(document).ready(function(){
+	//팝업 띄우기
+	//window.open (url,id,option);
+	///팝업창 열기 옵션 값을 가져옴
+	var show = getCookie("showCookies");
+	if(show != "N"){
+		window.open("popup.jsp","","width=400,height=500");
+	};
+});
+
+///저장된 쿠키를 검사하는 함수
+function getCookie(cname){
+	var cookie= document.cookie+";";
+	//console.log(cookie);
+	var idx = cookie.indexOf(cname,0);
+	var val ="";
+	if(idx != -1){
+		///substring (start, length )
+		/// 쿠키 userid = kkk; 에서 아래 코드는 kkk를 뽑아내는 함수
+		cookie = cookie.substring(idx, cookie.length);
+		begin = cookie.indexOf("=",0)+1;
+		end = cookie.indexOf(";",begin);
+		val = cookie.substring(begin,end)
+	};
+	return val;
+};
+
+
+</script>
 
     <div class="row">
         <div class="bodyDiv">
