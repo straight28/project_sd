@@ -1,6 +1,7 @@
 package com.showdown.controller.action;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import com.showdown.controller.actionInterface.ActionInterface;
 import com.showdown.dao.QuestionBoardDao;
+import com.showdown.dto.QuestionBoardCommentDto;
 import com.showdown.dto.QuestionBoardDto;
 
 public class ViewQuestBoardAction implements ActionInterface {
@@ -22,10 +24,12 @@ public class ViewQuestBoardAction implements ActionInterface {
 		HttpSession session = request.getSession();
 		/* 조회수 상승 */
 		qbdao.questionBoardUpdateHit(questboardnum, session);
-		 /* 게시글 하나의 내용을 가져옴 */
+		/* 게시글 하나의 내용을 가져옴 */
 		QuestionBoardDto qbdto = qbdao.selectOneQuestionBoardByQuestionBoardNum(questboardnum); 
-		
 		request.setAttribute("qeustboard", qbdto);
+		/* 댓글 목록을 가져옴 */
+		List<QuestionBoardCommentDto> QBCcommentList = qbdao.commentList(questboardnum);
+		
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);

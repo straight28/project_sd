@@ -11,11 +11,19 @@
 <%
 MemberDto mDTO = (MemberDto)session.getAttribute("loginUser");
 %>
+<script> 
+$(document).ready(function () {
+    $('#summernote').summernote({
+    	 height: 300,
+         placeholder : "게시판 내용을 입력하세요."
+    });
+});
+
+</script>
 
 
-
-<h1 class="h1class">유저 게시판</h1>
-        <div class="col-sm-12">
+<h1 class="h1class">자유 게시판</h1>
+        <div class="col-sm-12" style="text-align:left">
 <div class="container">
             <form method="post" action="DO">
 			<input type="hidden" name="command" value="board_update">
@@ -30,7 +38,7 @@ MemberDto mDTO = (MemberDto)session.getAttribute("loginUser");
 					<tr>
 						<th>내용</th>
 						<td><textarea cols="10" rows="10" name="boardcontent"
-								class="form-control">${oneboard.boardcontent }</textarea></td>
+								class="form-control" id="summernote">${oneboard.boardcontent }</textarea></td>
 					</tr>
 					<tr>
 						<td><a class="btn btn-default pull-left"

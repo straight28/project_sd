@@ -12,7 +12,7 @@
 <%
 	String num = request.getParameter("num");
 %>
-<h1 class="h1class">유저 게시판</h1>
+<h1 class="h1class">자유 게시판</h1>
 <div class="container" style="text-align: left">
 
 
@@ -71,7 +71,8 @@
 	</c:choose>
 	<a class="btn btn-default pull-right"
 		href="DO?command=writeboardreply&num=${oneboard.boardnum }">답글</a>
-</div>
+
+</div><!-- 헤더쪽에 wrap -->
 
 <hr>
 
@@ -140,6 +141,7 @@
 	</div>
 
 </div>
+
 
 
 <script>

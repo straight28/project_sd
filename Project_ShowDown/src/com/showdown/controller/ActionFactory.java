@@ -1,6 +1,7 @@
 package com.showdown.controller;
 
 import com.showdown.controller.action.DeleteBoardAction;
+import com.showdown.controller.action.DeleteQuestionBoardAction;
 import com.showdown.controller.action.DeleteReplyInBoard;
 import com.showdown.controller.action.IndexPageAction;
 import com.showdown.controller.action.JoinAction;
@@ -10,8 +11,11 @@ import com.showdown.controller.action.LoginFormAction;
 import com.showdown.controller.action.LogoutAction;
 import com.showdown.controller.action.ModifyBoardAction;
 import com.showdown.controller.action.ModifyBoardFormAction;
+import com.showdown.controller.action.ModifyQuestionBoardAction;
+import com.showdown.controller.action.ModifyQuestionBoardFormAction;
 import com.showdown.controller.action.MyMenuFormAction;
 import com.showdown.controller.action.QuestionBoardAction;
+import com.showdown.controller.action.QuestionBoardWriteReplyAction;
 import com.showdown.controller.action.SearchKeyword;
 import com.showdown.controller.action.UserBoardAction;
 import com.showdown.controller.action.ViewBoardAction;
@@ -88,6 +92,14 @@ public class ActionFactory {
 			action = new WriteQuestionBoardAction();
 		}else if(command.equals("questboard_view")){
 			action = new ViewQuestBoardAction();
+		}else if(command.equals("questBoard_delete")){
+			action = new DeleteQuestionBoardAction();
+		}else if(command.equals("questboard_modify_form")){
+			action = new ModifyQuestionBoardFormAction();
+		}else if(command.equals("questboard_update")){
+			action = new ModifyQuestionBoardAction();
+		}else if(command.equals("questBoardRepleWrite")){
+			action = new QuestionBoardWriteReplyAction();
 		}
 		
 		

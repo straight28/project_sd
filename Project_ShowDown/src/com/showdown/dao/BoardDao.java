@@ -315,11 +315,12 @@ public class BoardDao implements BoardDaoInterface{
 	/********** 글 삭제하기 **********/
 	@Override
 	public int DeleteBoards(int boardnum) {
-		System.out.println("삭제되는 게시판 숫자는?"+boardnum);
+		System.out.println("삭제되는 자유 게시판 숫자는?"+boardnum);
 		int result=0;
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		
 		try {
 			////코멘트 모두 삭제
 			String commentsql = "delete from board_comment where boardnum=?";
@@ -357,7 +358,7 @@ public class BoardDao implements BoardDaoInterface{
 			pstmt.setInt(2, bDTO.getUsernum());
 			pstmt.setInt(3, bDTO.getBoardnum());
 			pstmt.executeUpdate();
-			System.out.println("업데이트 성공");
+			System.out.println("유저 게시판 성공");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("updateBoard 에러");

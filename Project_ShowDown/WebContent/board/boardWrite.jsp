@@ -20,7 +20,7 @@ $(document).ready(function () {
 </script>
 
 
-<h1 class="h1class">유저 게시판</h1>
+<h1 class="h1class">자유 게시판</h1>
 <div class="col-sm-12" style="text-align:left">
 	<div class="container">
 		<form name="userboard" method="post" action="DO">

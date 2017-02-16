@@ -96,7 +96,7 @@
                             <a href="DO?command=index">Doodle</a>
                         </li>
                         <li>
-                            <a href="DO?command=userboard">유저 게시판</a>
+                            <a href="DO?command=userboard">자유 게시판</a>
                         </li>
                         <li>
                             <a href="DO?command=questionboard">질문 게시판</a>

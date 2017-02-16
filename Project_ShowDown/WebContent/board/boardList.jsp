@@ -5,7 +5,7 @@
 <fmt:formatDate value="${now }" pattern="yyyy-MM-dd" var="today"/> <!-- 오늘날짜 확인을 위한 jstl -->
 
 
-<h1 class="h1class">유저 게시판</h1>
+<h1 class="h1class">자유 게시판</h1>
 <div class="container">
 	<table class="table table-hover">
 		<colgroup>

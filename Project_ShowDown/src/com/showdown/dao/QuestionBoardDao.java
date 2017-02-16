@@ -10,6 +10,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import com.showdown.DBConnect.DBConnectManager;
+import com.showdown.dto.QuestionBoardCommentDto;
 import com.showdown.dto.QuestionBoardDto;
 
 
@@ -84,7 +85,7 @@ public class QuestionBoardDao implements QuestionBoardDaoInterface {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, QBDTO.getQuestboardtitle());
 			pstmt.setInt(2, QBDTO.getUsernum());
-			pstmt.setString(3, QBDTO.getQuestboardtitle());
+			pstmt.setString(3, QBDTO.getQuestboardcontent());
 			
 			result = pstmt.executeUpdate();
 			
@@ -282,14 +283,120 @@ public class QuestionBoardDao implements QuestionBoardDaoInterface {
 	/*******  게시판 수정   *******/
 	@Override
 	public void ModifyQuestionBoards(QuestionBoardDto QBDTO) {
-		// TODO Auto-generated method stub
-
+		
+		String sql = "update questionboard set questboardcontent=?,usernum=? where questboardnum=?";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = DBConnectManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, QBDTO.getQuestboardcontent());
+			pstmt.setInt(2, QBDTO.getUsernum());
+			pstmt.setInt(3, QBDTO.getQuestboardnum());
+			pstmt.executeUpdate();
+			System.out.println("질문 게시판 수정 성공");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("ModifyQuestionBoards 에러");
+		} finally{
+			DBConnectManager.disConnect(conn, pstmt);
+		}
 	}
+
+	
 	
 	/*******  게시판 삭제   *******/
 	@Override
-	public int DeleteQuestionBoards(int boardnum) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int DeleteQuestionBoards(int questboardnum) {
+		System.out.println("삭제되는 질문게시판 번호는 "+questboardnum);
+		int result = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			///코멘트 모두 삭제  아직 미구현
+			conn = DBConnectManager.getConnection();
+			
+			
+			///코멘트 모두 삭제 후 게시판 삭제
+			String sql = "delete from questionboard where questboardnum=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, questboardnum);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("DeleteQuestionBoards 에러");
+		} finally{
+			DBConnectManager.disConnect(conn, pstmt);
+		}
+		return result;
 	}
+	
+	
+	/********** 게시물 안에 댓글 등록 **********/
+	public int InsertQuestionBoardComment(QuestionBoardCommentDto qbcDTO){
+		int result = 0;
+		String sql = " insert into questionboard_comment (questcommentnum,questboardnum,usernum,content, ref, re_step, re_level) " 
+				    +" values((select nvl(max(questcommentnum)+1,1) from questionboard_comment),?,?,?, "
+				    +" (select nvl(max(questcommentnum)+1,1) from questionboard_comment),1,0)";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = DBConnectManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, qbcDTO.getQuestboardnum());
+			pstmt.setInt(2, qbcDTO.getUsernum());
+			pstmt.setString(3, qbcDTO.getContent());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("InsertQuestionBoardComment 에러");
+		} finally{
+			DBConnectManager.disConnect(conn, pstmt);
+		}
+		return result;
+	}
+	
+	
+	
+    /*******  댓글 List 보여주기   *******/
+	public List<QuestionBoardCommentDto> commentList(int questboardnum){
+		List<QuestionBoardCommentDto> commentList = new ArrayList<QuestionBoardCommentDto>();
+		
+		String sql = "";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBConnectManager.getConnection();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("");
+		} finally{
+			DBConnectManager.disConnect(conn, pstmt,rs);
+		}
+		return commentList;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
