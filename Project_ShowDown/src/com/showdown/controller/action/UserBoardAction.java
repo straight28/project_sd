@@ -26,7 +26,7 @@ public class UserBoardAction implements ActionInterface {
 		BoardDao bDAO = BoardDao.getInstance();
 		
 		if(loginUser == null){
-			url = "DO?command=member_Login_Form";
+			url = "DO?command=member_Login_Form&q=0";
 		}
 			
 		//db에서 모든 게시글 수 계산

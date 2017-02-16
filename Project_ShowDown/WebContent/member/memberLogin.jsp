@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp"%>
 
+<% String q = (String)request.getAttribute("q"); %>
 <!--
 경로 확인 용 
 <link rel="stylesheet" href="../css/bootstrap.css">
@@ -38,6 +39,7 @@
 					<h4><span style="color:red; font-size:1.2em">${message}</span></h4>
 				</div>
 			<img src='images/matcha.jpg' />
+			<input type="hidden" name="q" value=<%=q%>>
 			</form>
 		</div>
 	</div>

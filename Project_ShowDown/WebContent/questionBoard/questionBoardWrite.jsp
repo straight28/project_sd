@@ -23,7 +23,7 @@ $(document).ready(function () {
 <div class="col-sm-12" style="text-align:left">
 	<div class="container">
 		<form name="questboard" method="post" action="DO">
-			<input type="hidden" name="command" value="questionboard_write"> <!-- 보드 등록 -->
+			<input type="hidden" name="command" value="questionBoard_write"> <!-- 보드 등록 -->
 			<table class="table table-striped">
 
 				<tbody>

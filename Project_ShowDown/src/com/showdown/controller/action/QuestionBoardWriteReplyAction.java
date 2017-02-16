@@ -16,7 +16,7 @@ public class QuestionBoardWriteReplyAction implements ActionInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String url = "DO?command=questboard_view&num=";
+		String url = "DO?command=questBoard_view&num=";
 		
 		QuestionBoardCommentDto qbcDTO = new QuestionBoardCommentDto();
 		HttpSession session = request.getSession();
@@ -24,7 +24,6 @@ public class QuestionBoardWriteReplyAction implements ActionInterface {
 		
 		qbcDTO.setQuestboardnum(Integer.parseInt(request.getParameter("num")));
 		url += request.getParameter("num");
-		
 		qbcDTO.setContent(request.getParameter("questboardcomment"));
 		qbcDTO.setUsernum(loginUser.getUsernum());
 		

@@ -17,7 +17,7 @@ $(document).ready(function () {
         <div class="col-sm-12" style="text-align:left">
 <div class="container">
             <form method="post" action="DO">
-			<input type="hidden" name="command" value="questboard_update">
+			<input type="hidden" name="command" value="questBoard_update">
 			<table class="table table-striped">
 
 				<tbody>

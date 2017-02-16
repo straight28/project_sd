@@ -3,7 +3,7 @@ package com.showdown.dto;
 import java.sql.Timestamp;
 
 public class QuestionBoardCommentDto {
-	private int questboardcommentnum;
+	private int questcommentnum;
 	private int questboardnum;
 	private int usernum;
 	private String nickname;
@@ -17,11 +17,11 @@ public class QuestionBoardCommentDto {
 	
 	
 	
-	public int getQuestboardcommentnum() {
-		return questboardcommentnum;
+	public int getQuestcommentnum() {
+		return questcommentnum;
 	}
-	public void setQuestboardcommentnum(int questboardcommentnum) {
-		this.questboardcommentnum = questboardcommentnum;
+	public void setQuestcommentnum(int questcommentnum) {
+		this.questcommentnum = questcommentnum;
 	}
 	public int getQuestboardnum() {
 		return questboardnum;

@@ -25,7 +25,7 @@ public class QuestionBoardAction implements ActionInterface {
 		QuestionBoardDao QBDao = QuestionBoardDao.getInstance();
 		
 		if(loginUser == null){
-			url = "DO?command=member_Login_Form";
+			url = "DO?command=member_Login_Form&q=1";
 		}
 		///DB에서 모든 게시글 수 계산
 		int count = QBDao.countQuestionBoard();

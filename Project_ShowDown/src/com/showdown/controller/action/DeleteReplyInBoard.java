@@ -19,10 +19,6 @@ public class DeleteReplyInBoard implements ActionInterface {
 		
 		bDAO.DeleteBoardReply(commentnum);
 		
-		String num = request.getParameter("num");
-		
-		
-		
 		new ViewBoardAction().execute(request, response);
 	}
 }

@@ -2,25 +2,23 @@ package com.showdown.controller.action;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.showdown.controller.actionInterface.ActionInterface;
+import com.showdown.dao.QuestionBoardDao;
 
-public class LoginFormAction implements ActionInterface {
-
-
+public class DeleteReplyInQuestBoard implements ActionInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String url = "member/memberLogin.jsp";
-		String q=request.getParameter("q");
+
+		String comment = request.getParameter("commentnum");
+		int questcommentnum = Integer.parseInt(comment);
+		QuestionBoardDao qbdao = QuestionBoardDao.getInstance();
 		
-		if( q != null){
-			request.setAttribute("q" , q);
-		}
-		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-		dispatcher.forward(request, response);
+		qbdao.DeleteQuestionBoardReply(questcommentnum);
+
+		new ViewQuestBoardAction().execute(request, response);
 	}
 }

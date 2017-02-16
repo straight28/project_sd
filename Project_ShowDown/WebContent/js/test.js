@@ -4,3 +4,8 @@
 	 location.href =
 	"DO?command=userboard&curPage="+page;
  }
+ 
+ function Questlist(page){
+	 location.href =
+	"DO?command=questionboard&curPage="+page;
+ }

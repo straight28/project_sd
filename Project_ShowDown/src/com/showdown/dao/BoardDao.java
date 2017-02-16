@@ -405,9 +405,7 @@ public class BoardDao implements BoardDaoInterface{
 				bcDto.setRe_step(rs.getInt("re_step"));
 				bcDto.setRe_level(rs.getInt("re_level"));
 				commentlist.add(bcDto);
-					
 			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally{

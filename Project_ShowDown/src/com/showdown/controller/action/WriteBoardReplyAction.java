@@ -26,6 +26,7 @@ public class WriteBoardReplyAction implements ActionInterface {
 		BoardDao bDAO = BoardDao.getInstance();
 				
 		bDAO.InsertBoardReply(bDTO);
+		
 		response.sendRedirect(url);
 		
 	}

@@ -10,6 +10,8 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import com.showdown.DBConnect.DBConnectManager;
+import com.showdown.dto.BoardCommentDto;
+import com.showdown.dto.BoardDto;
 import com.showdown.dto.QuestionBoardCommentDto;
 import com.showdown.dto.QuestionBoardDto;
 
@@ -22,7 +24,7 @@ public class QuestionBoardDao implements QuestionBoardDaoInterface {
 	public static QuestionBoardDao getInstance(){
 		return instance;
 	}
-	/*******  조회수 올림   *******/
+	/**********  조회수 올림   **********/
 	public void questionBoardUpdateHit(int questboardnum, HttpSession countSession){
 		String sql = "update questionboard set hit=hit+1 where questboardnum = ?";
 		Connection conn = null;
@@ -54,21 +56,9 @@ public class QuestionBoardDao implements QuestionBoardDaoInterface {
 		} finally{
 			DBConnectManager.disConnect(conn, pstmt);
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	}
 	
-	/*******  게시판 등록   *******/
+	/**********  게시판 등록   **********/
 	@Override
 	public int InsertQuestionBoards(QuestionBoardDto QBDTO) {
 		int result = 0;
@@ -98,7 +88,7 @@ public class QuestionBoardDao implements QuestionBoardDaoInterface {
 		return result;
 	}
 	
-	/********** 전체 게시판 글 갯수 **********/
+	/********** 전체 게시판 글 갯수   **********/
 	public int countQuestionBoard(){
 		int result = 0;
 		
@@ -123,7 +113,38 @@ public class QuestionBoardDao implements QuestionBoardDaoInterface {
 		return result;
 	}
 	
-	
+	/********** 검색한 게시판 글 갯수 **********/
+	public int searchCountBoard(String search_option, String keyword){
+		int result = 0;
+		
+		/*  nickname을 불러오는 sql이 달라서 안정성을 위해 sql을 분리시킴  */
+		String nicksql =" select count(*) from questionboard, member where questionboard.usernum = member.usernum and nickname like '%'||?||'%'";
+		String titlesql =" select count(*) from questionboard where questboardtitle like '%'||?||'%'";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBConnectManager.getConnection();
+			if (search_option.equals("nickname")) {
+				pstmt = conn.prepareStatement(nicksql);
+				
+			}else if(search_option.equals("questboardtitle")){
+				pstmt = conn.prepareStatement(titlesql);
+			}	
+			pstmt.setString(1, keyword);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{
+			DBConnectManager.disConnect(conn, pstmt, rs);
+		}
+		return result;
+	}
 	
 	/*******  모든 게시판 글 가져오기 (페이징 처리 하지 않은 것)  ******
 	
@@ -178,7 +199,7 @@ public class QuestionBoardDao implements QuestionBoardDaoInterface {
 	*/
 	
 	
-	/*******  모든 게시판 글 가져오기   *******/
+	/**********  모든 게시판 글 가져오기   **********/
 	
 	public List<QuestionBoardDto> selectAllQuestionBoards(int pageStart, int pageEnd){
 		
@@ -232,7 +253,7 @@ public class QuestionBoardDao implements QuestionBoardDaoInterface {
 		return list;
 	}
 	
-	/********** 글 내용보기 **********/
+	/********** 글 내용보기   **********/
 	public QuestionBoardDto selectOneQuestionBoardByQuestionBoardNum(int questboardnum){
 		String sql =" select questionboard.questboardnum, questionboard.questboardtitle, questionboard.usernum,  "
 				   +" questionboard.questboardcontent,	questionboard.questdate, questionboard.HIT, questionboard.ref, "
@@ -280,7 +301,7 @@ public class QuestionBoardDao implements QuestionBoardDaoInterface {
 	
 	
 	
-	/*******  게시판 수정   *******/
+	/**********  게시판 수정   **********/
 	@Override
 	public void ModifyQuestionBoards(QuestionBoardDto QBDTO) {
 		
@@ -308,7 +329,7 @@ public class QuestionBoardDao implements QuestionBoardDaoInterface {
 
 	
 	
-	/*******  게시판 삭제   *******/
+	/**********  게시판 삭제   **********/
 	@Override
 	public int DeleteQuestionBoards(int questboardnum) {
 		System.out.println("삭제되는 질문게시판 번호는 "+questboardnum);
@@ -337,7 +358,7 @@ public class QuestionBoardDao implements QuestionBoardDaoInterface {
 	}
 	
 	
-	/********** 게시물 안에 댓글 등록 **********/
+	/********** 게시물 안에 댓글 등록   **********/
 	public int InsertQuestionBoardComment(QuestionBoardCommentDto qbcDTO){
 		int result = 0;
 		String sql = " insert into questionboard_comment (questcommentnum,questboardnum,usernum,content, ref, re_step, re_level) " 
@@ -363,13 +384,101 @@ public class QuestionBoardDao implements QuestionBoardDaoInterface {
 		return result;
 	}
 	
+	/**********	게시글 안애 대댓글 등록    **********/
+	
+	public int InsertTwoQuestionBoardComment(QuestionBoardCommentDto qbcDTO){
+		int result = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = DBConnectManager.getConnection();
+			
+			int re_lev = qbcDTO.getRe_level()+1;
+			int re_step = qbcDTO.getRe_step()+1;
+			
+			/*	댓글 들어가기 전에 기존 단계들을 1 증가 시켜줌     */
+			
+			String updateSql ="update questionboard_comment set re_step = re_step+1"
+					+ " where ref=? and re_step >= ?";
+			pstmt = conn.prepareStatement(updateSql);
+			pstmt.setInt(1, qbcDTO.getRef());
+			pstmt.setInt(2, re_step);
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			String sql = " insert into questionboard_comment (questcommentnum,questboardnum,usernum,content, ref, re_step, re_level) "
+					 +" values((select nvl(max(questcommentnum)+1,1) from questionboard_comment) ,?,?,?,?,?,?)";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, qbcDTO.getQuestboardnum());
+			pstmt.setInt(2, qbcDTO.getUsernum());
+			pstmt.setString(3, qbcDTO.getContent());
+			pstmt.setInt(4, qbcDTO.getRef());
+			pstmt.setInt(5, re_step);
+			pstmt.setInt(6, re_lev);
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("InsertTwoQuestionBoardComment 에러");
+		} finally{
+			DBConnectManager.disConnect(conn, pstmt);
+		}
+		return result;
+	}
 	
 	
-    /*******  댓글 List 보여주기   *******/
+	
+	
+	
+	/********** 댓글 번호에 따른 댓글 정보를 가져옴   **********/
+	public QuestionBoardCommentDto selectOneReplyInfoByQuestboardcommentnum(int questcommentnum){
+		String sql = " select questionboard_comment.questcommentnum, questionboard_comment.questboardnum, questionboard_comment.usernum, "
+				  	+" questionboard_comment.content, questionboard_comment.regdate, questionboard_comment.ref, "
+				  	+" questionboard_comment.re_step, questionboard_comment.re_level "
+				  	+" from questionboard_comment where questionboard_comment.questcommentnum=?";
+		QuestionBoardCommentDto qbcdto = new QuestionBoardCommentDto();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBConnectManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, questcommentnum);
+			rs = pstmt.executeQuery();
+			if(rs.next()){
+							
+				qbcdto.setQuestcommentnum(rs.getInt("questcommentnum"));
+				qbcdto.setQuestboardnum(rs.getInt("questboardnum"));
+				qbcdto.setUsernum(rs.getInt("usernum"));
+				qbcdto.setContent(rs.getString("content"));
+				qbcdto.setRegdate(rs.getTimestamp("regdate"));
+				qbcdto.setRef(rs.getInt("ref"));
+				qbcdto.setRe_step(rs.getInt("re_step"));
+				qbcdto.setRe_level(rs.getInt("re_level"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("selectOneReplyInfoByQuestboardcommentnum 에러");
+		} finally{
+			DBConnectManager.disConnect(conn, pstmt, rs);
+		}
+		return qbcdto;
+	}
+	
+    /**********  댓글 List 보여주기   **********/
 	public List<QuestionBoardCommentDto> commentList(int questboardnum){
 		List<QuestionBoardCommentDto> commentList = new ArrayList<QuestionBoardCommentDto>();
 		
-		String sql = "";
+		String sql =" select questionboard_comment.QUESTCOMMENTNUM, questionboard_comment.content, questionboard_comment.usernum, "
+			       +" questionboard_comment.regdate, questionboard_comment.QUESTBOARDNUM, questionboard_comment.ref, "
+			       +" questionboard_comment.re_step, questionboard_comment.re_level, "
+			       +" member.nickname from questionboard_comment, member where questionboard_comment.usernum = member.usernum  "
+			       +" and questboardnum = ? "
+			       +" order by questionboard_comment.ref asc, questionboard_comment.re_step asc"; 
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -377,7 +486,28 @@ public class QuestionBoardDao implements QuestionBoardDaoInterface {
 		
 		try {
 			conn = DBConnectManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, questboardnum);
+			rs = pstmt.executeQuery();
 			
+			while(rs.next()){
+				QuestionBoardCommentDto QBCDTO	= new QuestionBoardCommentDto();
+				
+				/* 태그 방지, 공백 추가, 줄바꿈  */
+				String content = rs.getString("content");
+				content = BoardDao.getInstance().checkArticle(content);
+				
+				QBCDTO.setQuestcommentnum(rs.getInt("QUESTCOMMENTNUM"));
+				QBCDTO.setQuestboardnum(rs.getInt("questboardnum"));
+				QBCDTO.setUsernum(rs.getInt("usernum"));
+				QBCDTO.setContent(content);
+				QBCDTO.setNickname(rs.getString("nickname"));
+				QBCDTO.setRegdate(rs.getTimestamp("regdate"));
+				QBCDTO.setRef(rs.getInt("ref"));
+				QBCDTO.setRe_step(rs.getInt("re_step"));
+				QBCDTO.setRe_level(rs.getInt("re_level"));
+				commentList.add(QBCDTO);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("");
@@ -387,9 +517,112 @@ public class QuestionBoardDao implements QuestionBoardDaoInterface {
 		return commentList;
 	}
 	
+	/********** 댓글 삭제하기 **********/
+	public int DeleteQuestionBoardReply(int questcommentnum) {
+		int result=0;
+		
+		String sql = "delete from questionboard_comment where questcommentnum=?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DBConnectManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, questcommentnum);
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("DeleteQuestionBoardReply 에러");
+		} finally{
+			DBConnectManager.disConnect(conn, pstmt);
+		}
+		return result;
+	}
 	
 	
 	
+	
+	
+	/********** 검색을 위한 dao **********/
+	public List<QuestionBoardDto> searchList(String search_option, String keyword, int pageStart, int pageEnd){
+		List<QuestionBoardDto> searchlist = new ArrayList<QuestionBoardDto>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+	
+		String nicksql = "select * "
+		 			   + "   from (  "
+		 			   + "   select rownum as rn, A.* "
+				       + "   from (  "
+				       + "   select questionboard.questboardnum, questionboard.questboardtitle, questionboard.usernum, " 
+					   + "   questionboard.questboardcontent,	questionboard.questdate, questionboard.HIT, questionboard.ref, "
+					   + "   questionboard.re_step, questionboard.re_level, member.nickname "
+					   + " 	from questionboard, member where questionboard.usernum = member.usernum and nickname like '%'||?||'%' "
+				       + "   order by ref desc, re_step asc "
+				       + "   ) A "
+				       + "  )    where rn between ? and ? ";
+			
+
+		String titlesql = "select * "
+		 				+ "   from (  "
+		 				+ "   select rownum as rn, A.* "
+		 				+ "   from (  "
+		 				+ "   select questionboard.questboardnum, questionboard.questboardtitle, questionboard.usernum,  " 
+		 				+ "  questionboard.questboardcontent,	questionboard.questdate, questionboard.HIT, questionboard.ref, "
+		 				+ "   questionboard.re_step, questionboard.re_level, member.nickname"
+		 				+ " 	from questionboard, member where questionboard.usernum = member.usernum and questboardtitle like '%'||?||'%'"
+		 				+ "   order by ref desc, re_step asc "
+		 				+ "   ) A "
+		 				+ "  )    where rn between ? and ? ";
+	
+		try {
+			conn = DBConnectManager.getConnection();
+			if (search_option.equals("nickname")) {
+				pstmt = conn.prepareStatement(nicksql);
+			}else if(search_option.equals("questboardtitle")){
+				pstmt = conn.prepareStatement(titlesql);
+			}
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, pageStart);
+			pstmt.setInt(3, pageEnd);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				QuestionBoardDto qbdto = new QuestionBoardDto();
+				
+				/*  태그 방지, 공백추가 , 줄바꿈 */
+				String questboardtitle = rs.getString("questboardtitle");
+				questboardtitle = BoardDao.getInstance().checkArticle(questboardtitle);
+				
+				////검색 한내용이 곧 keyword 이므로 keyword 값을 변경해주면 검색시 값을 변경해 줄 수 있음
+				questboardtitle = questboardtitle.replace(keyword, "<span style='color:#ff3d4a'>"+keyword+"<span>"); 
+				String questboardcontent = rs.getString("questboardcontent");
+				questboardcontent = BoardDao.getInstance().checkArticle(questboardcontent);
+				String nickname = rs.getString("nickname");
+				
+				nickname = nickname.replace(keyword, "<span style='color:#ff3d4a'>"+keyword+"<span>");
+				
+				qbdto.setQuestboardnum(rs.getInt("questboardnum"));
+				qbdto.setQuestboardtitle(questboardtitle);
+				qbdto.setUsernum(rs.getInt("usernum"));
+				qbdto.setQuestboardcontent(questboardcontent);
+				qbdto.setQuestdate(rs.getTimestamp("questdate"));
+				qbdto.setHit(rs.getInt("hit"));
+				qbdto.setRef(rs.getInt("ref"));
+				qbdto.setRe_step(rs.getInt("re_step"));
+				qbdto.setRe_level(rs.getInt("re_level"));
+				qbdto.setNickname(nickname);
+				searchlist.add(qbdto);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			DBConnectManager.disConnect(conn, pstmt, rs);
+		}
+		return searchlist;
+		
+	}
 	
 	
 	

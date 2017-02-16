@@ -13,29 +13,29 @@
 			<div id="infos">
 				<ul>
 					<li>글번호:</li>
-					<li>${qeustboard.questboardnum}</li>
+					<li>${questboard.questboardnum}</li>
 				</ul>
 				<ul>
 					<li>작성자:</li>
-					<li>${qeustboard.nickname}</li>
+					<li>${questboard.nickname}</li>
 				</ul>
 				<ul>
 					<li>등록일:</li>
-					<li><fmt:formatDate value="${qeustboard.questdate}"
+					<li><fmt:formatDate value="${questboard.questdate}"
 							pattern="yyyy-MM-dd HH:mm:ss" /></li>
 				</ul>
 				<ul>
 					<li>조회수:</li>
-					<li>${qeustboard.hit }</li>
+					<li>${questboard.hit }</li>
 				</ul>
 			</div>
 		</div>
 
 		<div id="boardhead">
-			<div>${qeustboard.questboardtitle}</div>
+			<div>${questboard.questboardtitle}</div>
 		</div>
 		<div id="boardcontent">
-			<div>${qeustboard.questboardcontent}</div>
+			<div>${questboard.questboardcontent}</div>
 		</div>
 	</div>
 	
@@ -44,7 +44,7 @@
 
 	<c:set var="user" value="${loginUser.usernum }" />
 	<!-- 로그인한 사람 정보 세션 -->
-	<c:set var="board" value="${qeustboard.usernum }" />
+	<c:set var="board" value="${questboard.usernum }" />
 	<!-- 게시판 글 정보 세션 -->
 
 <a class="btn btn-default pull-left" href="DO?command=questionboard">목록</a>
@@ -52,9 +52,9 @@
 		<c:when test="${user == board}">
 			<!-- 로그인한 사람정보와 작성글 정보가 일치하면 아래메뉴 보임-->
 			<a class="btn btn-default pull-right"
-				href="DO?command=questBoard_delete&num=${qeustboard.questboardnum }">글 삭제</a>
+				href="DO?command=questBoard_delete&num=${questboard.questboardnum }">글 삭제</a>
 			<a class="btn btn-default pull-right"
-				href="DO?command=questboard_modify_form&num=${qeustboard.questboardnum }">글 수정</a>
+				href="DO?command=questBoard_modify_form&num=${questboard.questboardnum }">글 수정</a>
 		</c:when>
 		<c:otherwise>
 			<a class="btn btn-default pull-right" href="DO?command=questionboard">뒤로</a>
@@ -91,9 +91,9 @@
 						<c:if test="${commentList.usernum == user}">
 							<!-- 로그인한 사람정보와 댓글 정보가 일치하면 삭제 보임-->
 							<span class="pull-right">
-								<a href="javascript:0;" onclick="BtnReply(this,${commentList.commentnum},${commentList.ref },${commentList.re_step },${commentList.re_level } )">댓글</a>
+								<a href="javascript:0;" onclick="BtnReply(this,${commentList.questcommentnum},${commentList.ref },${commentList.re_step },${commentList.re_level } )">댓글</a>
 								&nbsp;&nbsp;
-								<a href="DO?command=deletereplyinboard&commentnum=${commentList.commentnum}&num=${qeustboard.questboardnum}">삭제</a>
+								<a href="DO?command=deletequestboardreply&commentnum=${commentList.questcommentnum}&num=${questboard.questboardnum}">삭제</a>
 							</span>
 							<br>
 						</c:if>
@@ -108,7 +108,7 @@
 		</c:if>
 
 
-		<form name="userboard" method="post" action="DO?command=questBoardRepleWrite">
+		<form name="questionboard" method="post" action="DO?command=questBoardRepleWrite">
 			<table class="table table-striped">
 				<tr>
 					<th style="text-align: left">댓글
@@ -124,7 +124,7 @@
 						value="리플 등록"></td>
 				</tr>
 			</table>
-			<input type="hidden" name="num" value="${qeustboard.questboardnum}">
+			<input type="hidden" name="num" value="${questboard.questboardnum}">
 			<input type="hidden" name="usernum" value="${loginUser.usernum} ">
 		</form>
 	</div>
@@ -139,19 +139,19 @@ function BtnReply(e,num,reff,stepp,levell){
 	var step = stepp;
 	var level = levell;
 	
-	$(e).parent().parent().next().next().html('<form name="userboard" method="post" class="replyBoardForm" action="DO?command=deepQuestBoardRepleWrite">'
+	$(e).parent().parent().next().next().html('<form name="questionboard" method="post" class="replyBoardForm" action="DO?command=deepQuestBoardRepleWrite">'
 			+ '<table class="table table-striped">'
 			+ 	'<tr>'
 			+ 		'<th style="text-align: left">댓글'
 			+	'</tr>'
 			+	'<tr>'
-			+		'<td><textarea cols="10" rows="2" name="boardcomment" class="form-control"></textarea></td>'
+			+		'<td><textarea cols="10" rows="2" name="questboardcomment" class="form-control"></textarea></td>'
 			+	'</tr>'
 			+	'<tr>'
 			+		'<td><input type="submit" class="btn btn-default pull-right" value="리플 등록"></td>'
 			+	'</tr>'
 			+ '</table>'
-			+ '<input type="hidden" name="num" value="${qeustboard.questboardnum}">'
+			+ '<input type="hidden" name="num" value="${questboard.questboardnum}">'
 			+ '<input type="hidden" name="comment" id="comment" value="">'
 			+ '<input type="hidden" name="ref" id="ref" value="">'
 			+ '<input type="hidden" name="step" id="step" value="">'

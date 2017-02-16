@@ -19,7 +19,7 @@
                             </div>
                             <div class="col-sm-12">
                             <a href="DO?command=member_Join_Form" class="btn btn-primary">회원가입</a>
-                            <a href="DO?command=member_Login_Form" class="btn btn-default">로그인</a>
+                            <a href="DO?command=member_Login_Form&q=0" class="btn btn-default">로그인</a>
                             </div>
                         </div>
                     </div>

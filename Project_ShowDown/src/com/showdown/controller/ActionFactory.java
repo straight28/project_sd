@@ -3,6 +3,7 @@ package com.showdown.controller;
 import com.showdown.controller.action.DeleteBoardAction;
 import com.showdown.controller.action.DeleteQuestionBoardAction;
 import com.showdown.controller.action.DeleteReplyInBoard;
+import com.showdown.controller.action.DeleteReplyInQuestBoard;
 import com.showdown.controller.action.IndexPageAction;
 import com.showdown.controller.action.JoinAction;
 import com.showdown.controller.action.JoinFormAction;
@@ -14,6 +15,7 @@ import com.showdown.controller.action.ModifyBoardFormAction;
 import com.showdown.controller.action.ModifyQuestionBoardAction;
 import com.showdown.controller.action.ModifyQuestionBoardFormAction;
 import com.showdown.controller.action.MyMenuFormAction;
+import com.showdown.controller.action.QuestSearchkeyword;
 import com.showdown.controller.action.QuestionBoardAction;
 import com.showdown.controller.action.QuestionBoardWriteReplyAction;
 import com.showdown.controller.action.SearchKeyword;
@@ -25,6 +27,7 @@ import com.showdown.controller.action.WriteBoardFormAction;
 import com.showdown.controller.action.WriteBoardReplyAction;
 import com.showdown.controller.action.WriteBoardReplyFormAction;
 import com.showdown.controller.action.WriteDeepReply;
+import com.showdown.controller.action.WriteDeepReplyInQuestionboard;
 import com.showdown.controller.action.WriteQuestionBoardAction;
 import com.showdown.controller.action.WriteQuestionBoardFormAction;
 import com.showdown.controller.action.WriteReplyAction;
@@ -86,20 +89,26 @@ public class ActionFactory {
 			action = new WriteDeepReply();
 		}else if(command.equals("questionboard")){ 		/// questionBoard 
 			action = new QuestionBoardAction();
-		}else if(command.equals("questboard_Write_Form")){
+		}else if(command.equals("questBoard_Write_Form")){
 			action = new WriteQuestionBoardFormAction();
-		}else if(command.equals("questionboard_write")){
+		}else if(command.equals("questionBoard_write")){
 			action = new WriteQuestionBoardAction();
-		}else if(command.equals("questboard_view")){
+		}else if(command.equals("questBoard_view")){
 			action = new ViewQuestBoardAction();
 		}else if(command.equals("questBoard_delete")){
 			action = new DeleteQuestionBoardAction();
-		}else if(command.equals("questboard_modify_form")){
+		}else if(command.equals("questBoard_modify_form")){
 			action = new ModifyQuestionBoardFormAction();
-		}else if(command.equals("questboard_update")){
+		}else if(command.equals("questBoard_update")){
 			action = new ModifyQuestionBoardAction();
 		}else if(command.equals("questBoardRepleWrite")){
 			action = new QuestionBoardWriteReplyAction();
+		}else if(command.equals("deepQuestBoardRepleWrite")){
+			action = new WriteDeepReplyInQuestionboard();
+		}else if(command.equals("questSearchkeyword")){
+			action = new QuestSearchkeyword();
+		}else if(command.equals("deletequestboardreply")){
+			action = new DeleteReplyInQuestBoard();
 		}
 		
 		

@@ -28,6 +28,9 @@ public class LoginAction implements ActionInterface {
 		
 		result = mDAO.checkID(userid,userpass);
 		
+		/// 진입페이지 변환 관련/// q가 1이면 질문게시판 0이면 자유게시판으로 이동
+		int	q = Integer.parseInt(request.getParameter("q"));
+		
 		if(result == 2){ /// 로그인 성공
 			
 			MemberDto mDTO = mDAO.selectMemberByUserid(userid);
@@ -37,6 +40,10 @@ public class LoginAction implements ActionInterface {
 				session.setAttribute("loginUser", mDTO);
 				url = "DO?command=userboard";      ///url 완성되면 페이지 전환 필요한 부분
 				message= "로그인 성공";
+				System.out.println("q의 값은"+q);
+				if(q == 1){
+				url = "DO?command=questionboard";  
+				}
 			}else{
 				message= "정보를 가져올 수 없습니다.";
 			}

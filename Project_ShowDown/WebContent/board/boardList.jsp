@@ -89,7 +89,7 @@
 				<option value="nickname" >작성자</option>
 			</c:if>
 			<c:if test="${search_option == 'nickname'}">
-				<option value="title" >제목</option>
+				<option value="boardtitle" >제목</option>
 				<!-- 제목에 셀렉트 고정 -->
 				<option value="nickname" selected>작성자</option>
 			</c:if>
