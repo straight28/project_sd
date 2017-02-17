@@ -66,7 +66,7 @@ function setCookie(name, value, days){
 	///userid= 값; path=/; expires=날짜;
 	///toGMTString() 표준시간
 	document.cookie = name+"="+value+";path=/Project_ShowDown;expires="+today.toGMTString()+";";
-	alert(document.cookie);
+	
 };
 ///저장된 쿠키를 검사하는 함수
 function getCookie(cname){
