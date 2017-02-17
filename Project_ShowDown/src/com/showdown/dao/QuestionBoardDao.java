@@ -339,8 +339,13 @@ public class QuestionBoardDao implements QuestionBoardDaoInterface {
 		PreparedStatement pstmt = null;
 		
 		try {
-			///코멘트 모두 삭제  아직 미구현
+			///코멘트 모두 삭제 
+			String commentsql = "delete from questionboard_comment where questboardnum=?";
 			conn = DBConnectManager.getConnection();
+			pstmt = conn.prepareStatement(commentsql);
+			pstmt.setInt(1, questboardnum);
+			pstmt.executeUpdate();
+			pstmt.close();
 			
 			
 			///코멘트 모두 삭제 후 게시판 삭제

@@ -71,7 +71,7 @@ function setCookie(name, value, days){
 ///저장된 쿠키를 검사하는 함수
 function getCookie(cname){
 	var cookie= document.cookie+";";
-	//console.log(cookie);
+	
 	var idx = cookie.indexOf(cname,0);
 	var val ="";
 	if(idx != -1){

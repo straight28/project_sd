@@ -74,12 +74,16 @@
 <br>
 <br>
 </div>
-<!-- jQuery (부트스트랩의 자바 플러그인 필수적) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script>
-    $('.carousel').carousel()
-</script>
 
+
+<!-- jQuery (부트스트랩의 자바 플러그인 필수적) 
+없어도 됨 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+<script>
+    $('.carousel').carousel();
+</script>
+-->
 
 
 
