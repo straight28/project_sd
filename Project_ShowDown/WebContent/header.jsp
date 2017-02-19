@@ -27,7 +27,12 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script> 
 		
+ <script type="text/javascript">
+ function btnClick(){
+	 alert("서비스 준비 중 입니다.");
+ }
  
+ </script>
 		
 </head>
 
@@ -102,7 +107,7 @@
                             <a href="DO?command=questionboard">질문 게시판</a>
                         </li>
                         <li>
-                            <a href="#">다른 서비스</a>
+                            <a href="javascript:0;" onclick="btnClick()">다른 서비스</a>
                         </li>
                     </ul>
 
@@ -112,3 +117,6 @@
     </div>
 <hr style="border-color: #be6dff">
 		<br>
+		
+
+		
