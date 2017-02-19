@@ -15,7 +15,7 @@ public class JoinAction implements ActionInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int result=0;
-		String url = "/JoinPage.jsp";
+		String url = "DO?command=member_Join_Form";
 		/// DTO 객체 생성
 		MemberDto mDTO = new MemberDto();
 
@@ -33,9 +33,9 @@ public class JoinAction implements ActionInterface {
 		
 		
 		if (result == 0) {
-			url = "/JoinPage.jsp";
+			url = "DO?command=member_Join_Form";
 		}else{
-			url = "member/memberLogin.jsp";
+			url = "DO?command=member_Login_Form";
 		}
 		
 		response.sendRedirect(url);

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import com.showdown.DBConnect.DBConnectManager;
 import com.showdown.dto.MemberDto;
+import com.showdown.util.BCrypt;
 
 /*********** 회원 정보 dao **********/
 public class MemberDao implements MemberDaoInterface{
@@ -48,8 +49,13 @@ public class MemberDao implements MemberDaoInterface{
 		try {
 			conn = DBConnectManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
+			
+			/********** Bcrypt 알고리즘으로 암호화 **********/
+			///hashpw(평문, 암호화키 생성(기본값은 10))
+			String password = BCrypt.hashpw(mDTO.getUserpass(), BCrypt.gensalt());
+			
 			pstmt.setString(1, mDTO.getUserid());
-			pstmt.setString(2, mDTO.getUserpass());
+			pstmt.setString(2, password);
 			pstmt.setString(3, mDTO.getNickname());
 			pstmt.setString(4, mDTO.getEmail());
 			pstmt.setInt(5, mDTO.getManagecode());
@@ -68,15 +74,15 @@ public class MemberDao implements MemberDaoInterface{
 	
 	/********** 회원탈퇴   **********/
 	@Override
-	public void DeleteMember(String userid) {
-		String sql = "delete from member where userid=?";
+	public void DeleteMember(int usernum) {
+		String sql = "delete from member where usernum=?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			conn = DBConnectManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, userid);
+			pstmt.setInt(1, usernum);
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -143,10 +149,11 @@ public class MemberDao implements MemberDaoInterface{
 			pstmt.setString(1, userid);
 			rs = pstmt.executeQuery();
 			if(rs.next()){
-			
-			String DBpassword = rs.getString(1);
+			String DBpassword = rs.getString(1); ///암호문
 			result = 0; //  0 이면 아이디가 존재
-			if (DBpassword.equals(userpass)) {
+			
+			/********** checkpw (평문, 암호문) **********/
+			if(BCrypt.checkpw(userpass, DBpassword)){
 				result = 2;  //2이면 아이디와 비번 둘다 일치
 			}else{
 				result = 1;   //1이면 아이디는 맞으나 비번 불일치
@@ -187,7 +194,33 @@ public class MemberDao implements MemberDaoInterface{
 		return result;
 	}
 	
-	
+	/********** 비밀번호 업데이트 **********/
+	public int UpdateMemberPass(int usernum, String userpass1) {
+		int result = -1;
+		String sql = "update member set userpass=? where usernum=?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = DBConnectManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			
+			/********** Bcrypt 알고리즘으로 암호화 **********/
+			///hashpw(평문, 암호화키 생성(기본값은 10))
+			String userpass = BCrypt.hashpw(userpass1, BCrypt.gensalt());
+			
+			pstmt.setString(1, userpass);
+			pstmt.setInt(2, usernum);
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("UpdateMember 에러");
+		} finally{
+			DBConnectManager.disConnect(conn, pstmt);
+		}
+		return result;
+	}
 	
 	
 }

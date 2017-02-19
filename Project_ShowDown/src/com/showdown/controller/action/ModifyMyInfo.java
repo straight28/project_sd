@@ -24,7 +24,7 @@ public class ModifyMyInfo implements ActionInterface {
 
 		MemberDao mdao = MemberDao.getInstance();
 		result = mdao.UpdateMember(mdto);
-		System.out.println(result); //result 가 -1이면 실패
+		System.out.println("modyfiy가 실패시 result값은 -1 현재 result값 "+result); //result 가 -1이면 실패
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 		

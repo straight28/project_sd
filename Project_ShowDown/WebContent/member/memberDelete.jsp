@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp"%>
+
+
+
 <style>
 .table .myinfo_col1 {
 	width: 130px;
@@ -17,7 +20,8 @@
 
 <div class="row">
 	<div class="bodyDiv">
-		<h1 class="h1class">내 정보 조회</h1>
+		<form name="ModifyForm" role="form" method="post" action="DO?command=deleteMember">
+		<h1 class="h1class">회원 탈퇴</h1>
 		<div class="col-md-12">
 			<table class="table table-bordered">
 				<colgroup>
@@ -34,35 +38,57 @@
 
 				<tr>
 					<td class="tbold">아이디</td>
-					<td>${userinfo.userid }</td>
+					<td> ${loginUser.userid }</td>
 				</tr>
 				<tr>
-					<td class="tbold">닉네임</td>
-					<td>${userinfo.nickname }</td>
+					<td class="tbold">비밀번호</td>
+					<td> <input type="password" name="userpass"></td>
 				</tr>
 				<tr>
-					<td class="tbold">이메일</td>
-					<td>${userinfo.email }</td>
+					<td class="tbold">안내</td>
+					<td> 
+						<p>비밀번호가 일치하여야 회원탈퇴가 가능합니다. </p> 
+						<p>회원을 탈퇴 하시면 사이트 서비스를 이용하실 수 없습니다.</p> </td>
 				</tr>
 			</table>
 		</div>
 		<div class="col-md-12">
 
 			<div class="member_login_menu">
-					<input type="button" class="btn btn-default" style="color: #271b65;" value="기본 정보수정" onclick="location='DO?command=ModifyMyInfo'">  
-				
-					<input type="button"class="btn btn-default" style="color: #271b65;" value="비밀번호 변경"
-					onclick="location='DO?command=updatepassForm'"> 
-					
-					<input type="button" class="btn btn-default" style="color: #271b65;"
-					value="회원탈퇴" onclick="location='DO?command=deleteMemberForm'">
+					<input type="submit"class="btn btn-default" style="color: #271b65;" value="회원탈퇴"> 
+					<br><br>
+					<h4><span style="color:red; font-size:1.2em">${message}</span></h4>
 			</div>
 		</div>
-
+		<input type="hidden" name="usernum" value="${loginUser.usernum}">
+		<input type="hidden" name="userid" value="${loginUser.userid}">
+	</form>
 	</div>
 </div>
 
 <!-- container-fluid 영역 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

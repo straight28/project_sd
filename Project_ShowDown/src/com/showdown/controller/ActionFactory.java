@@ -1,6 +1,8 @@
 package com.showdown.controller;
 
 import com.showdown.controller.action.DeleteBoardAction;
+import com.showdown.controller.action.DeleteMemberAction;
+import com.showdown.controller.action.DeleteMemberForm;
 import com.showdown.controller.action.DeleteQuestionBoardAction;
 import com.showdown.controller.action.DeleteReplyInBoard;
 import com.showdown.controller.action.DeleteReplyInQuestBoard;
@@ -14,6 +16,8 @@ import com.showdown.controller.action.ModifyBoardAction;
 import com.showdown.controller.action.ModifyBoardFormAction;
 import com.showdown.controller.action.ModifyMyInfo;
 import com.showdown.controller.action.ModifyMyInfoForm;
+import com.showdown.controller.action.ModifyMyPass;
+import com.showdown.controller.action.ModifyPasswordAction;
 import com.showdown.controller.action.ModifyQuestionBoardAction;
 import com.showdown.controller.action.ModifyQuestionBoardFormAction;
 import com.showdown.controller.action.MyMenuFormAction;
@@ -115,6 +119,14 @@ public class ActionFactory {
 			action = new ModifyMyInfoForm();
 		}else if(command.equals("userinfomodify")){
 			action = new ModifyMyInfo();
+		}else if(command.equals("updatepassForm")){
+			action = new ModifyMyPass();
+		}else if(command.equals("updatepass")){
+			action = new ModifyPasswordAction();
+		}else if(command.equals("deleteMemberForm")){
+			action = new DeleteMemberForm();
+		}else if(command.equals("deleteMember")){
+			action = new DeleteMemberAction();
 		}
 		
 		
