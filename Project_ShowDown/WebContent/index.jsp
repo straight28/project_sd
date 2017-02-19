@@ -9,7 +9,7 @@ $(document).ready(function(){
 	///팝업창 열기 옵션 값을 가져옴
 	var show = getCookie("showCookies");
 	if(show != "N"){
-		window.open("popup.jsp","","width=400,height=500");
+		window.open("popup.jsp","","width=420,height=550, top=300, left=600, resizable=no");
 	};
 });
 

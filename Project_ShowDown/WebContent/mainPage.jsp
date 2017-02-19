@@ -21,17 +21,17 @@
         
             <div class="item active">
            	 <a href="DO?command=userboard">
-                <img src="images/black-and-white-code-programming-tech-79290.jpeg" alt="First slide" title="First slide" >
+                <img class="img-circle" src="images/black-and-white-code-programming-tech-79290.jpeg" alt="First slide" title="First slide" >
                 </a>
             </div>
             <div class="item">
             	<a href="DO?command=userboard">
-                <img src="images/pexels-photo-89860.jpeg" alt="Second slide" title="Second slide">
+                <img class="img-circle" src="images/pexels-photo-89860.jpeg" alt="Second slide" title="Second slide">
             	</a>
             </div>
             <div class="item">
                	<a href="DO?command=userboard">
-               	<img src="images/pexels-photo-316465.jpeg" alt="Third slide" title="Third slide">
+               	<img class="img-circle" src="images/pexels-photo-316465.jpeg" alt="Third slide" title="Third slide">
             	</a>
             </div>
         </div>

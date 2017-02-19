@@ -166,17 +166,16 @@ public class MemberDao implements MemberDaoInterface{
 	@Override
 	public int UpdateMember(MemberDto mDTO) {
 		int result = -1;
-		String sql = "update member set userpass=?, nickname=?, email=? where usernum=?";
+		String sql = "update member set nickname=?, email=? where usernum=?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			conn = DBConnectManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, mDTO.getUserpass());
-			pstmt.setString(2, mDTO.getNickname());
-			pstmt.setString(3, mDTO.getEmail());
-			pstmt.setString(4,mDTO.getUserid());
+			pstmt.setString(1, mDTO.getNickname());
+			pstmt.setString(2, mDTO.getEmail());
+			pstmt.setInt(3,mDTO.getUsernum());
 			result = pstmt.executeUpdate();
 			
 		} catch (Exception e) {

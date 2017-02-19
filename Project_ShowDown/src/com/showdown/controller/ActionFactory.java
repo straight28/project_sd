@@ -12,6 +12,8 @@ import com.showdown.controller.action.LoginFormAction;
 import com.showdown.controller.action.LogoutAction;
 import com.showdown.controller.action.ModifyBoardAction;
 import com.showdown.controller.action.ModifyBoardFormAction;
+import com.showdown.controller.action.ModifyMyInfo;
+import com.showdown.controller.action.ModifyMyInfoForm;
 import com.showdown.controller.action.ModifyQuestionBoardAction;
 import com.showdown.controller.action.ModifyQuestionBoardFormAction;
 import com.showdown.controller.action.MyMenuFormAction;
@@ -109,6 +111,10 @@ public class ActionFactory {
 			action = new QuestSearchkeyword();
 		}else if(command.equals("deletequestboardreply")){
 			action = new DeleteReplyInQuestBoard();
+		}else if(command.equals("ModifyMyInfo")){
+			action = new ModifyMyInfoForm();
+		}else if(command.equals("userinfomodify")){
+			action = new ModifyMyInfo();
 		}
 		
 		
