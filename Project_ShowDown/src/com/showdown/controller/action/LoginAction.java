@@ -29,7 +29,14 @@ public class LoginAction implements ActionInterface {
 		result = mDAO.checkID(userid,userpass);
 		
 		/// 진입페이지 변환 관련/// q가 1이면 질문게시판 0이면 자유게시판으로 이동
-		int	q = Integer.parseInt(request.getParameter("q"));
+		String q=request.getParameter("q");
+		if( q != null){
+			request.setAttribute("q" , q);
+		}else{
+			q="0"; /// 자유게시판으로 화면 전환을 위한 q값
+			request.setAttribute("q" , q);
+		}
+		int	q1 = Integer.parseInt(q);
 		
 		if(result == 2){ /// 로그인 성공
 			
@@ -41,7 +48,7 @@ public class LoginAction implements ActionInterface {
 				url = "DO?command=userboard";      ///url 완성되면 페이지 전환 필요한 부분
 				message= "로그인 성공";
 				System.out.println("q의 값은"+q);
-				if(q == 1){
+				if(q1 == 1){
 				url = "DO?command=questionboard";  
 				}
 			}else{

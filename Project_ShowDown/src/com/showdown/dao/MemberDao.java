@@ -44,7 +44,7 @@ public class MemberDao implements MemberDaoInterface{
 		int result = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "insert into member(userid, userpass, nickname, email,managecode) values(?,?,?,?,?)";
+		String sql = "insert into member(usernum, userid, userpass, nickname, email,managecode) values((select nvl(max(usernum)+1,1) from member),?,?,?,?,?)";
 		
 		try {
 			conn = DBConnectManager.getConnection();
