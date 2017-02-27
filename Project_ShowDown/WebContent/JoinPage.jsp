@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../header.jsp"%>
+<%@ include file="/header.jsp"%>
 
 <div class="row">
 	<div class="bodyDiv">
@@ -20,6 +20,7 @@
                         <div class="col-xs-10 col-lg-10">
                         <input type="text" name="userid" id="userid" class="form-control" placeholder="이름" required>
                             <span class="help-block">&nbsp;* 영문자, 숫자 4~10자리</span>
+                            <input type="button" class="btn btn-default btn-sm"   value="중복 체크"  onclick="idcheck()">
                         </div>
                     </div>
 
@@ -44,6 +45,8 @@
                         <div class="col-xs-10 col-lg-10">
                         <input type="text" name="nickname" id="nickname" class="form-control"
                                placeholder="유저 닉네임 (한글 4~10자 이내) " required>
+                               <span class="help-block">&nbsp;* 중복체크 필수</span>
+                               <input type="button" class="btn btn-default btn-sm"   value="중복 체크"  onclick="nickcheck()">
                         </div>
 
                     </div>
@@ -59,7 +62,7 @@
 
 				<div class="member_login_menu">
 					<input type="submit" class="btn btn-default"
-						style="color: #271b65;" value="회원가입" onclick="check();"> 
+						style="color: #271b65;" value="회원가입" onclick="check()"> 
 				</div>
 			</form>
 			
@@ -73,4 +76,4 @@
 
 
 </div>
-<%@ include file="../footer.jsp"%>
+<%@ include file="/footer.jsp"%>

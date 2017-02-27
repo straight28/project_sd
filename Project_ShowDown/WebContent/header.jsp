@@ -13,10 +13,6 @@
 <%-- 부트스트랩을 위한 주소와 링크 시작 --%>
 		<link rel="stylesheet" href="css/bootstrap.css"> 
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<!-- javascript -->
-		<script src="js/jquery-3.1.1.js"></script>  
-	<!-- <script src="js/bootstrap.js"></script> -->
-		<script src="js/test.js"></script>  
 <!-- css -->
  	<link href="css/test.css" rel="stylesheet">   
 		
@@ -27,6 +23,9 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script> 
 		
+<!-- javascript -->
+		<script type="text/javascript" src="js/jquery-3.1.1.js"></script>  
+		<script type="text/javascript" src="js/test.js"></script>  
  <script type="text/javascript">
  function btnClick(){
 	 alert("서비스 준비 중 입니다.");

@@ -3,11 +3,10 @@ package com.showdown.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import com.showdown.DBConnect.DBConnectManager;
 import com.showdown.dto.MemberDto;
 import com.showdown.util.BCrypt;
+
 
 /*********** 회원 정보 dao **********/
 public class MemberDao implements MemberDaoInterface{
@@ -168,7 +167,61 @@ public class MemberDao implements MemberDaoInterface{
 		return result;
 	}
 	
+	/********** 아이디 중복 확인시 회원 검사 **********/
+	public int confirmID(String userid) {
+		int result = -1;
+	    String sql = "select * from member where userid=?";
+	       
+	    Connection connn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    
+	    try {
+	      connn = DBConnectManager.getConnection();
+	      pstmt = connn.prepareStatement(sql);
+	      pstmt.setString(1, userid);
+	      rs = pstmt.executeQuery();
+	      if (rs.next()) { 
+	        result = 1;
+	      } else { 
+	        result = -1;
+	      }
+	    } catch (Exception e) {
+	      e.printStackTrace();
+	    } finally {
+	      DBConnectManager.disConnect(connn, pstmt, rs);
+	    }
+	    return result;
+	  }
 	 
+	/********** 닉네임 중복 확인시 회원 검사 **********/
+	public int nickCheck(String nickname) {
+		int result = -1;
+	    String sql = "select * from member where nickname=?";
+	       
+	    Connection connn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    
+	    try {
+	      connn = DBConnectManager.getConnection();
+	      pstmt = connn.prepareStatement(sql);
+	      pstmt.setString(1, nickname);
+	      rs = pstmt.executeQuery();
+	      if (rs.next()) { 
+	        result = 1;
+	      } else { 
+	        result = -1;
+	      }
+	    } catch (Exception e) {
+	      e.printStackTrace();
+	    } finally {
+	      DBConnectManager.disConnect(connn, pstmt, rs);
+	    }
+	    return result;
+	  }
+	
+	
 	/********** 회원 정보 업데이트 **********/
 	@Override
 	public int UpdateMember(MemberDto mDTO) {

@@ -6,6 +6,7 @@ import com.showdown.controller.action.DeleteMemberForm;
 import com.showdown.controller.action.DeleteQuestionBoardAction;
 import com.showdown.controller.action.DeleteReplyInBoard;
 import com.showdown.controller.action.DeleteReplyInQuestBoard;
+import com.showdown.controller.action.IdCheckFormAction;
 import com.showdown.controller.action.IndexPageAction;
 import com.showdown.controller.action.JoinAction;
 import com.showdown.controller.action.JoinFormAction;
@@ -21,6 +22,7 @@ import com.showdown.controller.action.ModifyPasswordAction;
 import com.showdown.controller.action.ModifyQuestionBoardAction;
 import com.showdown.controller.action.ModifyQuestionBoardFormAction;
 import com.showdown.controller.action.MyMenuFormAction;
+import com.showdown.controller.action.NickNameCheckFormAcion;
 import com.showdown.controller.action.QuestSearchkeyword;
 import com.showdown.controller.action.QuestionBoardAction;
 import com.showdown.controller.action.QuestionBoardWriteReplyAction;
@@ -127,6 +129,10 @@ public class ActionFactory {
 			action = new DeleteMemberForm();
 		}else if(command.equals("deleteMember")){
 			action = new DeleteMemberAction();
+		}else if(command.equals("id_check_form")){
+			action = new IdCheckFormAction();
+		}else if(command.equals("nick_check_form")){
+			action = new NickNameCheckFormAcion();
 		}
 		
 		

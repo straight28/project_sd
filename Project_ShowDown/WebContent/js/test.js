@@ -83,5 +83,28 @@
      }
      return true;
  }
+  ///아이디 중복확인
+  function idcheck() {
+      if (document.joinForm.userid.value == "") {
+          alert("아이디를 입력하세요.");
+          document.joinForm.userid.focus();
+          return;
+      }
+      var url = "DO?command=id_check_form&userid="
+          + document.joinForm.userid.value;
+      window.open(url,"","width=420,height=350, top=300, left=300, resizable=no");
+  }
 
+  
+  //닉네임 중복확인
+  function nickcheck() {
+  if (document.joinForm.nickname.value == "") {
+      alert("닉네임을 입력하세요.");
+      document.joinForm.nickname.focus();
+      return;
+  }
+  var url = "DO?command=nick_check_form&nickname="
+      + document.joinForm.nickname.value;
+  window.open(url,"","width=420,height=350, top=300, left=300, resizable=no");
+}
  
