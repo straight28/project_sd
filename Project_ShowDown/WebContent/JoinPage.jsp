@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp"%>
 
-
 <div class="row">
 	<div class="bodyDiv">
 		
@@ -20,7 +19,7 @@
                         <label for="userid" class="col-xs-2 col-lg-2 control-label">아이디</label>
                         <div class="col-xs-10 col-lg-10">
                         <input type="text" name="userid" id="userid" class="form-control" placeholder="이름" required>
-                            <span class="help-block">&nbsp;* 영문자와 숫자만 가능</span>
+                            <span class="help-block">&nbsp;* 영문자, 숫자 4~10자리</span>
                         </div>
                     </div>
 
@@ -28,7 +27,7 @@
                         <label for="userpass" class="col-xs-2 col-lg-2 control-label">비밀번호</label>
                         <div class="col-xs-10 col-lg-10">
                         <input type="password" name="userpass" id="userpass" class="form-control"
-                               placeholder="비밀번호 (10자이내) " required>
+                               placeholder="비밀번호 (영문자, 숫자 6~10자리) " required>
                         </div>
                     </div>
 
@@ -44,7 +43,7 @@
                         <label for="nickname" class="col-xs-2 col-lg-2 control-label">유저 닉네임</label>
                         <div class="col-xs-10 col-lg-10">
                         <input type="text" name="nickname" id="nickname" class="form-control"
-                               placeholder="유저 닉네임 (10자이내) " required>
+                               placeholder="유저 닉네임 (한글 4~10자 이내) " required>
                         </div>
 
                     </div>
@@ -60,7 +59,7 @@
 
 				<div class="member_login_menu">
 					<input type="submit" class="btn btn-default"
-						style="color: #271b65;" value="회원가입"> 
+						style="color: #271b65;" value="회원가입" onclick="check();"> 
 				</div>
 			</form>
 			
